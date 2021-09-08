@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Web Tech Template - Free CSS Layout</title>
+<meta name="keywords" content="Web Tech Template, CSS, HTML" />
+<meta name="description" content="Web Tech Template is a free CSS website provided by templatemo.com" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div id="templatemo_header">
+
+    <div id="site_title">
+
+        <a href="http://www.templatemo.com" target="_parent">Development Blog - Advanced Graphics and Interaction</a>
+
+    </div> <!-- end of site_title -->
+
+   <div id="header_right">
+
+     <!-- free space we might want to use -->
+
+   </div>
+
+    <div class="cleaner"></div>
+
+</div> <!-- end of header -->
+
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+        <ul>
+            <li><a href="index.html"><span></span>Home</a></li>
+            <li><a href="#"><span></span>The Team</a></li>
+            <li><a href="#" target="_parent"><span></span>Inspirations</a></li>
+        </ul>
+	</div>
+</div> <!-- end of templatemo_menu -->
+
+
+<div id="templatemo_main"> <span class="tm_bottom"></span>
+
+<div id="templatemo_content">
+
+    	<div class="content_box">
+            <h1 id="blogTitle">Blog Title</h1>
+            <div id="image_gallery">
+              <img id="gallery_image"></img>
+            </div>
+            <p id="gallery_buttons"><button class="gallery_button" onclick="prevImage()">&#60;-</button><button class="gallery_button" onclick="nextImage()">-&#62;</button></p>
+            <p id=gallery_counter>-</p>
+            <p id="blogContent">-</p>
+      </div>
+
+    <div class="cleaner"></div>
+</div> <!-- end of main -->
+
+<div id="templatemo_footer">
+
+<div align=center>This template downloaded from <a href='https://all-free-download.com/free-website-templates/download/web_tech_711.html'>here</a>, and modified to our needs.</div></body>
+
+<script type="text/javascript" src="blogpostData.json"></script>
+<script language="javascript" type="text/javascript">
+    function nextImage() {
+      galleryIndex = (galleryIndex + 1) % blogEntry.images.length;
+      document.getElementById('gallery_image').src = blogEntry.images[galleryIndex];
+      document.getElementById('gallery_counter').innerHTML = "Image " + (galleryIndex + 1) + " out of " + blogEntry.images.length;
+    }
+
+    function prevImage() {
+      galleryIndex = galleryIndex - 1;
+      if(galleryIndex < 0) {
+        galleryIndex = blogEntry.images.length - 1;
+      }
+      document.getElementById('gallery_image').src = blogEntry.images[galleryIndex];
+      document.getElementById('gallery_counter').innerHTML = "Image " + (galleryIndex + 1) + " out of " + blogEntry.images.length;
+    }
+
+    const query = document.location.search;
+    const params = new URLSearchParams(query);
+    const blogIndex = parseInt(params.get('entry'))-1;
+    const blogEntry = blogData.BlogEntry[blogIndex];
+    var galleryIndex = 0;
+    document.getElementById('blogTitle').innerHTML = blogEntry.title;
+    document.getElementById('gallery_image').src = blogEntry.images[galleryIndex];
+    document.getElementById('gallery_counter').innerHTML = "Image 1 out of " + blogEntry.images.length;
+    document.getElementById('blogContent').innerHTML = blogEntry.text;
+</script>
+
+</html>

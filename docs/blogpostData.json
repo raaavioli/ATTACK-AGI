@@ -1,0 +1,15 @@
+blogData =
+{
+   BlogEntry: [
+      {
+        title: "Yoyo",
+        images: ["images/conceptIdea.png"],
+        text: "Yoyoyoyo, my man. This is a placeholder text."
+      },
+      {
+        title: "Hey hey",
+        images: ["images/model1.png"],
+        text: "Hey, my man. This is a placeholder text."
+      }
+   ]
+}

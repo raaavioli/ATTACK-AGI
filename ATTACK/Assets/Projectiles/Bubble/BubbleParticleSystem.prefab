@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 35
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3844,7 +3844,7 @@ ParticleSystem:
     ratio: 1
     light: {fileID: 4831264800395635590, guid: 6f01a734ede56cb4b8c7dc87164639d9, type: 3}
     randomDistribution: 1
-    color: 1
+    color: 0
     range: 1
     intensity: 1
     rangeCurve:

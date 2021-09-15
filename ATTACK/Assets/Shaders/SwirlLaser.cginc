@@ -57,5 +57,5 @@ fixed4 frag(FragmentInput i) : SV_Target{
     fixed4 swirlMask = tex2D(_SwirlMask, float2(i.uv.x, M_SPEED * _Time.y + i.uv.y));
     fixed4 swirl = M_COLOR * swirlMask;
     float CylinderCapCull = (abs(i.model_normal.y) < 0.99);
-    return M_INTENSITY * swirl * CylinderCapCull * EdgeTransparency(0.1, 0.9, i.unwrapped_uv.y);
+    return M_INTENSITY * swirl * CylinderCapCull * EdgeTransparency(0.01, 0.9, i.unwrapped_uv.y);
 }

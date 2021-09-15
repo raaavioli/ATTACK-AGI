@@ -81,7 +81,7 @@ Shader "Unlit/CompleteLaserShader"
                 WavePatternY += Distortion;
                 //return WavePatternY;
                 float CylinderCapCull = (abs(i.model_normal.y) < 0.99);
-                return _CoreColor * WavePatternY * CylinderCapCull * EdgeTransparency(0.1, 0.9, i.unwrapped_uv.y);
+                return _CoreColor * WavePatternY * CylinderCapCull * EdgeTransparency(0.01, 0.9, i.unwrapped_uv.y);
             }
             ENDCG
         }

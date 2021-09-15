@@ -2,14 +2,19 @@ blogData =
 {
    BlogEntry: [
       {
-        title: "Yoyo",
+        title: "A humble start",
         images: ["images/conceptIdea.png"],
-        text: "Yoyoyoyo, my man. This is a placeholder text."
+        text: "We felt that nice graphics and interaction ideas on its own is not 'fun' enough, so we decided to make a simple game to go along with it. To not place too much focus on learning controls and rules of the game, we figured that something simple that mostly plays itself automatically would satisfy that requirement. Immediately, the idea of something similar to Auto Chess sprung up in our minds. To add a cool interaction, we figured that we wanted physical objects interact with the screen, to have an effect in the virtual space. In the studio we're working in, there is a SUR40 device, that would allow us to do just that. With that in mind, the idea of interactions like Yu-Gi-Oh struck us, to have physical cards generate characters in the game to fight each other.</br>Because we don't want to heavily focus on game logic, we may want to restrict the fighting to the characters being static, and only using ranged attacks against each other. We may design a terrain stage to 'make sense' of that restriction."
       },
       {
-        title: "Hey hey",
+        title: "General model style decided",
         images: ["images/model1.png"],
-        text: "Hey, my man. This is a placeholder text."
+        text: "Once again, to not place too much focus on things not relevant within the scope of the course, we decided to have a very simple graphics. Another gain from having simple graphics is that it won't be as heavy for the device running the program to render the graphics. Considering that we're working with an old SUR40 with not the best specs, it's better to be careful than not, so that we don't overload its GPU. While the general graphic style is low-polygonal and simple, they still need to look different enough to be distinguishable. We have not yet decided on how many unique characters we'll go for, so we'll see how difficult of a task that will be later in the development.</br>What you see here is some sort of a 'mage', capable of shooting magic projectiles at the enemies. It's an old model one of our team members just so happen to have stashed away from playing around with Blender before. It's cool to see that it will be useful once more."
+      },
+      {
+        title: "Stage terrain constructed",
+        images: ["images/stage.png"],
+        text: "We decided upon making a 'battlefield' out in the nature. That way, we won't have to bother with adding additional model that requires more rigid planning, while placing some ground clutter later on can be done in a careless and seemingly random fashion. In an earlier blog post, we mentioned maybe justifying the characters only using ranged attacks. The natural choice to do that, in this environment, is to have a river separating the opposing forces. The design is very minimalistic and low-polygonal, as is required by our choice of style. The stage may be scaled up or down depending on how large we need it to be, without too much hassle."
       }
    ]
 }

@@ -1,9 +1,9 @@
 ############## Python-OpenCV Playing Card Detector ###############
 #
-# Author: Evan Juras
+# Author: Evan Juras, Anders Steen
 # Date: 9/5/17
 # Description: Python script to detect and identify playing cards
-# from a PiCamera video feed.
+# from a video feed.
 #
 
 # Import necessary packages
@@ -35,7 +35,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 # See VideoStream.py for VideoStream class definition
 ## IF USING USB CAMERA INSTEAD OF PICAMERA,
 ## CHANGE THE THIRD ARGUMENT FROM 1 TO 2 IN THE FOLLOWING LINE:
-videostream = VideoStream.VideoStream((IM_WIDTH,IM_HEIGHT),FRAME_RATE,2,2).start()
+videostream = VideoStream.VideoStream((IM_WIDTH,IM_HEIGHT),FRAME_RATE,0).start()
 time.sleep(1) # Give the camera time to warm up
 
 # Load the train rank and suit images

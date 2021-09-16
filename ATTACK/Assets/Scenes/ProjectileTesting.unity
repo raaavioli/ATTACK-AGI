@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.27022815, g: 0.25072813, b: 0.19523263, a: 1}
+  m_IndirectSpecularColor: {r: 0.2702279, g: 0.25072798, b: 0.1952326, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -607,13 +607,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670802068}
-  m_LocalRotation: {x: 0.011549511, y: 0.783343, z: -0.058688093, w: 0.61870515}
-  m_LocalPosition: {x: -25.27, y: 6.92, z: 13.59}
+  m_LocalRotation: {x: 0.023417747, y: 0.88146067, z: -0.05883448, w: 0.46799278}
+  m_LocalPosition: {x: -10.01, y: 5.11, z: 14.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 6.098, y: 103.227, z: -3.144}
+  m_LocalEulerAnglesHint: {x: 7.218, y: 124.02, z: -0.796}
 --- !u!1 &1904244340
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1904244341}
   - component: {fileID: 1904244342}
+  - component: {fileID: 1904244343}
   m_Layer: 0
   m_Name: AttackEmissionProbe
   m_TagString: Untagged
@@ -652,7 +653,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904244340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3240166891a2419428f2456265df186f, type: 3}
   m_Name: 
@@ -661,3 +662,19 @@ MonoBehaviour:
   FireStartTime: 0.9
   MaxFireTime: 0.422
   ProjectilePrefab: {fileID: 7256912105097393847, guid: 734937edf6a97664a8475980e76db1ce, type: 3}
+--- !u!114 &1904244343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904244340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ec2be6b363d483fa976312a87050f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChargePrefab: {fileID: 7922952976278620387, guid: 68df0ee2fca31f841a6b81378cb40fb0, type: 3}
+  FireStartTime: 0.9
+  MaxFireTime: 0.422
+  ProjectilePrefab: {fileID: 5252260672383280543, guid: 5d4fff743a29e0348ab226e8442c034c, type: 3}

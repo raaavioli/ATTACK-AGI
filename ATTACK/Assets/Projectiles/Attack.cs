@@ -22,8 +22,6 @@ public abstract class Attack : MonoBehaviour
     protected abstract void UpdateProjectile();
     protected abstract void StopProjectile();
 
-
-
     public void Start()
     {
         Animator = gameObject.GetComponentInParent<Animator>();
@@ -57,6 +55,11 @@ public abstract class Attack : MonoBehaviour
         }
     }
 
+    protected virtual void UpdateCharge(ref ParticleSystem Charge)
+    {
+        // Overridden in children
+    }
+
     /**
      * Runs the simulation and repositions particle systems.
      * Should only be run from Update
@@ -70,6 +73,7 @@ public abstract class Attack : MonoBehaviour
             if (SimulationTime < FireStartTime)
             {
                 Charge.transform.position = gameObject.transform.position;
+                UpdateCharge(ref Charge);
             }
             else if (Charge.isPlaying && SimulationTime >= FireStartTime)
             {

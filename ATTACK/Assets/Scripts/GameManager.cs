@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] spawnPointsT1;
     private GameObject[] spawnPointsT2;
-    public int teamSize = 5;
+    public int teamSize = 3;
 
     public GameObject character;
 
@@ -17,19 +17,19 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < teamSize; i++)
         {
-            SpawnCharacter(character, spawnPointsT1, i, Team.Left);
+            SpawnCharacter(character, spawnPointsT1[i], Team.Left);
         }
 
         for (int i = 0; i < teamSize; i++)
         {
-            SpawnCharacter(character, spawnPointsT2, i, Team.Right);
+            SpawnCharacter(character, spawnPointsT2[i], Team.Right);
         }
 
     }
 
-    private void SpawnCharacter(GameObject character, GameObject[] teamSpawns, int spawnIndex, Team team)
+    private void SpawnCharacter(GameObject character, GameObject spawn, Team team)
     {
-        Vector3 spawnPoint = teamSpawns[spawnIndex].transform.position;
+        Vector3 spawnPoint = spawn.transform.position;
         
         // Quaternions are required to Instantiate at a Vec3. Alternative will require a transform which makes the characters a child of their spawnpoint
         Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1); 

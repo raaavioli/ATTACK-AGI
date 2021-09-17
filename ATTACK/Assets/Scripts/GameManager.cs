@@ -27,6 +27,20 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public Transform GetRandomTarget(Team characterTeam)
+    {
+        int enemy = Random.Range(0, teamSize);
+
+        if (characterTeam == Team.Left)
+        {
+            return spawnPointsT2[enemy].transform;
+        }
+        else
+        {
+            return spawnPointsT1[enemy].transform;
+        }
+    }
+
     private void SpawnCharacter(GameObject character, GameObject spawn, Team team)
     {
         Vector3 spawnPoint = spawn.transform.position;

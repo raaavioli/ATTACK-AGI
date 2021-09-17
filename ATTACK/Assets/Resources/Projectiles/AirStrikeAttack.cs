@@ -29,20 +29,22 @@ public class AirStrikeAttack : Attack
         float t = (SimulationTime - (FireStartTime + MaxFireTime / 50f)) / MaxFireTime;
         if (t < 0)
             t = 0;
-        t *= (t * t);
+        t *= (t * t * t);
         float MetersPerSecond = Time.deltaTime * 200f;
-        Plane.transform.position += MetersPerSecond * ((1 - t) * gameObject.transform.forward + t * gameObject.transform.up).normalized;
-        Vector3 Rotation = new Vector3(t * -90, gameObject.transform.rotation.y, 0);
-        Plane.transform.localEulerAngles = Rotation;
+        Vector3 PrevPos = Plane.transform.position;
+        Plane.transform.position += MetersPerSecond * ((1 - t) * transform.forward + t * transform.up).normalized;
+
+        Vector3 Direction = Plane.transform.position - PrevPos;
+        Plane.transform.rotation = Quaternion.LookRotation(Direction);
     }
 
     private void SetStartTransform()
     {
         // Arbitrary distance backward from the attacker, should be off screen.
         Vector3 StartPosition = gameObject.transform.position
-        - gameObject.transform.forward * 30
+        - gameObject.transform.forward * 200
         + gameObject.transform.up * 10;
         Plane.transform.position = StartPosition;
-        Plane.transform.rotation = gameObject.transform.rotation;
+        Plane.transform.rotation = transform.rotation;
     }
 }

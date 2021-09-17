@@ -6,41 +6,41 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] spawnPointsT1;
     private GameObject[] spawnPointsT2;
+    public int teamSize = 5;
 
     public GameObject character;
 
-    // Start is called before the first frame update
     void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < teamSize; i++)
         {
-            SpawnCharacter(character, spawnPointsT1, i, 0);
+            SpawnCharacter(character, spawnPointsT1, i, Team.Left);
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < teamSize; i++)
         {
-            SpawnCharacter(character, spawnPointsT2, i, 1);
+            SpawnCharacter(character, spawnPointsT2, i, Team.Right);
         }
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void SpawnCharacter(GameObject character, GameObject[] teamSpawns, int spawnIndex, int teamNumber)
+    private void SpawnCharacter(GameObject character, GameObject[] teamSpawns, int spawnIndex, Team team)
     {
         Vector3 spawnPoint = teamSpawns[spawnIndex].transform.position;
         
         // Quaternions are required to Instantiate at a Vec3. Alternative will require a transform which makes the characters a child of their spawnpoint
-        Quaternion towardsMiddle = new Quaternion(0, teamNumber * 180, 0, 1); 
+        Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1); 
 
         GameObject c = Instantiate(character, spawnPoint, towardsMiddle);
-        c.GetComponent<CharacterCommon>().SetTeam(teamNumber);
+        c.GetComponent<CharacterCommon>().SetTeam(team);
     }
+}
+
+public enum Team : ushort 
+{
+    Left = 0,
+    Right = 1
 }

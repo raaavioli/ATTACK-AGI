@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class CharacterCommon : MonoBehaviour
 {
-    private int team;
+    private Team team;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void SetTeam(int teamNumber)
+    public void SetTeam(Team team)
     {
-        team = teamNumber;
+        this.team = team;
     }
 }

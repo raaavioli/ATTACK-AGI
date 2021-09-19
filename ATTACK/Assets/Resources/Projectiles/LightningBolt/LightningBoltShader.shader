@@ -8,7 +8,6 @@
     SubShader
     {
         Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" "PreviewType" = "Plane" }
-        Blend One One
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass

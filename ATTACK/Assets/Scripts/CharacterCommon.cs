@@ -13,7 +13,6 @@ public class CharacterCommon : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
         Attack();
     }
 
@@ -35,10 +34,8 @@ public class CharacterCommon : MonoBehaviour
     private void Attack()
     {
         Transform targetPoint = gameManager.GetRandomTarget(team);
+        Vector3 DirToTarget = (targetPoint.position - gameObject.transform.position).normalized;
 
-        GameObject projectile = Instantiate(attack, transform);
-        projectile.GetComponent<SimpleAttack>().SetTeam(team);
-
-        projectile.transform.LookAt(targetPoint);
+        transform.rotation = Quaternion.LookRotation(DirToTarget);
     }
 }

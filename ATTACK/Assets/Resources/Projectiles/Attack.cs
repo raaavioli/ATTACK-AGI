@@ -11,7 +11,7 @@ public abstract class Attack : MonoBehaviour
     [Range(0.1f, 3.0f)]
     public float MaxFireTime = 0.5f;
 
-    private ParticleSystem Charge;
+    private ParticleSystem Charge = null;
     private bool Simulating = false;
     private bool Shooting = false;
     protected float SimulationTime = 0;
@@ -25,8 +25,11 @@ public abstract class Attack : MonoBehaviour
     public void Start()
     {
         Animator = gameObject.GetComponentInParent<Animator>();
-        Charge = Instantiate(ChargePrefab, this.transform.position, this.transform.rotation);
-        Charge.Stop();
+        if (ChargePrefab != null)
+        {
+            Charge = Instantiate(ChargePrefab, this.transform.position, this.transform.rotation);
+            Charge.Stop();
+        }
         InstantiateProjectile();
     }
 
@@ -49,15 +52,18 @@ public abstract class Attack : MonoBehaviour
         {
             // Start charging
             Simulating = true;
-            Charge.time = 0;
-            Charge.Play();
+            if (Charge != null)
+            {
+                Charge.time = 0;
+                Charge.Play();
+            }
             Animator.SetTrigger("StartShoot");
         }
     }
 
     protected virtual void UpdateCharge(ref ParticleSystem Charge)
     {
-        // Overridden in children
+        // Overridden in children, no default behaviour
     }
 
     /**
@@ -70,14 +76,17 @@ public abstract class Attack : MonoBehaviour
         {
             SimulationTime += Time.deltaTime;
 
-            if (SimulationTime < FireStartTime)
+            if(Charge != null)
             {
-                Charge.transform.position = gameObject.transform.position;
-                UpdateCharge(ref Charge);
-            }
-            else if (Charge.isPlaying && SimulationTime >= FireStartTime)
-            {
-                Charge.Stop();
+                if (SimulationTime < FireStartTime)
+                {
+                        Charge.transform.position = gameObject.transform.position;
+                        UpdateCharge(ref Charge);
+                }
+                else if (Charge.isPlaying && SimulationTime >= FireStartTime)
+                {
+                        Charge.Stop();
+                }
             }
 
             if (!Shooting && SimulationTime >= FireStartTime)

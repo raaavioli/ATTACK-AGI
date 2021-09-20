@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChargePrefab: {fileID: 1942519772477316185, guid: fcfe389e040f3d54db86da55db63b3ab, type: 3}
-  FireStartTime: 1.25
+  FireStartTime: 1.55
   MaxFireTime: 0.6
-  LaserMaterial: {fileID: 2100000, guid: aaa8ea2ebccaae640b6d65a09bcbbe0a, type: 2}
+  LaserMaterial: {fileID: 2100000, guid: 9932d72d08bbc984c939bfdaa89b3262, type: 2}
 --- !u!1 &5589603267448117598
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d267da0fab5e0448ca1a368ed721a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack: {fileID: 0}
 --- !u!1 &6615920728115432811
 GameObject:
   m_ObjectHideFlags: 0

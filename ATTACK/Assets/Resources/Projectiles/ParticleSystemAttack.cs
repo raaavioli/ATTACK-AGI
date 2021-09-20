@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,7 +14,7 @@ public class ParticleSystemAttack : Attack
 
     protected override void InstantiateProjectile()
     {
-        Projectile = Instantiate(ProjectilePrefab, this.transform.position + new Vector3(0, 0, 1), this.transform.rotation);
+        Projectile = Instantiate(ProjectilePrefab, transform.position + new Vector3(0, 0, 1), transform.rotation);
         Projectile.Stop();
     }
 
@@ -26,6 +27,7 @@ public class ParticleSystemAttack : Attack
     protected override void UpdateProjectile()
     {
         Projectile.transform.position = gameObject.transform.position;
+        Projectile.transform.rotation = gameObject.transform.root.rotation;
     }
 
     protected override void StopProjectile()

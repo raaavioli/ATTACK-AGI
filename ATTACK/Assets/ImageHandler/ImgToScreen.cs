@@ -1,32 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 
 public class ImgToScreen : MonoBehaviour
 {
-    private Sur40ToImg instance;
     private byte[] img;
     Texture2D imageTexture;
-    private Image displayImage;
+    private RawImage displayImage;
 
     void Start()
     {
         imageTexture = new Texture2D(1920, 1080);
-        instance = new Sur40ToImg();
-        displayImage = gameObject.GetComponent<Image>();
+        displayImage = gameObject.GetComponent<RawImage>();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            img = instance.getImage();
+        if(ServerHandler.instance.rdyToFetchData) {
+            img = ServerHandler.instance.data;
             if (img != null)
             {
                 imageTexture.LoadRawTextureData(img);
                 imageTexture.Apply();
-                displayImage.image = imageTexture;
+                displayImage.texture = imageTexture;
             }
         }
     }

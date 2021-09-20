@@ -46,7 +46,6 @@ public class Sur40ToImg
                     0, 0,
                     1920, 1080);
             }
-
         }
         imageUpdated = true;
     }

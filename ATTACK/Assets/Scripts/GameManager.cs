@@ -8,11 +8,14 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT2;
     public int teamSize = 3;
 
-    void Start()
+    private List<GameObject> T1;
+    private List<GameObject> T2;
+    public void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
-
+        T1 = new List<GameObject>();
+        T2 = new List<GameObject>();
         List<Character> characters = Character.Values();
 
         for (int i = 0; i < teamSize; i++)
@@ -25,6 +28,27 @@ public class GameManager : MonoBehaviour
             SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
         }
 
+    }
+
+    public void Update()
+    {
+        foreach (GameObject character in T1)
+        {
+            CharacterCommon cc = character.GetComponent<CharacterCommon>();
+            if (cc.CanAttack)
+            {
+                cc.AttackRandom();
+            }
+        }
+
+        foreach (GameObject character in T2)
+        {
+            CharacterCommon cc = character.GetComponent<CharacterCommon>();
+            if (cc.CanAttack)
+            {
+                cc.AttackRandom();
+            }
+        }
     }
 
     public Transform GetRandomTarget(Team characterTeam)
@@ -51,6 +75,14 @@ public class GameManager : MonoBehaviour
         GameObject c = Instantiate(character.GetModelPrefab(), spawnPoint, towardsMiddle);
         c.transform.localRotation = towardsMiddle;
         c.GetComponent<CharacterCommon>().SetTeam(team);
+        if (team == 0)
+        {
+            T1.Add(c);
+        } 
+        else
+        {
+            T2.Add(c);
+        }
     }
 }
 

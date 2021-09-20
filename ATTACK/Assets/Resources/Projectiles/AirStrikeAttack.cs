@@ -43,7 +43,7 @@ public class AirStrikeAttack : Attack
         // Arbitrary distance backward from the attacker, should be off screen.
         Vector3 StartPosition = gameObject.transform.position
         - gameObject.transform.forward * 200
-        + gameObject.transform.up * 10;
+        + gameObject.transform.up * 6;
         Plane.transform.position = StartPosition;
         Plane.transform.rotation = transform.rotation;
     }

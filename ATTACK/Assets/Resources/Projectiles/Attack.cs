@@ -17,12 +17,14 @@ public abstract class Attack : MonoBehaviour
     protected float SimulationTime = 0;
     Animator Animator;
 
+    public bool CanAttack => !Simulating;
+
     protected abstract void InstantiateProjectile();
     protected abstract void StartProjectile();
     protected abstract void UpdateProjectile();
     protected abstract void StopProjectile();
 
-    public void Start()
+    public void Awake()
     {
         Animator = gameObject.GetComponentInParent<Animator>();
         if (ChargePrefab != null)
@@ -35,18 +37,10 @@ public abstract class Attack : MonoBehaviour
 
     public void Update()
     {
-        // ----------------------------------------------------------------------------------//
-        // Just to illustrate how to run an attack, currently all attacks are run when pressing
-        // the mouse.
-        // StartSimulation will later be called by the game manager
-        if (Input.GetMouseButton(0))
-            StartSimulation();
-        // ---------------------------------------------------------------------------------//
-
         RunSimulation();
     }
 
-    public void StartSimulation()
+    public bool StartSimulation()
     {
         if (!Simulating)
         {
@@ -58,7 +52,9 @@ public abstract class Attack : MonoBehaviour
                 Charge.Play();
             }
             Animator.SetTrigger("StartShoot");
+            return true;
         }
+        return false;
     }
 
     protected virtual void UpdateCharge(ref ParticleSystem Charge)

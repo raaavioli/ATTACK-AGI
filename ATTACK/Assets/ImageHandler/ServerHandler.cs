@@ -9,15 +9,11 @@ using System;
 public class ServerHandler : MonoBehaviour
 {
     public static ServerHandler instance;
-    public byte[] data {
-        get { rdyToFetchData = false; return data; }
-        private set { data = value; }
-    }
+    private byte[] data;
     public bool rdyToFetchData { get; private set; } = false;
 
-    IPEndPoint ipep;
-    UdpClient newSock;
-
+    Socket socket;
+    EndPoint senderRemote;
 
     void Awake()
     {
@@ -27,19 +23,44 @@ public class ServerHandler : MonoBehaviour
             Destroy(this);
         }
 
-        ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50001);
-        newSock = new UdpClient(ipep);
+        data = new byte[16384];
+
+        IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50001);
+
+        socket = new Socket(endPoint.Address.AddressFamily,
+            SocketType.Dgram,
+            ProtocolType.Udp);
+
+        // Creates an IPEndPoint to capture the identity of the sending host.
+        IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+        senderRemote = sender;
+
+        // Binding is required with ReceiveFrom calls.
+        socket.Bind(endPoint);
+        Console.WriteLine("Waiting to receive datagrams from client...");
+        socket.Blocking = false;
     }
 
-    void Start()
+    void Update()
     {
-        newSock.BeginReceive(ASyncReceiver, null);
+        if (socket.Available > 0) {
+            socket.ReceiveFrom(data, ref senderRemote);
+            rdyToFetchData = true;
+            string str = "";
+            foreach (byte piece in data) {
+                str += piece.ToString();
+			}
+            Debug.Log(str);
+            //Debug.Log(Encoding.UTF8.GetString(data));
+		}
     }
 
-    public void ASyncReceiver(IAsyncResult result)
-    {
-        data = newSock.EndReceive(result, ref ipep);
-        rdyToFetchData = true;
-        newSock.BeginReceive(ASyncReceiver, null);
-    }
+    public byte[] fetchData() {
+        rdyToFetchData = false;
+        return data;
+	}
+
+	private void OnDestroy() {
+        socket.Close();
+	}
 }

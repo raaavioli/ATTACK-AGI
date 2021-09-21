@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlameMaterial
+  m_Name: PlaneGlowMaterial
   m_Shader: {fileID: 4800000, guid: b1e7ba9edeeb4a74ba584b4a05fb100c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

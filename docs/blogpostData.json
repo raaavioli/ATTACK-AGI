@@ -28,7 +28,7 @@ blogData =
       },
       {
         title: "Stage terrain improved",
-        images: ["images/placeholdercat.png"],
+        images: ["images/improvedStage.png"],
         text: "The stage everything takes place on was a little bare. We decided to improve it by adding some ground clutter. We went online to look for available resources that fits the theme. Alas, only proper rocks were found. The grass and branches were modelled in Blender. We sure think it looks better. What do you think?"
       }
    ]

@@ -30,6 +30,11 @@ blogData =
         title: "Stage terrain improved",
         images: ["images/improvedStage.png"],
         text: "The stage everything takes place on was a little bare. We decided to improve it by adding some ground clutter. We went online to look for available resources that fits the theme. Alas, only proper rocks were found. The grass and branches were modelled in Blender. We sure think it looks better. What do you think?"
+      },
+      {
+        title: "Projectiles added",
+        images: ["images/AirStrike.png", "images/bubbles.png", "images/laser.png", "images/lightning.png"],
+        text: "Projectiles have been added for the three existing characters. To create the effects, a couple of custom shaders were written to get desired effects. The Witch shoots lightning primarily, but a bubble projectile was also created in case that is desired in the actual game. Enigma charges up and shoots a powerful laser. The laser is essentially a cylinder rendered through three shader passes, all adding individual layers to the resulting beam. The Colonel calls in a powerful air strike plane, which crashes into the target creating a cloud of fire smoke while the plane is ripped into pieces. The smoke effect is a particle system with a custom shader using a custom made smoke texture which is used to give the smoke/fire its shape and color."
       }
    ]
 }

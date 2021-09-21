@@ -20,12 +20,12 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < teamSize; i++)
         {
-            SpawnCharacter(characters[i], spawnPointsT1[i], Team.Left);
+            SpawnCharacter(characters[2], spawnPointsT1[i], Team.Left);
         }
 
         for (int i = 0; i < teamSize; i++)
         {
-            SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
+            SpawnCharacter(characters[2], spawnPointsT2[i], Team.Right);
         }
 
     }

@@ -40,6 +40,6 @@ public class CharacterCommon : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(DirToTarget);
 
-        return attack.StartSimulation();
+        return attack.StartSimulation(targetPoint.position);
     }
 }

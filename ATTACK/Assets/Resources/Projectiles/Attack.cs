@@ -15,6 +15,7 @@ public abstract class Attack : MonoBehaviour
     private bool Simulating = false;
     private bool Shooting = false;
     protected float SimulationTime = 0;
+    protected Vector3 TargetPosition;
     Animator Animator;
 
     public bool CanAttack => !Simulating;
@@ -40,10 +41,11 @@ public abstract class Attack : MonoBehaviour
         RunSimulation();
     }
 
-    public bool StartSimulation()
+    public bool StartSimulation(Vector3 TargetPosition)
     {
         if (!Simulating)
         {
+            this.TargetPosition = TargetPosition;
             // Start charging
             Simulating = true;
             if (Charge != null)

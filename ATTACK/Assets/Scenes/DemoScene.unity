@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44780058, g: 0.49349844, b: 0.55238, a: 1}
+  m_IndirectSpecularColor: {r: 0.4481874, g: 0.49820536, b: 0.57556516, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -345,7 +345,7 @@ Transform:
   - {fileID: 900869789}
   - {fileID: 1348226872}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238176699
 GameObject:
@@ -375,7 +375,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 0.9488095, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -433,13 +433,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238176699}
-  m_LocalRotation: {x: 0.72148937, y: 0.123693824, z: -0.67504615, w: 0.09200909}
+  m_LocalRotation: {x: -0.4721568, y: -0.14822954, z: 0.6832784, w: -0.53686744}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 17.444, y: 265.69, z: 176.739}
+  m_LocalEulerAnglesHint: {x: 45.197, y: -43.613, z: 237.405}
 --- !u!4 &1313403682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5392910245988299352, guid: 938210a1548302a489726d066cf13545, type: 3}
@@ -667,6 +667,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 434864738, guid: 98e5ef499230e654981f25411114dda6, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 434864739, guid: 98e5ef499230e654981f25411114dda6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3203574858778793008, guid: 98e5ef499230e654981f25411114dda6, type: 3}
       propertyPath: m_Name
       value: BetterTerrain
@@ -674,10 +682,6 @@ PrefabInstance:
     - target: {fileID: 4900145919848647743, guid: 98e5ef499230e654981f25411114dda6, type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4900145919848647743, guid: 98e5ef499230e654981f25411114dda6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.06
       objectReference: {fileID: 0}
     - target: {fileID: 4900145919848647743, guid: 98e5ef499230e654981f25411114dda6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -801,7 +805,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3721896506898489925, guid: e1ae136b91d2e17438b3be0d35ceb594, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3721896506898489925, guid: e1ae136b91d2e17438b3be0d35ceb594, type: 3}
       propertyPath: m_LocalPosition.x

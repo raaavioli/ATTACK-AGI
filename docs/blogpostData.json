@@ -15,6 +15,21 @@ blogData =
         title: "Stage terrain constructed",
         images: ["images/stage.png"],
         text: "We decided upon making a 'battlefield' out in the nature. That way, we won't have to bother with adding additional model that requires more rigid planning, while placing some ground clutter later on can be done in a careless and seemingly random fashion. In an earlier blog post, we mentioned maybe justifying the characters only using ranged attacks. The natural choice to do that, in this environment, is to have a river separating the opposing forces. The design is very minimalistic and low-polygonal, as is required by our choice of style. The stage may be scaled up or down depending on how large we need it to be, without too much hassle."
+      },
+      {
+        title: "First characters completed",
+        images: ["images/enigma.png", "images/colonel.png", "images/plane.png", "images/witch.png"],
+        text: "The three first characters for the project are now complete. We have the Witch, the Colonel and Enigma. All of these are modeled, textured procedurally, then textured through texture baking, then rigged and animated as well, all inside of Blender. The Witch is meant to be a magic user, casting spells to attack her enemies. The Colonel is an army commander who calls in air support to wage war on the opponents. Enigma is a recently unearthed ancient construct with an unknown (but violent) purpose and a powerful laser beam."
+      },
+      {
+        title: "Possible card detector prototyped",
+        images: ["images/card_recognition_1st_test.png"],
+        text: "The problem of how to have the SUR40 read and identify (or parse, if you will) the playing cards is far from a trivial problem. Therefore, building off open source project that does something similar makes sense. <a href='https://github.com/EdjeElectronics/OpenCV-Playing-Card-Detector'>This project</a> was found to be able to do what we need, while being hand-crafted and understandable by humans. It was originally meant to work on a Raspberry Pi, but now we are able to run the project using a webcam on one of our laptops, and it works moderately well. The large problem however is how to get it to work on the SUR40, especially if the PixelSense data is not accessible as a video stream. More experimentation will have to be done to tell for sure, but either way we proceed, we can likely learn something from the computer vision techniques that this project employs."
+      },
+      {
+        title: "Stage terrain improved",
+        images: ["images/placeholdercat.png"],
+        text: "The stage everything takes place on was a little bare. We decided to improve it by adding some ground clutter. We went online to look for available resources that fits the theme. Alas, only proper rocks were found. The grass and branches were modelled in Blender. We sure think it looks better. What do you think?"
       }
    ]
 }

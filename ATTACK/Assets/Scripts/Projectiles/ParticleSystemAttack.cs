@@ -27,7 +27,7 @@ public class ParticleSystemAttack : Attack
     protected override void UpdateProjectile()
     {
         Projectile.transform.position = gameObject.transform.position;
-        Projectile.transform.rotation = gameObject.transform.root.rotation;
+        Projectile.transform.rotation = Quaternion.LookRotation(TargetPosition - transform.position);
     }
 
     protected override void StopProjectile()

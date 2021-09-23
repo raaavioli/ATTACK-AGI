@@ -35,11 +35,11 @@ public class CharacterCommon : MonoBehaviour
      */
     public bool AttackRandom()
     {
-        Transform targetPoint = gameManager.GetRandomTarget(team);
-        Vector3 DirToTarget = (targetPoint.position - gameObject.transform.position).normalized;
+        Vector3 targetPoint = gameManager.GetRandomTarget(team);
+        Vector3 DirToTarget = (targetPoint - transform.position).normalized;
 
         transform.rotation = Quaternion.LookRotation(DirToTarget);
 
-        return attack.StartSimulation(targetPoint.position);
+        return attack.StartSimulation(targetPoint);
     }
 }

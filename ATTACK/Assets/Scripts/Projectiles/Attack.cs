@@ -78,8 +78,9 @@ public abstract class Attack : MonoBehaviour
             {
                 if (SimulationTime < FireStartTime)
                 {
-                        Charge.transform.position = gameObject.transform.position;
-                        UpdateCharge(ref Charge);
+                    Charge.transform.position = transform.position;
+                    Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - transform.position);
+                    UpdateCharge(ref Charge);
                 }
                 else if (Charge.isPlaying && SimulationTime >= FireStartTime)
                 {

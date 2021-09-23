@@ -51,28 +51,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Transform GetRandomTarget(Team characterTeam)
+    public Vector3 GetRandomTarget(Team characterTeam)
     {
         int enemy = Random.Range(0, teamSize);
 
         if (characterTeam == Team.Left)
         {
-            return spawnPointsT2[enemy].transform;
+            return T2[enemy].transform.position;
         }
         else
         {
-            return spawnPointsT1[enemy].transform;
+            return T1[enemy].transform.position;
         }
     }
 
     private void SpawnCharacter(Character character, GameObject spawn, Team team)
-    {
-        Vector3 spawnPoint = spawn.transform.position;
-        
+    {     
         // Quaternions are required to Instantiate at a Vec3. Alternative will require a transform which makes the characters a child of their spawnpoint
         Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1); 
 
-        GameObject c = Instantiate(character.GetModelPrefab(), spawnPoint, towardsMiddle);
+        GameObject c = Instantiate(character.GetModelPrefab(), spawn.transform);
         c.transform.localRotation = towardsMiddle;
         c.GetComponent<CharacterCommon>().SetTeam(team);
         if (team == 0)

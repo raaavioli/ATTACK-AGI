@@ -6,6 +6,7 @@ public class PlatformMovement : MonoBehaviour
     float Period;
     float Amplitude;
     float StartOffset;
+
     void Start()
     {
         Period = 3f;
@@ -16,7 +17,8 @@ public class PlatformMovement : MonoBehaviour
 
     void Update()
     {
-        float AngRad = ((Time.time + StartOffset) / Period) * Mathf.PI * 2;
+        float LapCount = (Time.time + StartOffset) / Period;
+        float AngRad = (LapCount) * Mathf.PI * 2;
         Vector3 Movement = Vector3.up * Mathf.Sin(AngRad) * Amplitude;
         transform.position = StartPosition + Movement;
     }

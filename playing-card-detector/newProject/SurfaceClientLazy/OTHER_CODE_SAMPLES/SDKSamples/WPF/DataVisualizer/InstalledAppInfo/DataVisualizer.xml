@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ss:ApplicationInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:ss="http://schemas.microsoft.com/Surface/2007/ApplicationMetadata">
+  <Application>
+    <Title>Data Visualizer</Title>
+    <Description>Provides a visual representation of the touch data</Description>
+    <ExecutableFile>DataVisualizer.exe</ExecutableFile>
+    <Arguments></Arguments>
+    <IconImageFile>InstalledAppInfo\AppIcon.png</IconImageFile>		
+    <Tags>
+      <Tag Schema="*" Series="*" ExtendedValue="*" Value="*">
+        <Actions />
+      </Tag>
+    </Tags>
+  </Application>
+</ss:ApplicationInfo>

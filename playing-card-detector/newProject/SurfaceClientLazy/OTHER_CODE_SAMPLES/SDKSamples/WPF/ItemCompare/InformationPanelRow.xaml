@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ItemCompare.InformationPanelRow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ic="clr-namespace:ItemCompare"
+  Width="Auto" >
+  <Grid Height="Auto" 
+        Width="Auto" 
+        Margin="0,17,0,0">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>    
+    <TextBlock Style="{StaticResource ObjectTitleTextStyle}"
+               Grid.Row="1"              
+               Margin="13,0,13,0"
+               x:Name="HeadingLabel"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Top" 
+               Text="SomePlaceHolderText"/>
+    <ic:ComparisonCell Grid.Row="2" 
+                       x:Name="Cell" />   
+  </Grid>
+</UserControl>

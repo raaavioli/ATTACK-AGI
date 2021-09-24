@@ -1,0 +1,884 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShoppingCart</name>
+    </assembly>
+    <members>
+        <member name="T:ShoppingCart.SurfaceDragDrop">
+            <summary>
+            The main class that:
+            - provides methods to start and end drag-and-drop, 
+            - provides methods to query for SurfaceDragCursors over a given element
+            - defines routed events to notify that an SurfaceDragCursor enters, leaves or gets dropped over an element
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.GetCursorsOver(System.Windows.FrameworkElement)">
+            <summary>
+            Returns a collection of cursors over the given element.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.GetIsAnyCursorOver(System.Windows.FrameworkElement)">
+            <summary>
+            Returns true if there is at least one cursor over the given element.
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.BeginDragDrop(System.Windows.FrameworkElement,System.Object,System.Windows.FrameworkElement,System.Double,System.Collections.Generic.IEnumerable{Microsoft.Surface.Presentation.Contact})">
+            <summary>
+            Starts drag and drop operation. Returns true if drag has been started successfully.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.FindParent(System.Windows.DependencyObject,System.Predicate{System.Windows.DependencyObject})">
+            <summary>
+            Searches for the first parent that satisfies the given predicate.
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDragEnterEvent">
+            <summary>
+            Identifies the SurfaceDragEnter event, which occurs when a cursor enters the element boundary, the event gets called on the target (the element itself).
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDragLeaveEvent">
+            <summary>
+            Identifies the SurfaceDragEnter event, which occurs when a cursor leaves the element boundary, the event gets called on the old target.
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDragOverEvent">
+            <summary>
+            Identifies the SurfaceDragOver event, which occurs when a cursor is dragged over the element, the event gets called on the target (the element itself).
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDragGiveFeedbackEvent">
+            <summary>
+            Identifies the SurfaceDragGiveFeedback event, which gets called on the source when cursor is changed.
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDragQueryTargetEvent">
+            <summary>
+            Identifies the SurfaceDragQueryHitTest event, which is called by the framework to query for the target item.
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDropEvent">
+            <summary>
+            Identifies the SurfaceDrop event, which occurs when a cursor is dropped over the element, the event gets called on the target (the element itself).
+            </summary>
+        </member>
+        <member name="F:ShoppingCart.SurfaceDragDrop.SurfaceDragCompletedEvent">
+            <summary>
+            Identifies the SurfaceDragCompleted event, which occurs when drag-and-drop is completed, the event gets called on the source.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDropHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDrop event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveSurfaceDropHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDrop event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDragCompletedHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDragCompleted event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveSurfaceDragCompletedHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDragCompleted event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDragOverHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDragOver event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveSurfaceDragOverHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDragOver event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDragEnterHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDragEnter event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveSurfaceDragEnterHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDragEnter event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDragLeaveHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDragLeave event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveSurfaceDragLeaveHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDragLeave event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDragGiveFeedbackHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDragGiveFeedback event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveAddSurfaceDragGiveFeedbackHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDragGiveFeedback event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddSurfaceDragQueryTargetHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropQueryTargetEventArgs})">
+            <summary>
+            Adds a handler for the SurfaceDragQueryHitTest event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveSurfaceDragQueryTargetHandler(System.Windows.DependencyObject,System.EventHandler{ShoppingCart.SurfaceDragDropQueryTargetEventArgs})">
+            <summary>
+            Removes a handler for the SurfaceDragQueryHitTest event.
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.AddHandler(System.Windows.DependencyObject,System.Windows.RoutedEvent,System.Delegate)">
+            <summary>
+            Adds a handler for a given attached event.
+            </summary>
+            <param name="element"></param>
+            <param name="routedEvent"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDrop.RemoveHandler(System.Windows.DependencyObject,System.Windows.RoutedEvent,System.Delegate)">
+            <summary>
+             Removes a handler for the given attached event.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragDrop.HitTest">
+            <summary>
+            Sets or gets hit testing logic used by the drag-and-drop infrustructure
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.CardValidationPanel">
+            <summary>
+            Interaction logic for CardValidationPanel.xaml
+            </summary>
+            <summary>
+            CardValidationPanel
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.CardValidationPanel.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.CardValidationPanel.ValidateButtonClick(System.Object,System.EventArgs)">
+            <summary>
+            Event handler for the Validate button's click event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.CardValidationPanel.OnIdentityValidated">
+            <summary>
+            Raises the IdentityValidatedEvent
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.CardValidationPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="E:ShoppingCart.CardValidationPanel.IdentityValidated">
+            <summary>
+            Occurs when the user successfully validates their identity
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.Pod">
+            <summary>
+            Interaction logic for Pod.xaml
+            </summary>
+            <summary>
+            Pod
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Pod.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Pod.CheckoutButtonClick(System.Object,System.EventArgs)">
+            <summary>
+            Handles the button click event for the checkout button
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.OnCheckoutButtonClick">
+            <summary>
+            Raises the checkout button click event for the checkout button
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Pod.OnPreviewContactChange(System.Object,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Handles the preview contact change event for the pod
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.PodItemTapped(System.Object,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            handles the contact tap gesture for scatterviewitems in the pod
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.TryStartDragDrop(ShoppingCart.Pod,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Try to start Drag-and-drop for the pod
+            </summary>
+            <param name="sourcePod"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.BeginDragDrop(System.Windows.Controls.ContentControl,System.Windows.Size,System.Double,System.Collections.Generic.IEnumerable{Microsoft.Surface.Presentation.Contact})">
+            <summary>
+            Begin a drag drop and make a cursor for the drag drop
+            </summary>
+            <param name="source"></param>
+            <param name="sourceSize"></param>
+            <param name="orientation"></param>
+            <param name="draggingContacts"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.OnDragCompleted(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles the drag completed event for the pod
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.Merge(Microsoft.Surface.Presentation.ReadOnlyContactCollection,Microsoft.Surface.Presentation.Contact)">
+            <summary>
+            Merges the given collection and the item without duplications. Returns a new enumerator.
+            </summary>
+            <param name="contacts"></param>
+            <param name="extraContact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.Pod.AddItem(Microsoft.Surface.Presentation.Controls.ScatterViewItem)">
+            <summary>
+            Adds a new item to the pod
+            </summary>
+            <param name="itemToAdd"></param>
+        </member>
+        <member name="M:ShoppingCart.Pod.GetTopmostScatterViewItem">
+            <summary>
+            Finds the topmost scatterviewitem in the pod
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Pod.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="E:ShoppingCart.Pod.Checkout">
+            <summary>
+            Occurs when the user presses the checkout button on their pod
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.App">
+            <summary>
+            App
+            </summary>
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.Window1">
+            <summary>
+            Window1
+            </summary>
+            <summary>
+            Demonstrates infrastructure capabilities based on several Surface controls.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Window1.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Window1.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnPreviewContactChange(System.Object,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Handles contact change event for scatterview and listbox
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnPreviewContactDown(System.Object,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Handles contact down event for scatterview
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnPreviewContactUp(System.Object,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Handles contact up event for scatterview
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDragCompleted(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles DragCompleted event for a source item.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.BeginDragDrop(System.Windows.Controls.ContentControl,System.Windows.Size,System.Double,System.Collections.Generic.IEnumerable{Microsoft.Surface.Presentation.Contact})">
+            <summary>
+            Begin a drag drop and make a cursor for the drag drop
+            </summary>
+            <param name="source"></param>
+            <param name="sourceSize"></param>
+            <param name="orientation"></param>
+            <param name="draggingContacts"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.TryStartDragDrop(System.Windows.Controls.ListBox,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Try to start Drag-and-drop for a listBox
+            </summary>
+            <param name="sourceListBox"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDropOverListBox(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles Drop event for a ListBox as a target
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnQueryTargetOverListBox(System.Object,ShoppingCart.SurfaceDragDropQueryTargetEventArgs)">
+            <summary>
+            Handles QueryTarget event for a ListBox as a target.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDragEnterOverListBox(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles Enter event for a listBox as a target.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDragLeaveOverListBox(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles Leave event for a listBox as a target.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.TryStartDragDrop(Microsoft.Surface.Presentation.Controls.ScatterView,Microsoft.Surface.Presentation.ContactEventArgs)">
+            <summary>
+            Try to start Drag-and-drop for a scatterView
+            </summary>
+            <param name="sourceScatterView"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDropOverScatterView(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles Drop event for a ScatterView as a target.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDragEnterOverScatterView(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles Enter event for a scatterView as a target.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnDragLeaveOverScatterView(System.Object,ShoppingCart.SurfaceDragDropEventArgs)">
+            <summary>
+            Handles Leave event for a scatterView as a target.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.svi_ScatterManipulationCompleted(System.Object,Microsoft.Surface.Presentation.Controls.ScatterManipulationCompletedEventArgs)">
+            <summary>
+            Handles Manipulation completed event for scatterviewitems
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.svi_ScatterManipulationDelta(System.Object,Microsoft.Surface.Presentation.Controls.ScatterManipulationDeltaEventArgs)">
+            <summary>
+            Handles the manipulation delta event for scatterviewitems
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.validate_IdentityValidated(System.Object,System.EventArgs)">
+            <summary>
+            Occurs once the user has successfully validated their identity
+            </summary>
+            <remarks>
+            Remove the validation box, and enable the user's pod. This
+            equates to hooking up the event for the checkout button
+            </remarks>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.PodCheckoutPressed(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.GetListBoxItemFromPoint(System.Windows.Controls.ListBox,System.Windows.Point)">
+            <summary>
+            Point-based hit testing to find a ListBoxItem inside a given ListBox.
+            </summary>
+            <param name="listBox"></param>
+            <param name="relativePosition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.Window1.Merge(Microsoft.Surface.Presentation.ReadOnlyContactCollection,Microsoft.Surface.Presentation.Contact)">
+            <summary>
+            Merges the given collection and the item without duplications. Returns a new enumerator.
+            </summary>
+            <param name="contacts"></param>
+            <param name="extraContact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.Window1.Highlight(System.Windows.Controls.Control,System.Boolean)">
+            <summary>
+            Highlights a target control by changing the BorderBrush.
+            </summary>
+            <param name="target"></param>
+            <param name="highlight"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.Highlight(System.Windows.Controls.ListBox,System.Windows.Controls.ListBoxItem,System.Boolean)">
+            <summary>
+            Highlights a target ListBox and optional ListBoxItem.
+            </summary>
+            <param name="targetListBox"></param>
+            <param name="targetListBoxItem"></param>
+            <param name="highlight"></param>
+        </member>
+        <member name="M:ShoppingCart.Window1.GetParent``1(System.Windows.DependencyObject)">
+            <summary>
+            Returns a parent control given its child.
+            </summary>
+            <param name="child"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnWindowLoaded(System.Object,System.EventArgs)">
+            <summary>
+            Dismiss the loading screen now that the main window is loaded
+            and ready for interaction.  
+            </summary>
+            <param name="sender">The object raising the event</param>
+            <param name="e">The event data</param>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnWindowClosed(System.Object,System.EventArgs)">
+            <summary>
+            Clean up the event handlers when the window is closed
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Window1.OnSuggestedOrientationChanged(System.Object,Microsoft.Surface.SuggestedOrientationChangedEventArgs)">
+            <summary>
+            Update the UI to match the new suggested orientation
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.Window1.RotateUI">
+            <summary>
+            Rotate the content of this window to match the current orientation
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.SurfaceDragDropHost">
+            <summary>
+            A ScatterView-based control that hosts elements being dragged.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.GetInstance(System.Windows.Window)">
+            <summary>
+            Returns the existing instance of SurfaceDragDropHost if it exists.
+            </summary>
+            <param name="window"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.GetOrCreateInstance(System.Windows.Window,ShoppingCart.SurfaceDragDropHitTest)">
+            <summary>
+            Tries to get an instance of SurfaceDragDropHost for the given window or
+            creates a new one if it doesn't exist.
+            </summary>
+            <param name="window"></param>
+            <param name="hitTest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.GetCursorsOver(System.Windows.FrameworkElement)">
+            <summary>
+            Returns a collection of cursors over the given element.
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.GetIsAnyCursorOver(System.Windows.FrameworkElement)">
+            <summary>
+            Returns true if there is at least one cursor over the given element.
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.FindParent(System.Windows.DependencyObject,System.Predicate{System.Windows.DependencyObject})">
+            <summary>
+            Searches for the first parent that satisfies the given predicate.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.BeginDragDrop(System.Windows.FrameworkElement,System.Object,System.Windows.FrameworkElement,System.Double,System.Collections.Generic.IEnumerable{Microsoft.Surface.Presentation.Contact})">
+            <summary>
+            Begins a drag-and-drop operation:
+            1. constructs a ScatterViewItem to host the element being dragged
+            2. adds it to the ScatterView.
+            3. listens for ScatterViewItem Move and Complete events to manage drag and drop process.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.GetBoundaryRect(Microsoft.Surface.Presentation.Controls.ScatterViewItem)">
+            <summary>
+            Returns boundary rectangle for a given ScatterViewItem.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.HitTest(ShoppingCart.SurfaceDragCursor)">
+            <summary>
+            Performs hit testing and calls QueryTarget routed event on the target to refine hit test result.
+            </summary>
+            <param name="cursor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.CursorDropped(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            A handler that is called when manipulation over a ScatterViewItem completes.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.CursorMoved(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            A handler which is called when position or orientation of the ScatterViewItem is changed.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.OnInitialized(System.EventArgs)">
+            <summary>
+            Set values that can't be touched in the constructor
+            see http://msdn2.microsoft.com/en-us/library/ms182331(VS.80).aspx
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropHost.RaiseEvent(System.Windows.RoutedEvent,System.Windows.FrameworkElement,ShoppingCart.SurfaceDragCursor)">
+            <summary>
+            Raises a routed event.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.SurfaceDragCursor">
+            <summary>
+            Holds a state for an element being dragged.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragCursor.#ctor(System.Windows.FrameworkElement,System.Object,Microsoft.Surface.Presentation.Controls.ScatterViewItem)">
+            <summary>
+            Constructs an instance of the DragDropState.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragCursor.GetPosition(System.Windows.UIElement)">
+            <summary>
+            Returns center of the cursor relative to a given element.
+            </summary>
+            <param name="relativeTo"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragCursor.Source">
+            <summary>
+            Returns the source element.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragCursor.Target">
+            <summary>
+            Returns the element the cursor is over.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragCursor.Data">
+            <summary>
+            Returns data associated with the source.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragCursor.DragDropEffects">
+            <summary>
+            Returns DragDropEffects.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragCursor.Orientation">
+            <summary>
+            Returns orientation
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragCursor.Visual">
+            <summary>
+            Returns a ScatterViewItem which hosts the object being dragged.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.ElementAdorner">
+            <summary>
+            A general purpose adorner.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.ElementAdorner.#ctor(System.Windows.UIElement,System.Windows.UIElement)">
+            <summary>
+            Constructs the ElementAdorner.
+            </summary>
+            <param name="adornedElement"></param>
+            <param name="adorningElement"></param>
+        </member>
+        <member name="M:ShoppingCart.ElementAdorner.OnInitialized(System.EventArgs)">
+            <summary>
+            Can't do this in the constructor, see
+            http://msdn2.microsoft.com/en-us/library/ms182331(VS.80).aspx
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:ShoppingCart.ElementAdorner.MeasureOverride(System.Windows.Size)">
+            <summary>
+            Measures content.
+            </summary>
+            <param name="constraint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.ElementAdorner.ArrangeOverride(System.Windows.Size)">
+            <summary>
+            Arranges child control to the full size.
+            </summary>
+            <param name="finalSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.ElementAdorner.GetVisualChild(System.Int32)">
+            <summary>
+            Get visual by index.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ShoppingCart.ElementAdorner.VisualChildrenCount">
+            <summary>
+            Gets visual children count, always 1.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.SurfaceDragDropEventArgs">
+            <summary>
+            Provides information for drag and drop events.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropEventArgs.#ctor(System.Windows.RoutedEvent,System.Object,ShoppingCart.SurfaceDragCursor)">
+            <summary>
+            Constructs SurfaceDragDropEventArgs instance.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropEventArgs.InvokeEventHandler(System.Delegate,System.Object)">
+            <summary>
+            Provides correct type casting to the SurfaceDragDropEventHandler.
+            </summary>
+            <param name="genericHandler"></param>
+            <param name="genericTarget"></param>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragDropEventArgs.Cursor">
+            <summary>
+            Returns the SurfaceDragCursor.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragDropEventArgs.ProposedEffects">
+            <summary>
+            Returns or sets drag-and-drop effect.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.SurfaceDragDropQueryTargetEventArgs">
+            <summary>
+            Queries for drop Target.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropQueryTargetEventArgs.#ctor(System.Object,ShoppingCart.SurfaceDragCursor)">
+            <summary>
+            Constructs SurfaceDragDropEventArgs instance.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropQueryTargetEventArgs.InvokeEventHandler(System.Delegate,System.Object)">
+            <summary>
+            Provides correct type casting to the EventHandler&lt;SurfaceDragDropQueryTargetEventArgs&gt;.
+            </summary>
+            <param name="genericHandler"></param>
+            <param name="genericTarget"></param>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragDropQueryTargetEventArgs.Cursor">
+            <summary>
+            Returns the SurfaceDragCursor.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.SurfaceDragDropQueryTargetEventArgs.ProposedTarget">
+            <summary>
+            Returns or sets the target for the drag-and-drop.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.SurfaceDragDropHitTest">
+            <summary>
+            An abstract class to define hit testing.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.SurfaceDragDropGeometryHitTest">
+            <summary>
+            Geometry-based hit testing.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropGeometryHitTest.HitTest(System.Windows.Window,System.Windows.Rect,System.Double,System.Windows.Point)">
+            <summary>
+            Returns a first element the given rect is over.
+            </summary>
+            <param name="window"></param>
+            <param name="rect"></param>
+            <param name="orientation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.SurfaceDragDropGeometryHitTest.GetGeometry(System.Windows.Rect,System.Double,System.Windows.Point)">
+            <summary>
+            Constructs a RectangleGeometry instance for a given Rect and orientation.
+            </summary>
+            <param name="rect"></param>
+            <param name="orientation"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShoppingCart.ContactsHelper">
+            <summary>
+            A helper class that provides extra data for a given contact:
+             - delta between the current position,
+             - an element the contact was placed at.
+            </summary>
+        </member>
+        <member name="M:ShoppingCart.ContactsHelper.DraggedDelta(Microsoft.Surface.Presentation.Contact)">
+            <summary>
+            Returns delta between current contact position and where the contact was placed.
+            </summary>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.ContactsHelper.DraggedDelta(Microsoft.Surface.Presentation.Contact,System.Windows.UIElement)">
+            <summary>
+            Returns delta between current contact position and where the contact was placed
+            relative to the given elementToDrag.
+            </summary>
+            <param name="contact"></param>
+            <param name="relativeTo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShoppingCart.ContactsHelper.GetDragSource(Microsoft.Surface.Presentation.Contact)">
+            <summary>
+            Returns the Source the contact was placed at.
+            </summary>
+        </member>
+        <member name="T:ShoppingCart.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:ShoppingCart.Properties.Resources.ArgumentExceptionMessage">
+            <summary>
+              Looks up a localized string similar to Invalid element type..
+            </summary>
+        </member>
+    </members>
+</doc>

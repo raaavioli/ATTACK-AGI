@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<assembly>
+		<name>Microsoft.Surface.Core</name>
+	</assembly>
+	<members>
+		<member name="N:Microsoft.Surface.Core">
+			<summary>Provides access to input from interactive surface devices in a way that can be used with any Windows-based user interface (UI) framework. This is not intended to be used by applications which also use classes from the <see cref="N:Microsoft.Surface.Presentation"></see> assembly.</summary>
+		</member>
+		<member name="T:Microsoft.Surface.Core.EventThreadChoice">
+			<summary>Specifies the thread that input events should be raised on.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.EventThreadChoice.OnBackgroundThread">
+			<summary>Any thread. If the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> constructor specifies <see cref="F:Microsoft.Surface.Core.EventThreadChoice.OnBackgroundThread"></see>, input events are raised on any thread. In this case, events are raised on a background thread. Event handlers that receive events in this manner should perform minimal processing and should not block. Blocking prevents the system from further processing input events. Events are raised synchronously, so your application is notified of events as soon as the input system sees them occur. Use this member to achieve the smoothest tracking possible. You must make sure that your user interface operations are performed on the proper thread.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.EventThreadChoice.OnCurrentThread">
+			<summary>The thread that the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object is created on. If the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> constructor specifies <see cref="F:Microsoft.Surface.Core.EventThreadChoice.OnCurrentThread"></see>, input events are raised on the thread that the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> is created on. In this case, events are raised asynchronously. Events are received only when your thread is ready, so events might be received a short time after the event actually occurs. You can use this member only if the <see cref="P:System.Threading.SynchronizationContext.Current"></see> property of the <see cref="T:System.Threading.SynchronizationContext"></see> object is non-null. If a <see cref="T:System.Threading.SynchronizationContext"></see> object exists, it is used to dispatch events through the <see cref="M:System.Threading.SynchronizationContext.Post"></see> method. Windows Forms and Windows Presentation Foundation (WPF) both provide a default <see cref="T:System.Threading.SynchronizationContext"></see> object that is created when you create your first control.</summary>
+		</member>
+		<member name="T:Microsoft.Surface.Core.FrameReceivedEventArgs">
+			<summary>Represents event arguments that are sent with a <see cref="E:Microsoft.Surface.Core.TouchTarget.FrameReceived"></see> event, which occurs when a new frame of input data is available.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage(Microsoft.Surface.Core.ImageType,Microsoft.Surface.Core.TouchPoint,System.Byte[]@,Microsoft.Surface.Core.ImageMetrics@)">
+			<summary>Retrieves a portion of an unscaled image (in the specified format) that corresponds to the bounding box of a touch point. Stride is not 4-byte aligned for this overload. This method is ideal for Microsoft XNA applications.</summary>
+			<returns>The value is true if a raw image was retrieved successfully; otherwise, it is false.</returns>
+			<param name="metrics">The metrics of the returned image.</param>
+			<param name="touchPoint">The touch point whose bounding box is used to get the subimage.</param>
+			<param name="buffer">The result subimage.</param>
+			<param name="type">The requested image type.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage(Microsoft.Surface.Core.ImageType,Microsoft.Surface.Core.TouchPoint,System.Byte[]@,Microsoft.Surface.Core.ImageMetrics@,System.Int32@,System.Int32@)">
+			<summary>Retrieves a portion of an unscaled image (in the specified format) that corresponds to the bounding box of a touch point. Stride is 4-byte aligned.</summary>
+			<returns>The value is true if a raw image was retrieved successfully; otherwise, it is false.</returns>
+			<param name="metrics">The metrics of the returned image.</param>
+			<param name="touchPoint">The touch point whose bounding box is used to get the subimage.</param>
+			<param name="buffer">The result subimage.</param>
+			<param name="paddingRight">An offset, in pixels, if the image has padding on the right to account for byte alignment.</param>
+			<param name="type">The requested image type.</param>
+			<param name="paddingLeft">An offset, in pixels, if the image has padding on the left to account for byte alignment.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage(Microsoft.Surface.Core.ImageType,System.Int32,System.Int32,System.Int32,System.Int32,System.Byte[]@,Microsoft.Surface.Core.ImageMetrics@)">
+			<summary>Retrieves a portion of an unscaled image (in the specified format) that corresponds to a specific portion of the client window. Stride is not 4-byte aligned for this overload. This method is ideal for Microsoft XNA applications.</summary>
+			<returns>The value is true if a raw image was retrieved successfully; otherwise, it is false.</returns>
+			<param name="metrics">The metrics of the returned image.</param>
+			<param name="left">The length of the left side of the desired image rectangle, in pixels.</param>
+			<param name="top">The length of the top side of the desired image rectangle, in pixels.</param>
+			<param name="width">The width of the desired image rectangle, in pixels.</param>
+			<param name="height">The height of the desired image rectangle, in pixels.</param>
+			<param name="type">The requested image type.</param>
+			<param name="buffer">The resulting image.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage(Microsoft.Surface.Core.ImageType,System.Int32,System.Int32,System.Int32,System.Int32,System.Byte[]@,Microsoft.Surface.Core.ImageMetrics@,System.Int32@,System.Int32@)">
+			<summary>Retrieves a portion of an unscaled image (in the specified format) that corresponds to a specific portion of the client window. Stride is 4-byte aligned.</summary>
+			<returns>The value is true if a raw image was retrieved successfully; otherwise, it is false.</returns>
+			<param name="type">The requested image type.</param>
+			<param name="buffer">The resulting image.</param>
+			<param name="left">The length of the left side of the desired image rectangle, in pixels.</param>
+			<param name="top">The length of the top side of the desired image rectangle, in pixels.</param>
+			<param name="width">The width of the desired image rectangle, in pixels.</param>
+			<param name="metrics">The metrics of the returned image.</param>
+			<param name="height">The height of the desired image rectangle, in pixels.</param>
+			<param name="paddingRight">An offset, in pixels, if the image has padding on the right to account for byte alignment.</param>
+			<param name="paddingLeft">An offset, in pixels, if the image has padding on the left to account for byte alignment.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.FrameReceivedEventArgs.UpdateRawImage(Microsoft.Surface.Core.ImageType,System.Byte[],System.Int32,System.Int32,System.Int32,System.Int32)">
+			<summary>Retrieves an unscaled image (in the specified format) that corresponds to a specific portion of the client window.</summary>
+			<returns>The value is true if the image is retrieved successfully; otherwise, it is false.</returns>
+			<param name="type">The requested image type.</param>
+			<param name="buffer">The byte array to update with the new image.</param>
+			<param name="left">The length of the left side of the desired image rectangle, in pixels.</param>
+			<param name="top">The length of the top side of the desired image rectangle, in pixels.</param>
+			<param name="width">The width of the desired image rectangle, in pixels.</param>
+			<param name="height">The height of the desired image rectangle, in pixels.</param>
+		</member>
+		<member name="P:Microsoft.Surface.Core.FrameReceivedEventArgs.FrameTimestamp">
+			<summary>The timestamp of this frame.</summary>
+			<returns>Returns <see cref="T:System.Int64"></see>.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.ImageMetrics">
+			<summary>Represents the size and format of an image.</summary>
+		</member>
+		<member name="P:Microsoft.Surface.Core.ImageMetrics.BitsPerPixel">
+			<summary>Gets the number of bits per pixel (bpp) of an image.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the bits per pixel (bpp) of the image.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.ImageMetrics.DpiX">
+			<summary>Gets the number of horizontal dots per inch (dpi) of an image.</summary>
+			<returns>Returns a <see cref="T:System.Double"></see> value that specifies the horizontal dpi of the image.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.ImageMetrics.DpiY">
+			<summary>Gets the number of vertical dots per inch (dpi) of an image.</summary>
+			<returns>Returns a <see cref="T:System.Double"></see> value that specifies the vertical dpi of the image.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.ImageMetrics.Height">
+			<summary>Gets the height of an image, in pixels.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the image height, in pixels.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.ImageMetrics.Stride">
+			<summary>Gets the stride width of an image, in bytes. The stride width is also known as the scan width.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the stride width, in bytes.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.ImageMetrics.Width">
+			<summary>Gets the width of an image, in pixels.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the image width, in pixels.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.ImageType">
+			<summary>Specifies the type of image that is retrieved from the interactive surface display.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.ImageType.Normalized">
+			<summary>A grayscale image with 8 bits per pixel (bpp). This image is a composite of images from multiple cameras. The images are corrected by removing ambient light.</summary>
+		</member>
+		<member name="T:Microsoft.Surface.Core.InteractiveSurface">
+			<summary>Provides access to the primary interactive surface device that is attached to the system.</summary>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurface.PrimarySurfaceDevice">
+			<summary>Gets the primary interactive surface device.</summary>
+			<returns>Returns an <see cref="T:Microsoft.Surface.Core.InteractiveSurfaceDevice"></see> that represents the primary interactive surface device.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.InteractiveSurfaceDevice">
+			<summary>Represents an interactive surface device.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.InteractiveSurfaceDevice.DeviceChanged">
+			<summary>Occurs when any of the hardware capability properties are changed.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.InteractiveSurfaceDevice.TiltChanged">
+			<summary>Occurs when the tilt angle of the interactive surface device has changed.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.InteractiveSurfaceDevice.IsImageTypeSupported(Microsoft.Surface.Core.ImageType)">
+			<summary>Returns whether the specified image type is supported by this interactive surface device.</summary>
+			<returns>The value is true if the specified image type is supported; otherwise, it is false.</returns>
+			<param name="imageType">An <see cref="T:Microsoft.Surface.Core.ImageType"></see> enumeration value, which you can obtain by calling one of the <see cref="Overload:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage"></see> methods.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.InteractiveSurfaceDevice.ToString">
+			<summary>Converts the <see cref="T:Microsoft.Surface.Core.InteractiveSurfaceDevice"></see> object to its equivalent string representation.</summary>
+			<returns>Returns a <see cref="T:System.String"></see> representation of this <see cref="T:Microsoft.Surface.Core.InteractiveSurfaceDevice"></see> object.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Bottom">
+			<summary>Gets the distance of the bottom edge of the display area of the interactive surface device, in number of pixels, from the top edge.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the distance of the lower edge of the interactive surface device from the top edge.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Height">
+			<summary>Gets the length, in pixels, of the vertical edge of the interactive surface device.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the length of the vertical edge, in pixels.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.IsFingerRecognitionSupported">
+			<summary>Gets whether the interactive surface device can determine that a touch input is caused by a finger.</summary>
+			<returns>The value is true if a finger can be recognized as the source of a touch input; otherwise, it is false.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.IsTagRecognitionSupported">
+			<summary>Gets whether tags can be recognized by the interactive surface hardware.</summary>
+			<returns>The value is true if a tag can be recognized; otherwise, it is false.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.IsTiltSupported">
+			<summary>Gets whether the interactive surface hardware reports a tilt value when it is tilted.</summary>
+			<returns>The value is true if the interactive surface hardware can report that the display surface is tilted; otherwise, it is false.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.IsTouchBoundsSupported">
+			<summary>Gets whether the coordinates of the bounding box around a touch point can be reported by the interactive surface hardware.</summary>
+			<returns>The value is true if reporting touch point bounds is supported; otherwise, it is false.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.IsTouchOrientationSupported">
+			<summary>Gets whether the orientation of a touch point can be reported by the interactive surface hardware.</summary>
+			<returns>The value is true if the orientation (direction) of a touch point can be detected; otherwise, it is false.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Left">
+			<summary>Gets the distance of the left edge of the display area of the  interactive surface device, in number of pixels, from the left edge of the display screen.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the distance of the left edge of the interactive surface device from the left edge of the display screen. Left is typically 0.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.MaximumTouchesSupported">
+			<summary>Gets the maximum number of simultaneous touches supported by the interactive surface hardware.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value representing the maximum number of simultaneous touch devices that can be detected.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.PhysicalDpiX">
+			<summary>Gets the physical dots per inch (DPI) along the x-axis of the interactive surface device.</summary>
+			<returns>Returns <see cref="T:System.Single"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.PhysicalDpiY">
+			<summary>Gets the physical dots per inch (DPI) along the y-axis of the interactive surface device.</summary>
+			<returns>Returns <see cref="T:System.Single"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.PhysicalScaleX">
+			<summary>Gets the scale factor along the x-axis to convert from pixels to inches.</summary>
+			<returns>Returns <see cref="T:System.Single"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.PhysicalScaleY">
+			<summary>Gets the scale factor along the y-axis to convert from pixels to inches.</summary>
+			<returns>Returns <see cref="T:System.Single"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Right">
+			<summary>Gets the distance of the right edge of the display area of the interactive surface device, in number of pixels, from the left edge of the display screen.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the distance of the right edge of the interactive surface device from the left edge of the display screen.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Tilt">
+			<summary>Gets the physical tilt of the interactive surface device.</summary>
+			<returns>Returns one of the <see cref="T:Microsoft.Surface.Core.Tilt"></see> enumeration values: Horizontal   By default, within 20 degrees of the horizontal axis (0 degree angle).Vertical   By default, within 20 degrees of the vertical axis.Tilted   Any other value between Horizontal and Vertical.Unknown   The tilt angle cannot be determined by the interactive surface hardware.The interactive surface device is considered to be <see cref="F:Microsoft.Surface.Presentation.Tilt.Vertical"></see> if the tilt angle is within 20 degrees of the vertical (90 degree) axis, and <see cref="F:Microsoft.Surface.Presentation.Tilt.Horizontal"></see> if the tilt angle is within 20 degrees of the horizontal (0 degrees) axis. Any other tilt angle corresponds to <see cref="F:Microsoft.Surface.Presentation.Tilt.Tilted"></see>. The Surface administrator can change that threshold from 20 degrees to some other value by using the Surface Configuration Editor. For more information, see the Microsoft Surface Administration Guide.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.TiltAngle">
+			<summary>Gets the angle of the physical tilt of the interactive surface device.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> value representing the angle of tilt, in radians. The interactive surface device is 0 radians when the display is horizontal and facing up. The value returned is between -(Math.PI) radians and Math.PI radians. If the interactive surface device is unable to report a tilt angle, Surface assumes a tilt angle of 90 degrees.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Top">
+			<summary>Gets the distance of the top edge of the display area of the interactive surface device, in number of pixels, from the top edge of the display screen.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the distance of the top edge of the interactive surface device from the top edge of the display screen. Top is typically 0.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.Width">
+			<summary>Gets the length, in pixels, of the horizontal edge of the interactive surface device.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the length of the horizontal edge, in pixels.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.WorkingAreaBottom">
+			<summary>Gets the bottom edge of the working area of the interactive surface device, in device-independent units from the origin in the top-left corner.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the bottom edge of the working area.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.WorkingAreaHeight">
+			<summary>Gets the length of the vertical edge of the working area of the interactive surface device, in pixels.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the length of the vertical edge of the working area, in pixels.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.WorkingAreaLeft">
+			<summary>Gets the left edge of the working area of the interactive surface device, in device-independent units from the origin in the top-left corner.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the left edge of the working area.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.WorkingAreaRight">
+			<summary>Gets the right edge of the working area of the interactive surface device, in device-independent units from the origin in the top-left corner.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the right edge of the working area.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.WorkingAreaTop">
+			<summary>Gets the top edge of the working area of the interactive surface device, in device-independent units from the origin in the top-left corner.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the top edge of the working area.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.InteractiveSurfaceDevice.WorkingAreaWidth">
+			<summary>Gets the length of the horizontal edge of the working area of the interactive surface device, in pixels.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that specifies the length of the horizontal edge of the working area, in pixels.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.ReadOnlyTouchPointCollection">
+			<summary>Represents a collection of touch points on the interactive surface.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.ReadOnlyTouchPointCollection.#ctor(System.Collections.ObjectModel.ReadOnlyCollection{Microsoft.Surface.Core.TouchPoint})">
+			<summary>Creates a read-only collection from the specified touch point collection. </summary>
+			<param name="touchPoints">The collection of touch points to create a read-only collection from.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.ReadOnlyTouchPointCollection.Contains(System.Int32)">
+			<summary>Determines whether a <see cref="T:Microsoft.Surface.Core.ReadOnlyTouchPointCollection"></see> collection contains a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object with the specified identifier (ID).</summary>
+			<returns>The value is true if the collection contains a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object with the specified ID; otherwise, it is false.</returns>
+			<param name="touchPointId">The identifier of the <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object to locate.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.ReadOnlyTouchPointCollection.GetTouchPointFromId(System.Int32)">
+			<summary>Gets a touch point from a <see cref="T:Microsoft.Surface.Core.ReadOnlyTouchPointCollection"></see> object with the specified touch point identifier (ID).</summary>
+			<returns>Returns a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see><see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object with the specified ID.</returns>
+			<param name="touchPointId">The identifier of the <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object to find.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.ReadOnlyTouchPointCollection.TryGetTouchPointFromId(System.Int32,Microsoft.Surface.Core.TouchPoint@)">
+			<summary>Tries to get a touch point from a <see cref="T:Microsoft.Surface.Core.ReadOnlyTouchPointCollection"></see> object with the specified touch point identifier (ID).</summary>
+			<returns>The value is true if this method found a matching <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object; otherwise, it is false.</returns>
+			<param name="touchPoint">When this method returns, contains the <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object, or contains null if no <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> was found.</param>
+			<param name="touchPointId">The identifier of the <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object to find.</param>
+		</member>
+		<member name="T:Microsoft.Surface.Core.TagData">
+			<summary>Represents the identifying data that is associated with a tagged object.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.TagData.None">
+			<summary>An instance of a <see cref="T:Microsoft.Surface.Core.TagData"></see> object that represents no tag.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TagData.Equals(System.Object)">
+			<summary>Determines if this <see cref="T:Microsoft.Surface.Core.TagData"></see> structure is equal to another specified <see cref="T:Microsoft.Surface.Core.TagData"></see> structure.</summary>
+			<returns>Returns true if the two <see cref="T:Microsoft.Surface.Core.TagData"></see> structures are identical; otherwise, returns false.</returns>
+			<param name="obj">The <see cref="T:Microsoft.Surface.Core.TagData"></see> structure to compare to this object.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TagData.GetHashCode">
+			<summary>Returns the hash code for this instance.</summary>
+			<returns>Returns a 32-bit signed integer hash code for this instance.</returns>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TagData.op_Equality(Microsoft.Surface.Core.TagData,Microsoft.Surface.Core.TagData)">
+			<summary>Determines whether two specified <see cref="T:Microsoft.Surface.Core.TagData"></see> structures are the same.</summary>
+			<returns>Returns true if the two <see cref="T:Microsoft.Surface.Core.TagData"></see> structures are the same; otherwise, returns false.</returns>
+			<param name="right">The second <see cref="T:Microsoft.Surface.Core.TagData"></see> structure to use in the comparison.</param>
+			<param name="left">The first <see cref="T:Microsoft.Surface.Core.TagData"></see> structure to use in the comparison.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TagData.op_Inequality(Microsoft.Surface.Core.TagData,Microsoft.Surface.Core.TagData)">
+			<summary>Determines whether two specified <see cref="T:Microsoft.Surface.Core.TagData"></see> structures are different.</summary>
+			<returns>Returns true if the two <see cref="T:Microsoft.Surface.Core.TagData"></see> structures are different; otherwise, returns false.</returns>
+			<param name="right">The second <see cref="T:Microsoft.Surface.Core.TagData"></see> structure to use in the comparison.</param>
+			<param name="left">The first <see cref="T:Microsoft.Surface.Core.TagData"></see> structure to use in the comparison.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TagData.ToString">
+			<summary>Converts the <see cref="T:Microsoft.Surface.Core.TagData"></see> structure to its equivalent string representation.</summary>
+			<returns>Returns a string representation of the structure. The string is displayed in the following format:Tag (Schema=0x&lt;value&gt;; Series=0x&lt;value&gt;; ExtendedValue=0x&lt;value&gt;; Value=0x&lt;value&gt;)</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TagData.ExtendedValue">
+			<summary>Gets the extended value of a tag. This property is reserved for future use.</summary>
+			<returns>Returns <see cref="T:System.Int64"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TagData.Schema">
+			<summary>Gets the schema identifier of a tag.</summary>
+			<returns>Returns <see cref="T:System.Int32"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TagData.Series">
+			<summary>Gets the series identifier of a tag.</summary>
+			<returns>Returns <see cref="T:System.Int64"></see>.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TagData.Value">
+			<summary>Gets the value of a tag.</summary>
+			<returns>Returns <see cref="T:System.Int64"></see>.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.Tilt">
+			<summary>Specifies the physical tilt of the interactive surface.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.Tilt.Horizontal">
+			<summary>The interactive surface is tilted no more than 20 degrees from the horizontal axis. The tilt angle is between 340 and 20 degrees.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.Tilt.Tilted">
+			<summary>The interactive surface is tilted between 20 degrees from the horizontal axis and 20 degrees from the vertical axis. The tilt angle is between 20 and 70 degrees, or between 110 and 340 degrees.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.Tilt.Unknown">
+			<summary>Tilt data is unavailable because the interactive surface hardware does not report tilt values.</summary>
+		</member>
+		<member name="F:Microsoft.Surface.Core.Tilt.Vertical">
+			<summary>The interactive surface is tilted no more than 20 degrees from the vertical axis. The tilt angle is between 70 and 110 degrees.</summary>
+		</member>
+		<member name="T:Microsoft.Surface.Core.TouchBounds">
+			<summary>Describes the boundaries of a touch point relative to a <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> window.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchBounds.Equals(System.Object)">
+			<summary>Overridden. Indicates whether this instance and a specified object are of equal value.</summary>
+			<returns>The value is true if this instance and the specified object are equal; otherwise, it is false.</returns>
+			<param name="obj">The <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> object to compare to this instance.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchBounds.GetHashCode">
+			<summary>Overridden. Returns the hash code for this instance.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value representing the hash code for this instance.</returns>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchBounds.op_Equality(Microsoft.Surface.Core.TouchBounds,Microsoft.Surface.Core.TouchBounds)">
+			<summary>Overridden. Determines whether two specified <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structures are the same.</summary>
+			<returns>The value is true if the two structures are equal; otherwise, it is false.</returns>
+			<param name="b1">The first <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structure to use in the comparison.</param>
+			<param name="b2">The second <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structure to use in the comparison.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchBounds.op_Inequality(Microsoft.Surface.Core.TouchBounds,Microsoft.Surface.Core.TouchBounds)">
+			<summary>Overridden. Determines whether two specified <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structures are different.</summary>
+			<returns>The value is true if the two structures are not equal; otherwise, it is false.</returns>
+			<param name="b1">The first <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structure to use in the comparison.</param>
+			<param name="b2">The second <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structure to use in the comparison.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchBounds.ToString">
+			<summary>Overridden. Converts this instance to its equivalent string representation.</summary>
+			<returns>Returns a <see cref="T:System.String"></see> that represents this instance.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchBounds.Bottom">
+			<summary>Gets the y-coordinate of the bottom of the bounding box that surrounds the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value representing the y-coordinate of the bottom of the bounding box, relative to the touch-target window.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchBounds.Height">
+			<summary>Gets the height of the bounding box that surrounds the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value representing the height of the bounding box, in pixels. </returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchBounds.Left">
+			<summary>Gets the x-coordinate of the left side of the bounding box that surrounds the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value representing the x-coordinate of the left side of the bounding box, relative to the touch-target window.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchBounds.Right">
+			<summary>Gets the x-coordinate of the right side of the bounding box that surrounds the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value representing the x-coordinate of the right side of the bounding box, relative to the touch-target window.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchBounds.Top">
+			<summary>Gets the y-coordinate of the top of the bounding box that surrounds the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value representing the y-coordinate of the top of the bounding box, relative to the touch-target window.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchBounds.Width">
+			<summary>Gets the width of the bounding box that surrounds the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value representing the width of the bounding box, in pixels.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.TouchEventArgs">
+			<summary>Represents details for events that relate to touch points on a <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchEventArgs.#ctor(Microsoft.Surface.Core.TouchPoint)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.Surface.Core.TouchEventArgs"></see> class.</summary>
+			<param name="touchPoint">The touch point to provide data to the <see cref="T:Microsoft.Surface.Core.TouchEventArgs"></see> class.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchEventArgs.ToString">
+			<summary>Overridden. Converts the <see cref="T:Microsoft.Surface.Core.TouchEventArgs"></see> object to its equivalent string representation.</summary>
+			<returns>Returns a <see cref="T:System.String"></see> representation of the <see cref="T:Microsoft.Surface.Core.TouchEventArgs"></see> object.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchEventArgs.TouchPoint">
+			<summary>Gets touch-point data for touch-related events.</summary>
+			<returns>Returns <see cref="T:Microsoft.Surface.Core.TouchPoint"></see>.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.TouchPoint">
+			<summary>Represents a physical object touching the interactive surface.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchPoint.ToString">
+			<summary>Converts the <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object to its equivalent string representation.</summary>
+			<returns>Returns a <see cref="T:System.String"></see> representation of the <see cref="T:Microsoft.Surface.Core. TouchPoint"></see> object.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.Bounds">
+			<summary>Gets the bounding box information for a touch point.</summary>
+			<returns>Returns a <see cref="T:Microsoft.Surface.Core.TouchBounds"></see> structure that specifies the bounding box.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.CenterX">
+			<summary>Gets the x-coordinate for the center of the ellipse that surrounds the most prevalent part of a touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the x-coordinate.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.CenterY">
+			<summary>Gets the y-coordinate for the center of the ellipse that surrounds the most prevalent part of a touch point. </summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the y-coordinate.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.FrameTimestamp">
+			<summary>Gets the time stamp of this touch point.</summary>
+			<returns>Returns an <see cref="T:System.Int64"></see> that represents the time stamp of this touch point.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.Id">
+			<summary>Gets the identifier for a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object.</summary>
+			<returns>Returns an <see cref="T:System.Int32"></see> value that identifies the touch point.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.IsFingerRecognized">
+			<summary>Gets a Boolean value that indicates whether a touch point is recognized as a finger.</summary>
+			<returns>Returns a <see cref="T:System.Boolean"></see> value that indicates whether a touch point is recognized as a finger.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.IsTagRecognized">
+			<summary>Gets a Boolean value that indicates whether a touch point is recognized as a tagged object.</summary>
+			<returns>Returns a <see cref="T:System.Boolean"></see> value that indicates whether a touch point is recognized as a tagged object.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.MajorAxis">
+			<summary>Gets the length of the major axis for the ellipse that surrounds the most prevalent part of a touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the length of the major axis, in pixels.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.MinorAxis">
+			<summary>Gets the length of the minor axis for the ellipse that surrounds the most prevalent part of a touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the length of the minor axis, in pixels.The ellipse that is used to calculate the minor axis is centered on a point that the <see cref="P:Microsoft.Surface.Presentation.Controls.KeyboardPositioningEventArgs.CenterX"></see> and <see cref="P:Microsoft.Surface.Core.TouchPoint.CenterY"></see> properties define, with an orientation that the <see cref="P:Microsoft.Surface.Presentation.Controls.TagVisualization.Orientation"></see> property specifies.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.Orientation">
+			<summary>Gets the orientation of a touch point, in radians.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the orientation, in radians.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.PhysicalArea">
+			<summary>Gets the physical area that the touch point covers.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the area, in square inches.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.Tag">
+			<summary>Gets the <see cref="T:Microsoft.Surface.Core.TagData"></see> structure that contains the tag values.</summary>
+			<returns>Returns a <see cref="T:Microsoft.Surface.Core.TagData"></see> structure that contains the tag values.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.X">
+			<summary>Gets the x-coordinate of a touch point, relative to the client area of the window handle (<see cref="P:Microsoft.Surface.Core.TouchTarget.Hwnd"></see> property) of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object that contains the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the x-coordinate.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchPoint.Y">
+			<summary>Gets the y-coordinate of a touch point, relative to the client area of the window handle (<see cref="P:Microsoft.Surface.Core.TouchTarget.Hwnd"></see> property) of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object that contains the touch point.</summary>
+			<returns>Returns a <see cref="T:System.Single"></see> floating-point value that specifies the y-coordinate.</returns>
+		</member>
+		<member name="T:Microsoft.Surface.Core.TouchTarget">
+			<summary>Represents a top-level window for which touch input should be enabled.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.#ctor(System.IntPtr)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> class that corresponds to the window with the specified window handle value.</summary>
+			<param name="hwnd">The handle of a window that is used to create the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> instance.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.#ctor(System.IntPtr,System.Boolean)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> class that corresponds to the window with the specified window handle value. You can also use this constructor to specify if input should immediately be enabled.</summary>
+			<param name="hwnd">The handle of a window that is used to create the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> instance.</param>
+			<param name="immediatelyEnableInput">The value is true to immediately enable input as part of the constructor; otherwise, it is false.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.#ctor(System.IntPtr,Microsoft.Surface.Core.EventThreadChoice)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> class that corresponds to the window with the specified window handle value. You can also use this constructor to specify which thread you want events to be raised on.</summary>
+			<param name="hwnd">The handle of a window that is used to create the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> instance.</param>
+			<param name="threadSelection">An <see cref="T:Microsoft.Surface.Core.EventThreadChoice"></see> enumeration value that represents the thread that you want events to be raised on.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.#ctor(System.IntPtr,Microsoft.Surface.Core.EventThreadChoice,System.Boolean)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> class that corresponds to the window with the specified window handle value. You can also use this constructor to specify which thread you want events to be raised on and to specify if input should immediately be enabled.</summary>
+			<param name="hwnd">A handle to a window that is used to create the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> instance.</param>
+			<param name="threadSelection">An <see cref="T:Microsoft.Surface.Core.EventThreadChoice"></see> enumeration value that represents the thread that you want events to be raised on.</param>
+			<param name="immediatelyEnableInput">The value is true to immediately enable input as part of the constructor; otherwise, it is false.</param>
+		</member>
+		<member name="E:Microsoft.Surface.Core.TouchTarget.FrameReceived">
+			<summary>Occurs when a new frame of input data is available.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.TouchTarget.TouchDown">
+			<summary>Occurs when a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object is added to the screen.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.TouchTarget.TouchHoldGesture">
+			<summary>Occurs when the Microsoft Surface software recognizes a press-and-hold gesture on the screen.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.TouchTarget.TouchMove">
+			<summary>Occurs when one or more properties of a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object have changed, such as the <see cref="P:Microsoft.Surface.Core.TouchPoint.X"></see>, <see cref="P:Microsoft.Surface.Core.TouchPoint.Y"></see>, or <see cref="P:Microsoft.Surface.Core.TouchPoint.Orientation"></see> property.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.TouchTarget.TouchTapGesture">
+			<summary>Occurs when the Microsoft Surface software recognizes a tap gesture on the screen.</summary>
+		</member>
+		<member name="E:Microsoft.Surface.Core.TouchTarget.TouchUp">
+			<summary>Occurs when a <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> object is removed from the screen.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.DisableImage(Microsoft.Surface.Core.ImageType)">
+			<summary>Disables a Microsoft Surface application from retrieving images by using the <see cref="M:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage(Microsoft.Surface.Core.ImageType,Microsoft.Surface.Core.TouchPoint,System.Byte[]@,Microsoft.Surface.Core.ImageMetrics@)"></see> method.</summary>
+			<param name="type">The type of image to disable, <see cref="F:Microsoft.Surface.Core.ImageType.Normalized"></see>.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.Dispose">
+			<summary>Performs application-defined tasks that are associated with freeing, releasing, or resetting unmanaged resources.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.Dispose(System.Boolean)">
+			<summary>A protected implementation of the <see cref="M:Microsoft.Surface.Core.TouchTarget.Dispose"></see> method.</summary>
+			<param name="disposing">The value is true if the method is called from <see cref="M:Microsoft.Surface.Core.TouchTarget.Dispose"></see>.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.EnableImage(Microsoft.Surface.Core.ImageType)">
+			<summary>Enables a Microsoft Surface application to retrieve images by using the <see cref="M:Microsoft.Surface.Core.FrameReceivedEventArgs.TryGetRawImage(Microsoft.Surface.Core.ImageType,Microsoft.Surface.Core.TouchPoint,System.Byte[]@,Microsoft.Surface.Core.ImageMetrics@)"></see> method.</summary>
+			<returns>The value is true if the image type has been enabled; otherwise, it is false.</returns>
+			<param name="type">The type of image to enable, <see cref="F:Microsoft.Surface.Core.ImageType.Normalized"></see>.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.EnableInput">
+			<summary>Enables a <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object for input.</summary>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.GetState">
+			<summary>Creates a collection of <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> objects that represents a snapshot of available touch points.</summary>
+			<returns>Returns a <see cref="T:Microsoft.Surface.Core.ReadOnlyTouchPointCollection"></see> object representing a read-only collection of <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> objects.</returns>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.GetState(System.Collections.Generic.IEnumerable{System.Int32})">
+			<summary>Creates a collection of <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> objects that represents a snapshot of available touch points that match the specified filter.</summary>
+			<returns>Returns a <see cref="T:Microsoft.Surface.Core.ReadOnlyTouchPointCollection"></see> object. This object represents a read-only collection of <see cref="T:Microsoft.Surface.Core.TouchPoint"></see> objects that match the specified filter.</returns>
+			<param name="filter">A list of touch point IDs (<see cref="P:Microsoft.Surface.Core.TouchPoint.Id"></see> properties) that <see cref="M:Microsoft.Surface.Core.TouchTarget.GetState(System.Collections.Generic.IEnumerable{System.Int32})"></see> uses to filter the collection of available touch points.</param>
+		</member>
+		<member name="M:Microsoft.Surface.Core.TouchTarget.ToString">
+			<summary>Converts the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object to its equivalent string representation.</summary>
+			<returns>Returns a <see cref="T:System.String"></see> representation of the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object.</returns>
+		</member>
+		<member name="P:Microsoft.Surface.Core.TouchTarget.Hwnd">
+			<summary>Gets the window handle that was used to create a <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> object.</summary>
+			<returns>Returns an <see cref="T:System.IntPtr"></see> object representing the handle of the window that is used to create the <see cref="T:Microsoft.Surface.Core.TouchTarget"></see> instance.</returns>
+		</member>
+	</members>
+</doc>

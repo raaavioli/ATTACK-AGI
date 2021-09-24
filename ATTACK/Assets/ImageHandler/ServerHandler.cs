@@ -51,7 +51,7 @@ public class ServerHandler : MonoBehaviour
                 str += piece.ToString();
 			}
             Debug.Log(str);
-            //Debug.Log(Encoding.UTF8.GetString(data));
+            Debug.Log(Encoding.ASCII.GetString(data));
 		}
     }
 

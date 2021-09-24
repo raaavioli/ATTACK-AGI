@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ss:ObjectDescriptions  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:ss="http://schemas.microsoft.com/Surface/2010/ObjectDescription">
+
+  <Object Id="CreditCard">
+    <Layout Text="Contoso Express Card" 
+            BoundingBoxWidth="3" 
+            BoundingBoxHeight="2" />
+    <ObjectTagSet>
+      <Schema>
+        <Single Value="0x0" />
+      </Schema>
+      <Series>
+        <Single Value="0x0" />
+      </Series>
+      <ExtendedValue>
+        <Single Value="0x0"/>
+      </ExtendedValue>
+      <Value>
+        <Single Value="0xC0" />
+      </Value>
+    </ObjectTagSet>
+  </Object>
+
+</ss:ObjectDescriptions>

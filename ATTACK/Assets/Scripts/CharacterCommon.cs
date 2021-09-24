@@ -10,7 +10,11 @@ public class CharacterCommon : MonoBehaviour
     private Team team;
     private Attack attack;
 
-    public bool CanAttack => attack.CanAttack;
+    public bool CanAttack() {
+        if (attack == null)
+            return false;
+        return attack.CanAttack;
+    }
 
     void Start()
     {

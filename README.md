@@ -17,8 +17,8 @@ The characters then fight, and the last man standing wins!
 - OpenCV
 
 ## Group members
-- Anders Steen (Interaction programming & Art)
-- Filip Berendt (Gameplay programming)
-- Tobias Hansson (Gameplay programming)
-- Samuel Westman Granlund (Interaction programming)
+- Anders Steen (Interaction & Art)
+- Samuel Westman Granlund (Interaction)
+- Tobias Hansson (Gameplay)
+- Filip Berendt (Gameplay, Art & Graphics)
 - Oliver Eriksson (Graphics/VFX)

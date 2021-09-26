@@ -9,13 +9,14 @@ namespace SurfaceClient {
     class Client {
 
         private UdpClient udpClient = new UdpClient();
+        private ImageAnalyzer analyzer = new ImageAnalyzer();
 
         public Client() {
             udpClient.Connect("127.0.0.1", 50001);
         }
 
         public void Process(byte[] image) {
-            string cardString = ImageAnalyzer.AnalyzeImage(image);
+            string cardString = analyzer.AnalyzeImage(image);
             byte[] bytesToSend = Encoding.ASCII.GetBytes(cardString);
             udpClient.Send(bytesToSend, bytesToSend.Length);
         }

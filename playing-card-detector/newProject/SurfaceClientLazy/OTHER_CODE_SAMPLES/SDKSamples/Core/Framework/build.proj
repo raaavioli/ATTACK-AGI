@@ -1,0 +1,10 @@
+<Project DefaultTargets="Compile"
+	xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+	
+	<Import Project="$(TABLETOOLS)\TableCS.targets" />
+	
+	<ItemGroup>
+		<Project Include="SurfaceCoreFramework.csproj"/>		
+	</ItemGroup>	
+</Project>
+

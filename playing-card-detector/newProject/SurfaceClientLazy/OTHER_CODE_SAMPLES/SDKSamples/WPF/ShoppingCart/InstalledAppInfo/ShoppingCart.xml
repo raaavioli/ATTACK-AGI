@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ss:ApplicationInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ss="http://schemas.microsoft.com/Surface/2007/ApplicationMetadata">
+  <Application>
+    <Title>Shopping Cart</Title>
+    <Description>Demonstrates Drag and Drop between Surface controls</Description>
+    <ExecutableFile>ShoppingCart.exe</ExecutableFile>
+    <Arguments></Arguments>
+    <IconImageFile>InstalledAppInfo\AppIcon.png</IconImageFile>   
+    <Tags>
+      <Tag Value="0xC0">
+        <Actions>
+          <Launch/>
+        </Actions>
+      </Tag>
+    </Tags>
+  </Application>
+</ss:ApplicationInfo>

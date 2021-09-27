@@ -4,25 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.IO;
 
 namespace SurfaceClient {
     class Client {
 
-        private UdpClient udpClient = new UdpClient();
-        private ImageAnalyzer analyzer = new ImageAnalyzer();
+        private TcpClient tcpClient = new TcpClient();
+        private DateTime lastTime = DateTime.Now;
+
+        private const float TIME_THRESHOLD = 100;
 
         public Client() {
-            udpClient.Connect("127.0.0.1", 50001);
+            tcpClient.Connect("127.0.0.1", 50001);
         }
 
         public void Process(byte[] image) {
-            string cardString = analyzer.AnalyzeImage(image);
-            byte[] bytesToSend = Encoding.ASCII.GetBytes(cardString);
-            udpClient.Send(bytesToSend, bytesToSend.Length);
+            TimeSpan timeDifference = DateTime.Now - lastTime;
+            if (timeDifference.TotalMilliseconds > TIME_THRESHOLD) {
+                lastTime = DateTime.Now;
+                try {
+                    tcpClient.GetStream().Write(image, 0, image.Length);
+                } catch (IOException e) {
+                    tcpClient.Close();
+                }
+            }
         }
 
         ~Client() {
-            udpClient.Close();
+            tcpClient.Close();
         }
     }
 }

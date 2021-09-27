@@ -2,6 +2,8 @@ import socket
 import sys
 import signal
 import cv2
+import numpy as np
+from PIL import Image
 
 def signal_handler(sig, frame):
     print('interrupted, shutting down server.')
@@ -34,6 +36,22 @@ def main():
         data = connection.recv(518400)
         if data:
             print("get data")
+
+            img = np.frombuffer(data, dtype='uint8')
+            img = np.reshape(img, (540, 960))
+            #img = Image.fromarray(img)
+            #img.save("testImg.png")
+            #img = cv2.imread("testImg.png")
+            #cv2.imshow("testImg", img)
+            #img = Image.fromarray(img.astype(np.uint8))
+            #img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+            #img = cv2.imdecode(img, cv2.IMREAD_GRAYSCALE)
+            #if img.any():
+                #print(img)
+            #cv2.imshow("testImg", img)
+            #img = cv2.resize(img, (960, 540))
+            #cv2.imshow("testImg", img)
+
             result = analyzeImage(data)
             dataSum = sum(data)
             result += str(dataSum)

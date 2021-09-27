@@ -1,0 +1,280 @@
+<s:SurfaceWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                 xmlns:s="http://schemas.microsoft.com/surface/2008" 
+                 xmlns:sp="clr-namespace:ScatterPuzzle" 
+                 x:Class="ScatterPuzzle.Window1"                  
+                 Title="ScatterPuzzle">
+
+    <s:SurfaceWindow.Resources>  
+
+        <!-- Shapes for the pieces -->
+        <Path x:Key="TopLeftCorner" Data="M0,0 L150,0 150,50 150,50 150,50 C150,54.260921 145.25,56.39315 140,56.518101 134.25027,56.654942 134.04739,52.567127 130,50.524639 129.16667,50.104103 126.50002,49.937508 125,50.020805 111.19288,50.020805 100,61.20903 100,75.010399 100,88.811775 111.19288,100 125,100 126.7126,100 129.1129,99.65567 130,99.250313 134.375,97.251144 134.83333,92.753014 140,92.753014 145.16667,92.753014 150,95.373878&#xD;&#xA;150,100 L150,100 150,100 150,150 100,150 100,150 100,150 C95.739082,150 93.60685,145.25 93.481903,140 93.345062,134.25027 97.432877,134.04739 99.475365,130 99.895897,129.16667 100.06249,126.50002 99.979195,125 99.979195,111.19288 88.79097,100 74.989601,100 61.188225,100 50,111.19288 50,125 50,126.7126 50.34433,129.1129 50.749687,130 52.748856,134.375 57.246983,134.83333 57.246983,140 57.246983,145.16667 54.626118,150&#xD;&#xA;50.749687,150 L50,150 50,150 0,150 0,0 z" />
+        <Path x:Key="TopEdge" Data="M50,0 L200,0 200,50 200,50 200,50 C200,54.260921 195.25,56.39315 190,56.518101 184.25027,56.654942 184.04739,52.567127 180,50.524639 179.16667,50.104103 176.50002,49.937508 175,50.020805 161.19289,50.020805 150,61.20903 150,75.010399 150,88.811775 161.19289,100 175,100 176.7126,100 179.1129,99.65567 180,99.250313 184.375,97.251144 184.83333,92.753014 190,92.753014 195.16667,92.753014 200,95.373878&#xD;&#xA;200,99.250313 L200,100 200,100 200,150 150,150 150,150 150,150 C145.73907,150 143.60684,145.25 143.4819,140 143.34506,134.25027 147.43288,134.04739 149.47536,130 149.8959,129.16667 150.0625,126.50002 149.9792,125 149.9792,111.19288 138.79097,100 124.9896,100 111.18822,100 100,111.19288 100,125 100,126.7126 100.34433,129.1129 100.74969,130 102.74886,134.375 107.24699,134.83333 107.24699,140 107.24699,145.16667 104.62612,150&#xD;&#xA;100,150 L100,150 100,150 50,150 50,100 50,100 50,100 C50,95.373878 45.166668,92.753014 40,92.753014 34.833332,92.753014 34.375,97.251144 30.000002,99.250313 29.112906,99.65567 26.712603,100 24.999996,100 11.192883,100 0,88.811775 0,75.010399 0,61.20903 11.192883,50.020805 24.999996,50.020805 26.5,49.937508 29.166668,50.104103 30.000002,50.524639 34.047398,52.567127 34.250271,56.654942 40,56.518101 45.25,56.39315 50,54.260921&#xD;&#xA;50,50 L50,50 50,50 50,0 z" />
+        <Path x:Key="TopRightCorner" Data="M50,0 L200,0 200,150 150,150 150,150 150,150 C145.73907,150 143.60684,145.25 143.4819,140 143.34506,134.25027 147.43288,134.04739 149.47536,130 149.8959,129.16667 150.0625,126.50002 149.9792,125 149.9792,111.19288 138.79097,100 124.9896,100 111.18822,100 100,111.19288 100,125 100,126.7126 100.34433,129.1129 100.74969,130 102.74886,134.375 107.24699,134.83333 107.24699,140 107.24699,145.16667 104.62612,150&#xD;&#xA;100.74969,150 L100,149.92439 100,150 50,150 50,100 49.924393,100 50,99.250313 C50,95.373878 45.166668,92.753014 40,92.753014 34.833332,92.753014 34.375,97.251144 30.000002,99.250313 29.112906,99.65567 26.712603,100 24.999996,100 11.192883,100 0,88.811775 0,75.010399 0,61.20903 11.192883,50.020805 24.999996,50.020805 26.5,49.937508 29.166668,50.104103 30.000002,50.524639 34.047398,52.567127 34.250271,56.654942 40,56.518101 45.25,56.39315 50,54.260921&#xD;&#xA;50,50.270699 L49.9748,50.020805 50,50.020805 50,0 z" />
+        <Path x:Key="LeftEdge" Data="M75,0 C88.79097,0 100,11.192883 100,25 100,26.50005 100,29.166674 99.475365,30.000002 97.432877,34.047398 93.345062,34.250271 93.481903,40 93.60685,45.25 95.739082,50 99.729301,50 L99.979195,49.9748 99.979195,50 150,50 150,100.02081 149.97479,100.02081 150,100.2707 C150,104.26092 145.25,106.39315 140,106.5181 134.25027,106.65494 134.04739,102.56712 130,100.52464 129.16667,100.1041 126.50002,99.937508 125,100.02081 111.19288,100.02081 100,111.20903 100,125.0104 100,138.81178 111.19288,150 125,150 126.7126,150 129.1129,149.65567 130,149.25031 134.375,147.25114 134.83333,142.75302 140,142.75302 145.16667,142.75302 150,145.37389&#xD;&#xA;150,149.25031 L149.92439,150 150,150 150,200 99.979195,200 99.979195,199.97479 99.729301,200 C95.739082,200 93.60685,195.25 93.481903,190 93.345062,184.25027 97.432877,184.04739 99.475365,180 99.895897,179.16667 100.06249,176.50002 99.979195,175 99.979195,161.19289 88.79097,150 74.989601,150 61.188225,150 50,161.19289 50,175 50,176.7126 50.34433,179.1129 50.749687,180 52.748856,184.375 57.246983,184.83333 57.246983,190 57.246983,195.16667 54.626118,200&#xD;&#xA;50.749687,200 L50,199.92439 50,200 0,200 0,50 50,50 50,49.924393 50.749687,50 C54.626118,50 57.246983,45.166668 57.246983,40 57.246983,34.833332 52.748856,34.375 50.749687,30.000002 50.34433,29.112906 50,26.712603 50,24.999996 50,11.192883 61.188225,0 74.989601,0 z" />
+        <Path x:Key="Center" Data="M125,0 C138.79097,0 150,11.192883 150,25 150,26.500017 150,29.166668 149.47536,30.000002 147.43288,34.047397 143.34506,34.250271 143.4819,40.000001 143.60684,45.25 145.73907,50 149.72929,50 L149.9792,49.974799 149.9792,50 200,50 200,100.02081 199.97479,100.02081 200,100.2707 C200,104.26092 195.25,106.39315 190,106.5181 184.25027,106.65494 184.04739,102.56713 180,100.52464 179.16667,100.1041 176.50002,99.937508 175,100.02081 161.19289,100.02081 150,111.20903 150,125.0104 150,138.81178 161.19289,150 175,150 176.7126,150 179.1129,149.65567 180,149.25031 184.375,147.25114 184.83333,142.75301 190,142.75301 195.16667,142.75301 200,145.37388&#xD;&#xA;200,149.25031 L199.92439,150 200,150 200,200 149.97919,200 149.97919,199.97479 149.72931,200 C145.73909,200 143.60684,195.25 143.4819,190 143.34506,184.25027 147.43288,184.04739 149.47537,180 149.89589,179.16667 150.06248,176.50002 149.97919,175 149.97919,161.19288 138.79097,150 124.9896,150 111.18822,150 100,161.19288 100,175 100,176.7126 100.34433,179.1129 100.74969,180 102.74886,184.375 107.24699,184.83333 107.24699,190 107.24699,195.16667 104.62612,200&#xD;&#xA;100.74969,200 L100,199.92439 100,200 50,200 50,150 49.924393,150 50,149.25031 C50,145.37388 45.166668,142.75301 40,142.75301 34.833332,142.75301 34.375,147.25114 30.000002,149.25031 29.112906,149.65567 26.712603,150 24.999996,150 11.192883,150 0,138.81178 0,125.0104 0,111.20903 11.192883,100.02081 24.999996,100.02081 26.5,99.937508 29.166668,100.1041 30.000002,100.52464 34.047398,102.56713 34.250271,106.65494 40,106.5181 45.25,106.39315 50,104.26092&#xD;&#xA;50,100.2707 L49.9748,100.02081 50,100.02081 50,50 100,50 100,49.924394 100.74969,50 C104.62612,50 107.24699,45.166667 107.24699,40.000001 107.24699,34.833333 102.74886,34.375 100.74969,30.000002 100.34433,29.112906 100,26.712603 100,25 100,11.192883 111.18822,0 124.9896,0 z" />
+        <Path x:Key="RightEdge" Data="M125,0 C138.79097,0 150,11.192883 150,25 150,26.50005 150,29.166674 149.47537,30.000002 147.43288,34.047398 143.34506,34.250271 143.4819,40 143.60684,45.25 145.73909,50 149.72931,50 L149.97919,49.9748 149.97919,50 200,50 200,200 149.9792,200 149.9792,199.97479 149.72929,200 C145.73907,200 143.60684,195.25 143.4819,190 143.34506,184.25027 147.43288,184.04739 149.47536,180 149.8959,179.16667 150.0625,176.50002 149.9792,175 149.9792,161.19289 138.79097,150 124.9896,150 111.18822,150 100,161.19289 100,175 100,176.7126 100.34433,179.1129 100.74969,180 102.74886,184.375 107.24699,184.83333 107.24699,190 107.24699,195.16667 104.62612,200&#xD;&#xA;100.74969,200 L100,199.92439 100,200 50,200 50,150 49.924393,150 50,149.25031 C50,145.37389 45.166668,142.75302 40,142.75302 34.833332,142.75302 34.375,147.25114 30.000002,149.25031 29.112906,149.65567 26.712603,150 24.999996,150 11.192883,150 0,138.81178 0,125.0104 0,111.20903 11.192883,100.02081 24.999996,100.02081 26.500032,99.937508 29.166672,100.1041 30.000002,100.52464 34.047398,102.56712 34.250271,106.65494 40,106.5181 45.25,106.39315 50,104.26092&#xD;&#xA;50,100.2707 L49.9748,100.02081 50,100.02081 50,50 100,50 100,49.924393 100.74969,50 C104.62612,50 107.24699,45.166668 107.24699,40 107.24699,34.833332 102.74886,34.375 100.74969,30.000002 100.34433,29.112906 100,26.712603 100,24.999996 100,11.192883 111.18822,0 124.9896,0 z" />
+        <Path x:Key="BottomLeftCorner" Data="M75,0 C88.79097,0 100,11.192883 100,25 100,26.500032 100,29.166672 99.475365,30.000002 97.432877,34.047398 93.345062,34.250271 93.481903,40 93.60685,45.25 95.739082,50 99.729301,50 L99.979195,49.9748 99.979195,50 150,50 150,100.02081 149.97479,100.02081 150,100.2707 C150,104.26092 145.25,106.39315 140,106.5181 134.25027,106.65494 134.04739,102.56712 130,100.52464 129.16667,100.1041 126.50002,99.937508 125,100.02081 111.19288,100.02081 100,111.20903 100,125.0104 100,138.81178 111.19288,150 125,150 126.7126,150 129.1129,149.65567 130,149.25031 134.375,147.25114 134.83333,142.75302 140,142.75302 145.16667,142.75302 150,145.37389&#xD;&#xA;150,149.25031 L149.92439,150 150,150 150,200 0,200 0,50 50,50 50,49.924393 50.749687,50 C54.626118,50 57.246983,45.166668 57.246983,40 57.246983,34.833332 52.748856,34.375 50.749687,30.000002 50.34433,29.112906 50,26.712603 50,24.999996 50,11.192883 61.188225,0 74.989601,0 z" />
+        <Path x:Key="BottomEdge" Data="M125,0 C138.79097,0 150,11.192883 150,25 150,26.50005 150,29.166674 149.47537,30.000002 147.43288,34.047398 143.34506,34.250271 143.4819,40 143.60684,45.25 145.73909,50 149.72931,50 L149.97919,49.9748 149.97919,50 200,50 200,100.02081 199.97479,100.02081 200,100.2707 C200,104.26092 195.25,106.39315 190,106.5181 184.25027,106.65494 184.04739,102.56712 180,100.52464 179.16667,100.1041 176.50002,99.937508 175,100.02081 161.19289,100.02081 150,111.20903 150,125.0104 150,138.81178 161.19289,150 175,150 176.7126,150 179.1129,149.65567 180,149.25031 184.375,147.25114 184.83333,142.75302 190,142.75302 195.16667,142.75302 200,145.37389&#xD;&#xA;200,149.25031 L199.92439,150 200,150 200,200 50,200 50,150 49.924393,150 50,149.25031 C50,145.37389 45.166668,142.75302 40,142.75302 34.833332,142.75302 34.375,147.25114 30.000002,149.25031 29.112906,149.65567 26.712603,150 24.999996,150 11.192883,150 0,138.81178 0,125.0104 0,111.20903 11.192883,100.02081 24.999996,100.02081 26.500032,99.937508 29.166672,100.1041 30.000002,100.52464 34.047398,102.56712 34.250271,106.65494 40,106.5181 45.25,106.39315 50,104.26092&#xD;&#xA;50,100.2707 L49.9748,100.02081 50,100.02081 50,50 100,50 100,49.924393 100.74969,50 C104.62612,50 107.24699,45.166668 107.24699,40 107.24699,34.833332 102.74886,34.375 100.74969,30.000002 100.34433,29.112906 100,26.712603 100,24.999996 100,11.192883 111.18822,0 124.9896,0 z" />
+        <Path x:Key="BottomRightCorner" Data="M125,0 C138.79097,0 150,11.192883 150,25 150,26.500015 150,29.16667 149.47536,30.000002 147.43288,34.047397 143.34506,34.250271 143.4819,40.000001 143.60684,45.25 145.73907,50 149.72929,50 L149.9792,49.974799 149.9792,50 200,50 200,200 50,200 50,150 49.924393,150 50,149.25031 C50,145.37388 45.166668,142.75301 40,142.75301 34.833332,142.75301 34.375,147.25114 30.000002,149.25031 29.112906,149.65567 26.712603,150 24.999996,150 11.192883,150 0,138.81178 0,125.0104 0,111.20903 11.192883,100.02081 24.999996,100.02081 26.5,99.937508 29.166668,100.1041 30.000002,100.52464 34.047398,102.56713 34.250271,106.65494 40,106.5181 45.25,106.39315 50,104.26092&#xD;&#xA;50,100.2707 L49.9748,100.02081 50,100.02081 50,50 100,50 100,49.924394 100.74969,50 C104.62612,50 107.24699,45.166667 107.24699,40.000001 107.24699,34.833333 102.74886,34.375 100.74969,30.000002 100.34433,29.112906 100,26.712603 100,24.999996 100,11.192883 111.18822,0 124.9896,0 z" />
+
+        <!-- Animation to remove a piece -->
+        <PointAnimation x:Key="RemovePiece" BeginTime="00:00:00" 
+                        Storyboard.TargetProperty="Center" 
+                        Duration="00:00:00.75" 
+                        To="1920, 640" 
+                        AccelerationRatio="0.4" 
+                        FillBehavior="Stop" />
+
+        <!-- Animation to add a piece -->
+        <Storyboard x:Key="AddPiece">
+            <PointAnimation BeginTime="00:00:00" 
+                            Storyboard.TargetProperty="Center" 
+                            Duration="00:00:00.75" 
+                            DecelerationRatio="0.9" 
+                            FillBehavior="Stop" />
+            <DoubleAnimation BeginTime="00:00:00" 
+                             Storyboard.TargetProperty="Orientation" 
+                             Duration="00:00:00.75" 
+                             DecelerationRatio="0.9" 
+                             FillBehavior="Stop" />
+        </Storyboard>
+
+        <!-- Animation to join a piece to another piece -->
+        <Storyboard x:Key="JoinPiece">
+            <PointAnimation BeginTime="00:00:00" Storyboard.TargetProperty="Center" Duration="00:00:00.35" />
+            <DoubleAnimation BeginTime="00:00:00" Storyboard.TargetProperty="Orientation" Duration="00:00:00.35" />
+        </Storyboard>
+
+        <!-- Style for ScatterViewItems -->
+        <Style TargetType="{x:Type s:ScatterViewItem}" >
+          <Setter Property="Deceleration" Value="0.003500" />
+          <Setter Property="AngularDeceleration" Value="0.000750" />
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type s:ScatterViewItem}">
+                <ControlTemplate.Resources>
+                  <Storyboard x:Key="ActivationTimeline">
+                    <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                         Storyboard.TargetName="shadow"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="0.2" KeySpline="0.2,0,0.2,1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Overlay">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.017" Value="0.1" KeySpline="0,0.43,0.2,1"/>
+                      <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="0" KeySpline="0.21,0,0,1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                  </Storyboard>
+
+                  <Storyboard x:Key="DeactivateTimeline">
+                    <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                         Storyboard.TargetName="shadow"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="0.1" KeySpline="0.2,0,0.2,1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                  </Storyboard>
+                </ControlTemplate.Resources>
+
+                <Grid x:Name="container"	  		
+                        RenderTransformOrigin="{TemplateBinding RenderTransformOrigin}">
+                  <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="1"
+                                    ScaleY="1" />
+                  </Grid.RenderTransform>
+                  <!-- The shadow -->
+                  <sp:CustomShadowChrome x:Name="shadow" 
+                                         IsHitTestVisible="False" 
+                                         Color="{DynamicResource {x:Static s:SurfaceColors.ScatterViewItemShadowColorKey}}"
+                                         ShadowVector="0,0" 
+                                         Opacity="0.1"
+                                         MaximumShadowOffset="0"
+                                         Margin="0"
+                                         ShadowShape="{Binding Path=ClipShape}" />
+
+                    <!-- The content -->
+                    <ContentPresenter x:Name="Content"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                      Margin="{TemplateBinding Padding}" 
+                                      Clip="{Binding Path=ClipShape}" />
+
+                    <Rectangle x:Name="Overlay" Clip="{Binding Path=ClipShape}" Fill="#FFE6E6E6" Opacity="0" IsHitTestVisible="False">
+                   </Rectangle>
+                  </Grid>
+                 
+           
+                <ControlTemplate.Triggers>
+                  <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                      <Condition  Property="IsContainerActive"
+                                            Value="True" />
+                      <Condition  Property="ShowsActivationEffects"
+                                            Value="True" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.EnterActions>
+                      <BeginStoryboard x:Name="ActivationTimeline_BeginStoryboard"
+                                                 Storyboard="{StaticResource ActivationTimeline}" />
+                    </MultiTrigger.EnterActions>
+                    <MultiTrigger.ExitActions>
+                      <BeginStoryboard x:Name="DeactivateTimeline_BeginStoryboard"
+                                                             Storyboard="{StaticResource DeactivateTimeline}" />
+                    </MultiTrigger.ExitActions>
+                  </MultiTrigger>
+                  <Trigger Property="IsEnabled"
+                                 Value="False">
+                    <Setter Property="Opacity"
+                            TargetName="Content"
+                            Value="0.4" />
+                  </Trigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+             
+
+        <!--Style for ListBoxItems-->
+        <Style TargetType="{x:Type s:SurfaceListBoxItem}">
+            <Setter Property="Padding"
+                    Value="15,5,15,5"/>            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type s:SurfaceListBoxItem}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="Press">
+                                <ColorAnimation Duration="00:00:00.0400000"
+                                    Storyboard.TargetName="Item"
+                                    Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)"
+                                    To="#CCCCCCCC"/>
+                            </Storyboard>
+                            <Storyboard x:Key="Release">
+                                <ColorAnimation Duration="00:00:00.1500000"
+                                    Storyboard.TargetName="Item"
+                                    Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)"
+                                    To="Transparent"/>
+                            </Storyboard>
+                            <Storyboard x:Key="Select">
+                                <ColorAnimation Duration="00:00:00.0400000"
+                                    Storyboard.TargetName="Item"
+                                    Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)"
+                                    To="#FFFFFFFF"/>
+                            </Storyboard>
+                            <Storyboard x:Key="Unselect">
+                                <ColorAnimation Duration="00:00:00.1500000"
+                                    Storyboard.TargetName="Item"
+                                    Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)"
+                                    To="Transparent"/>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid>
+                            <Border x:Name="Item"
+                                    BorderBrush="Transparent" 
+                                    Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
+                                    Margin="{TemplateBinding Padding}"
+                                    BorderThickness="7">
+                                <ContentPresenter x:Name="Content"                                                 
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsPressed"
+                                            Value="True" />
+                                    <Condition Property="IsSelected"
+                                            Value="False" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush"	
+                                        TargetName="Item"
+                                        Value="#CCCCCCCC" />
+                            </MultiTrigger>
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Press}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Release}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Select}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Unselect}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter Property="Opacity"	
+                                        TargetName="Content"
+                                        Value="0.4" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </s:SurfaceWindow.Resources>
+
+    <Grid x:Name="RootLayout">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="68"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <s:ScatterView x:Name="scatter" 
+                       Grid.Column="3" 
+                       Grid.RowSpan="3" 
+                       s:ScatterViewItem.ContainerManipulationCompleted="OnManipulationCompleted" />
+        <s:SurfaceListBox x:Name="puzzles" 
+                          Grid.Column="1" 
+                          Grid.RowSpan="3"     
+                          SelectionMode="Single"
+                          BorderThickness="0"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          SelectionChanged="OnPuzzleSelected"                           
+                          ScrollViewer.VerticalScrollBarVisibility="Hidden"                           
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"    
+                          Background="#33CCCCCC"/>
+        <DockPanel VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" 
+                   LastChildFill="False"
+                   Margin="20"
+                   Height="38"
+                   Grid.Column="3" 
+                   Grid.Row="0">
+            <Label DockPanel.Dock="Left"
+                   Margin="32,0,0,0" >
+                Difficulty:
+            </Label>
+            <Label DockPanel.Dock="Left" 
+                   Margin="25,0,0,0" >
+                Easy
+            </Label>
+            <s:SurfaceSlider Value="1"
+                             Minimum="1"
+                             Maximum="3"
+                             Width="211"
+                             Margin="0,1,0,0"                             
+                             ValueChanged="OnDifficultyChanged"
+                             IsSnapToTickEnabled="True"
+                             DockPanel.Dock="Left"
+                             x:Name="Difficulty" />
+            <Label DockPanel.Dock="Left">
+                Hard
+            </Label>
+        </DockPanel>
+    </Grid>
+</s:SurfaceWindow>

@@ -1,0 +1,44 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008">
+
+  <!-- 
+    The following style enables a two way binding of height/width between a library container and its 
+    ancestor scatterview item. This will make sure that the library container gets resized properly while 
+    the scatterview item is manipulated and the opposite ocurrs as well, if the library container gets resized
+    as a result when the view mode changes, the scatter view item size will be updated. 
+  
+    If you decide to use the LibraryContainerInScatterViewItemStyle style, make sure to 
+    handle the ViewModeChanged event to update the scatter view minimum / maximum sizes.
+  -->
+  <Style x:Key="LibraryContainerInScatterViewItemStyle" TargetType="{x:Type s:ScatterViewItem}">
+    <Style.Resources>
+      <Style TargetType="{x:Type s:LibraryContainer}">
+        <Setter Property="Height" Value="{Binding Height, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type s:ScatterViewItem}}}"/>
+        <Setter Property="Width" Value="{Binding Width, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type s:ScatterViewItem}}}"/>
+        <Setter Property="IsActive" Value="{Binding IsContainerActive, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type s:ScatterViewItem}}}"/>
+      </Style>
+    </Style.Resources>
+    <Setter Property="MinWidth" Value="{Binding Path=Content.MinWidth, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="MinHeight" Value="{Binding Path=Content.MinHeight, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="MaxWidth" Value="{Binding Path=Content.MaxWidth, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="MaxHeight" Value="{Binding Path=Content.MaxHeight, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="Background" Value="{x:Null}"/>
+  </Style>
+
+  <!-- 
+    The LibraryControlInScatterViewItemContentStyle style should be used whenever a LibraryStack or 
+    LibraryBar is the set as the content of a ScatterViewItem.
+  -->
+  <Style x:Key="LibraryControlInScatterViewItemContentStyle" TargetType="{x:Type s:ScatterViewItem}">
+    <Setter Property="MinWidth" Value="{Binding Path=Content.MinWidth, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="MinHeight" Value="{Binding Path=Content.MinHeight, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="MaxWidth" Value="{Binding Path=Content.MaxWidth, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="MaxHeight" Value="{Binding Path=Content.MaxHeight, RelativeSource={RelativeSource Self}, Mode=OneWay}"/>
+    <Setter Property="IsContainerActive" Value="{Binding Path=Content.IsActive,RelativeSource={RelativeSource Self}, Mode=OneWayToSource}"/>
+    <Setter Property="Width" Value="{Binding Path=Content.Width, RelativeSource={RelativeSource Self}, Mode=TwoWay}"/>
+    <Setter Property="Height" Value="{Binding Path=Content.Height, RelativeSource={RelativeSource Self}, Mode=TwoWay}"/>
+    <Setter Property="Background" Value="{x:Null}"/>
+  </Style>
+
+</ResourceDictionary>

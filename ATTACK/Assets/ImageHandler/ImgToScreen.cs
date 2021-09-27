@@ -24,15 +24,14 @@ public class ImgToScreen : MonoBehaviour
         if (ServerHandler.instance.rdyToFetchData) {
             byte[] rawBytes = ServerHandler.instance.fetchData();
             img = convertTextureFormat(rawBytes);
-            if (img != null)
-            {
+            if (img != null) {
                 try {
                     imageTexture.LoadRawTextureData(img);
                     imageTexture.Apply();
                     displayImage.sprite = Sprite.Create(imageTexture, new Rect(0.0f, 0.0f, sqrtSize, sqrtSize), new Vector2(0.5f, 0.5f), 100.0f);
                 } catch (UnityException e) {
                     Debug.Log(e);
-				}
+                }
             }
         }
     }

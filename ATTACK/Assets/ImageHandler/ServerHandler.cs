@@ -23,9 +23,9 @@ public class ServerHandler : MonoBehaviour
             Destroy(this);
         }
 
-        data = new byte[16384];
+        data = new byte[128];
 
-        IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50001);
+        IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50002);
 
         socket = new Socket(endPoint.Address.AddressFamily,
             SocketType.Dgram,
@@ -50,6 +50,7 @@ public class ServerHandler : MonoBehaviour
             foreach (byte piece in data) {
                 str += piece.ToString();
 			}
+            Debug.Log(socket.Available);
             Debug.Log(str);
             Debug.Log(Encoding.ASCII.GetString(data));
 		}

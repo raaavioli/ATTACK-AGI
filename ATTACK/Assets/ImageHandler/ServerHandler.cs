@@ -6,23 +6,39 @@ using System.Net.Sockets;
 using System.Text;
 using System;
 
-public class ServerHandler : MonoBehaviour
-{
-    public static ServerHandler instance;
+public class ServerHandler : MonoBehaviour {
+    
+    public enum Suit {
+        SPADES,
+        CLUBS,
+        DIAMONDS,
+        HEARTS
+	}
+
+    public struct CardPosition {
+        int player;
+        int position;
+        Suit suit;
+        int rank;
+
+        public CardPosition(int player, int position, Suit suit, int rank) {
+            this.player = player;
+            this.position = position;
+            this.suit = suit;
+            this.rank = rank;
+		}
+
+        public override string ToString() {
+            return $"player: {player}, position: {position}, suit: {suit}, rank: {rank}";
+        }
+    }
+    
     private byte[] data;
-    public bool rdyToFetchData { get; private set; } = false;
 
     Socket socket;
     EndPoint senderRemote;
 
-    void Awake()
-    {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(this);
-        }
-
+    void Awake() {
         data = new byte[128];
 
         IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50002);
@@ -41,27 +57,46 @@ public class ServerHandler : MonoBehaviour
         socket.Blocking = false;
     }
 
-    void Update()
-    {
+    void Update() {
         if (socket.Available > 0) {
             socket.ReceiveFrom(data, ref senderRemote);
-            rdyToFetchData = true;
-            string str = "";
-            foreach (byte piece in data) {
-                str += piece.ToString();
-			}
             Debug.Log(socket.Available);
-            Debug.Log(str);
-            Debug.Log(Encoding.ASCII.GetString(data));
-		}
+            string cards = Encoding.ASCII.GetString(data);
+            Debug.Log(cards);
+            CardPosition[] positions = ParseCards(cards);
+            foreach (CardPosition position in positions) {
+                Debug.Log(position);
+			}
+        }
     }
 
-    public byte[] fetchData() {
-        rdyToFetchData = false;
-        return data;
+    private CardPosition[] ParseCards(string cards) {
+        List<CardPosition> positions = new List<CardPosition>();
+        string[] cardStrings = cards.Split(',');
+
+
+        for (int i = 0; i < cardStrings.Length - 1; ++i) {
+            string cardPosition = cardStrings[i];
+            string[] parts = cardPosition.Split(':');
+            Suit suit = Suit.SPADES;
+            switch (parts[2]) {
+                case "C":
+                    suit = Suit.CLUBS;
+                    break;
+                case "D":
+                    suit = Suit.DIAMONDS;
+                    break;
+                case "H":
+                    suit = Suit.HEARTS;
+                    break;
+			}
+            positions.Add(new CardPosition(int.Parse(parts[0]), int.Parse(parts[1]), suit, int.Parse(parts[3])));
+		}
+
+        return positions.ToArray();
 	}
 
-	private void OnDestroy() {
+    private void OnDestroy() {
         socket.Close();
-	}
+    }
 }

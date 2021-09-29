@@ -6,7 +6,7 @@ public class ObjectShatter : MonoBehaviour
     public ParticleSystem ImpactParticles;
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.Equals("Colliderplane"))
+        if (collision.gameObject.name.Contains("Colliderplane"))
         {
             GameObject ShatteredPlaneInstance = Instantiate(ShatteredObject, transform.position, transform.rotation);
             IntensityUpdater iu = ShatteredPlaneInstance.GetComponent<IntensityUpdater>();

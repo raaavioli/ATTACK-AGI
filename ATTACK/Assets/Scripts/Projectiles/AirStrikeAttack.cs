@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AirStrikeAttack : Attack
 {
     private GameObject Plane;
-
+    private Vector3 Direction;
     protected override void InstantiateProjectile()
     {
         GameObject PlanePrefab = Resources.Load<GameObject>("Models/colonel/PlanePrefab");
@@ -16,7 +17,13 @@ public class AirStrikeAttack : Attack
 
     protected override void StartProjectile()
     {
-        SetStartTransform();
+        // Arbitrary distance backward from the attacker, should be off screen.
+        Vector3 StartPosition = gameObject.transform.position
+        - gameObject.transform.forward * 30
+        + gameObject.transform.up * 30;
+        Plane.transform.position = StartPosition;
+        this.Direction = ((TargetPosition + Vector3.down) - StartPosition).normalized;
+        Plane.transform.rotation = Quaternion.LookRotation(Direction);
         Plane.SetActive(true);
     }
 
@@ -27,22 +34,28 @@ public class AirStrikeAttack : Attack
 
     protected override void UpdateProjectile()
     {
-        float t = (SimulationTime - FireStartTime) / MaxFireTime;
-        if (t < 0)
-            t = 0;
-        float MetersPerSecond = Time.deltaTime * 200f;
-        Vector3 Direction = (TargetPosition - Plane.transform.position).normalized;
-        Plane.transform.position += MetersPerSecond * Direction;
-        Plane.transform.rotation = Quaternion.LookRotation(Direction);
-    }
-
-    private void SetStartTransform()
-    {
-        // Arbitrary distance backward from the attacker, should be off screen.
-        Vector3 StartPosition = gameObject.transform.position
-        - gameObject.transform.forward * 30
-        + gameObject.transform.up * 30;
-        Plane.transform.position = StartPosition;
-        Plane.transform.rotation = Quaternion.LookRotation(TargetPosition - StartPosition);
+        if (Plane.activeSelf)
+        {
+            float t = (SimulationTime - FireStartTime) / MaxFireTime;
+            if (t < 0)
+                t = 0;
+            float MetersPerSecond = Time.deltaTime * 200f;
+            Vector3 NewDir = ((TargetPosition + Vector3.down) - Plane.transform.position);
+            const float Dist = 3;
+            float Magnitude = NewDir.magnitude;
+            if (Magnitude > Dist)
+            {
+                // When plane is far away from the target we want to adapt its trajectory towards the target
+                Direction = NewDir.normalized;
+            }
+            else
+            {
+                // When the plane is close, we want it to turn down
+                float _t = Magnitude / Dist;
+                Direction = (Direction + Vector3.down * (1 - _t)).normalized; 
+            }
+            Plane.transform.position += MetersPerSecond * Direction;
+            Plane.transform.rotation = Quaternion.LookRotation(Direction);
+        }
     }
 }

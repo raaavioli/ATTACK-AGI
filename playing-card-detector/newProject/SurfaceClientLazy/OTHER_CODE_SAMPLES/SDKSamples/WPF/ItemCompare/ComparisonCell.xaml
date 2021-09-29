@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="ItemCompare.ComparisonCell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">  
+ 
+    <Grid Margin="13,0,13,0">
+      <TextBlock x:Name="PriceValue"
+                 Style="{StaticResource PriceTextStyle}"          
+                 Visibility="Collapsed"                
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Stretch"
+                 Text="SomePlaceHolderText">
+      </TextBlock>
+      <TextBlock x:Name="TextValue"
+                 Style="{StaticResource BodyTextStyle}"          
+                 Visibility="Collapsed"                
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Stretch"
+                 Text="SomePlaceHolderText">           
+      </TextBlock>
+      <Image x:Name="ImageValue"
+           Visibility="Collapsed"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Stretch" />
+      <Image x:Name="BooleanValue"
+           Visibility="Collapsed"
+           Stretch="None"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Stretch" /> 
+    </Grid>
+  
+</UserControl>

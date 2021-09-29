@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+Important notice: The tag values c1,c2,c3 are used as sample tag values only, and can be modified to
+reflect the tags that you wish to use.
+
+If you wish to modify this sample:
+
+1. Remove the TagInfoText element and related animations from MainWindow.xaml. 
+   (It is only meant to help you get started with this sample).
+2. Update InstalledAppInfo\ItemCompare.xml
+3. Update ItemCompare.reg
+4. Reinstall the sample (See InstallSamples.bat in the samples folder)
+-->
+
+<!-- Defines the data schema for items, and the property values for each tag. -->
+<ItemData>
+  <!-- The schema. This defines the field names and their data types. -->
+  <Properties>
+    <ItemProperty Name="Price" PropertyType="Price"/>
+    <ItemProperty Name="Description" PropertyType="Text"/>
+    <ItemProperty Name="Features" PropertyType="Text"/>
+    <ItemProperty Name="System Requirements" PropertyType="Text"/>
+    <ItemProperty Name="Compatibility" PropertyType="Image"/>
+    <ItemProperty Name="Photo" PropertyType="Image"/>
+    <ItemProperty Name="Package Dimensions" PropertyType="Text"/>
+    <ItemProperty Name="Weight" PropertyType="Text"/>
+    <ItemProperty Name="In Stock" PropertyType="Boolean"/>
+    <ItemProperty Name="Notes" PropertyType="Text"/>
+  </Properties>
+
+  <!-- The items. Each supported tag value has one Item entry. -->
+  <Items>
+    <Item Tag="0xc1" Brand="Microsoft" Name="Wireless Laser Mouse">
+      <ItemValues>
+        <ItemValue Name="Price" Value="$49.95"/>
+        <ItemValue Name="Description" Value="On the Desk or On the Go Experience comfort and performance with the Microsoft® Wireless Laser Mouse 6000. This mouse combines 2.4 GHz wireless freedom and the precision of High Definition Laser Technology with the portability of a snap-in transceiver."/>
+        <ItemValue Name="Features" Value="2.4 GHz WIRELESS Confident wireless connection with up to 30-foot range, even in crowded wireless environments. MICROSOFT HIGH DEFINITION LASER TECHNOLOGY More responsive, more precise, and smoother tracking. FLIP 3D BUTTON Displays dynamic 3D overlay of all open applications.1 MAGNIFIER Just point and press the Magnifier button to enlarge and edit details.2 4-WAY SCROLLING Scroll side to side as well as up and down. EXTENDED BATTERY LIFE Many users average more than six months of battery life. A battery status indicator tells you when your battery is running low."/>
+        <ItemValue Name="System Requirements" Value="For a Windows®-based PC - Requires a PC that meets the requirements for and has installed one of these operating systems: Windows Vista® or Windows XP. Hard Drive 100 MB Other USB port CD drive. For Macintosh - Mac OS X v10.2x*–10.5x (excluding Mac OS X v10.0–10.1). Dashboard will only work with Mac OS X v10.4 or higher. Exposé will only work on Mac OS X v10.3** or higher. Hard Drive 30 MB Other USB port CD drive "/>
+        <ItemValue Name="Compatibility" Value="Resources/compatibility.png"/>
+        <ItemValue Name="Photo" Value="Resources/LaserMouse6000.png"/>
+        <ItemValue Name="Package Dimensions" Value="9.88in L x 7.8in W x 3.86in D"/>
+        <ItemValue Name="Weight" Value=".68 lbs"/>
+        <ItemValue Name="In Stock" Value="True"/>
+        <ItemValue Name="Notes" Value="N/A"/>
+      </ItemValues>
+    </Item>
+    <Item Tag="0xc2" Brand="Microsoft" Name="Explorer Mouse">
+      <ItemValues>
+        <ItemValue Name="Price" Value="$79.95"/>
+        <ItemValue Name="Description" Value="Works on Virtually Any Surface* The Microsoft Explorer Mouse, with revoluntionary Microsoft BlueTrackTM Technology, works more places than ever before, including on granite countertops, living room or airport carpets—even on a wood table or rough, unfinished park bench."/>
+        <ItemValue Name="Features" Value="Easy Recharging The battery status indicator tells you when a quick recharge is needed. The compact, stable recharging base is easy to use. Reliable Wireless on the Go Microsoft 2.4 GHz wireless and the snap-in mini-transceiver deliver a reliable connection with up to a 30-foot range. Sophisticated Design and Comfort The glowing blue light effects and comfortable curved surfaces set your mouse apart. Go Anywhere Microsoft BlueTrack Technology combines the power of optical with the precision of laser for remarkable tracking on more surfaces.*"/>
+        <ItemValue Name="System Requirements" Value="For a Windows®-based PC - Requires a PC that meets the requirements for and has installed one of these operating systems: Windows Vista® or Windows XP. Hard Drive 100 MB Other USB port CD drive. For Macintosh - Mac OS X v10.2x*–10.5x. Hard Drive 30 MB Other USB port CD drive "/>
+        <ItemValue Name="Compatibility" Value="Resources/compatibility.png"/>
+        <ItemValue Name="Photo" Value="Resources/ExplorerMouse.png"/>
+        <ItemValue Name="Package Dimensions" Value="8.5in L x 8.75in W x 3in D"/>
+        <ItemValue Name="Weight" Value="1.07 lbs"/>
+        <ItemValue Name="In Stock" Value="True"/>
+        <ItemValue Name="Notes" Value="*BlueTrack Technology does not work on clear glass or mirrored surfaces."/>
+      </ItemValues>
+    </Item>
+    <Item Tag="0xc3" Brand="Microsoft" Name="Wireless Laser Mouse">
+      <ItemValues>
+        <ItemValue Name="Price" Value="$69.95"/>
+        <ItemValue Name="Description" Value="Ergonomic Comfort in a Wireless, Rechargeable Mouse Step up to the Microsoft® Wireless Laser Mouse 7000. This advanced right-handed rechargeable mouse brings you 2.4 GHz wireless technology, High Definition Laser, and dynamic productivity features—wrapped in a striking design."/>
+        <ItemValue Name="Features" Value="RECHARGEABLE Status indicator flashes when the mouse needs charging. Just drop it onto the horizontal charging station to activate charging. 2.4 GHz WIRELESS Confident wireless connection with up to 30-foot range, even in crowded wireless environments. MICROSOFT HIGH DEFINITION LASER TECHNOLOGY More responsive, more precise, and smoother tracking. FLIP 3D BUTTON Displays dynamic 3D overlay of all open applications*. MAGNIFIER Just point and press the Magnifier button to enlarge and edit details**. 4-WAY SCROLLING Scroll side to side as well as up and down."/>
+        <ItemValue Name="System Requirements" Value="For a Windows®-based PC - Requires a PC that meets the requirements for and has installed one of these operating systems: Windows Vista® or Windows XP. Hard Drive 100 MB Other USB port CD drive. For Macintosh - Mac OS X v10.2x*–10.5x (excluding Mac OS X v10.0–10.1). Dashboard will only work with Mac OS X v10.4 or higher. Exposé will only work on Mac OS X v10.3** or higher. Hard Drive 30 MB Other USB port CD drive "/>
+        <ItemValue Name="Compatibility" Value="Resources/compatibility.png"/>
+        <ItemValue Name="Photo" Value="Resources/LaserMouse7000.png"/>
+        <ItemValue Name="Package Dimensions" Value="9.88in L x 7.8in W x 3.86in D"/>
+        <ItemValue Name="Weight" Value=".73 lbs"/>
+        <ItemValue Name="In Stock" Value="True"/>
+        <ItemValue Name="Notes" Value="*For Windows, Flip 3D requires a PC running Windows AeroTM. If you are using Macintosh OS X v10.3 or higher, the Flip 3D/Instant Viewer button will start Exposé for Mac. **If you are using Macintosh OS X, the Magnifier enlarges text and images on the entire screen."/>
+      </ItemValues>
+    </Item>
+  </Items>
+</ItemData>

@@ -5,8 +5,12 @@ import sys
 import signal
 import time
 
+sock = None
+
 def signal_handler(sig, frame):
-    print('interrupted, shutting down server.')
+    print('interrupted, shutting down client.')
+    if sock != None:
+        sock.close()
     sys.exit(0)
 
 def main():
@@ -27,8 +31,6 @@ def main():
     while True:
         sock.sendall(bytesToSend)
         time.sleep(0.1)
-    
-    sock.close()
 
 if __name__ == "__main__":
     main()

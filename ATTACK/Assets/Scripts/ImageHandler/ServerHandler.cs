@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System;
+using UnityEngine.Events;
+using static GameManager;
 
 public class ServerHandler : MonoBehaviour {
     
@@ -16,29 +18,38 @@ public class ServerHandler : MonoBehaviour {
 	}
 
     public struct CardPosition {
-        int player;
-        int position;
-        Suit suit;
-        int rank;
+        public Team team;
+        public int position;
+        public Suit suit;
+        public int rank;
 
-        public CardPosition(int player, int position, Suit suit, int rank) {
-            this.player = player;
+        public CardPosition(Team team, int position, Suit suit, int rank) {
+            this.team = team;
             this.position = position;
             this.suit = suit;
             this.rank = rank;
 		}
 
         public override string ToString() {
-            return $"player: {player}, position: {position}, suit: {suit}, rank: {rank}";
+            return $"team: {team}, position: {position}, suit: {suit}, rank: {rank}";
         }
     }
-    
-    private byte[] data;
 
-    Socket socket;
-    EndPoint senderRemote;
+    public static CardPosition[] cardInformation { get; private set; }
+    public static UnityAction onCardDataReceived;
+
+    private byte[] data;
+    private EndPoint senderRemote;
+    private ServerHandler instance;
+    private Socket socket;
 
     void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(this);
+        }
+
         data = new byte[128];
 
         IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 50002);
@@ -53,7 +64,6 @@ public class ServerHandler : MonoBehaviour {
 
         // Binding is required with ReceiveFrom calls.
         socket.Bind(endPoint);
-        Console.WriteLine("Waiting to receive datagrams from client...");
         socket.Blocking = false;
     }
 
@@ -63,10 +73,8 @@ public class ServerHandler : MonoBehaviour {
             Debug.Log(socket.Available);
             string cards = Encoding.ASCII.GetString(data);
             Debug.Log(cards);
-            CardPosition[] positions = ParseCards(cards);
-            foreach (CardPosition position in positions) {
-                Debug.Log(position);
-			}
+            cardInformation = ParseCards(cards);
+            onCardDataReceived();
         }
     }
 
@@ -90,7 +98,7 @@ public class ServerHandler : MonoBehaviour {
                     suit = Suit.HEARTS;
                     break;
 			}
-            positions.Add(new CardPosition(int.Parse(parts[0]), int.Parse(parts[1]), suit, int.Parse(parts[3])));
+            positions.Add(new CardPosition((Team) int.Parse(parts[0]) - 1, int.Parse(parts[1]), suit, int.Parse(parts[3])));
 		}
 
         return positions.ToArray();

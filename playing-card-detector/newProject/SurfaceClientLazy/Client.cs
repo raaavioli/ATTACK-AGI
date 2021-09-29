@@ -14,11 +14,13 @@ namespace SurfaceClient {
 
         private const float TIME_THRESHOLD = 100;
 
-        public Client() {
-            tcpClient.Connect("127.0.0.1", 50001);
-        }
-
         public void Process(byte[] image) {
+            if (!tcpClient.Connected) {
+                if (!TryConnect()) {
+                    return;
+                }
+            }
+
             TimeSpan timeDifference = DateTime.Now - lastTime;
             if (timeDifference.TotalMilliseconds > TIME_THRESHOLD) {
                 lastTime = DateTime.Now;
@@ -27,6 +29,18 @@ namespace SurfaceClient {
                 } catch (IOException e) {
                     tcpClient.Close();
                 }
+            }
+        }
+
+        private bool TryConnect() {
+            try {
+                tcpClient.Connect("127.0.0.1", 50001);
+                return true;
+            } catch (SocketException e) {
+                return false;
+            } catch (ObjectDisposedException e) {
+                tcpClient = new TcpClient();
+                return false;
             }
         }
 

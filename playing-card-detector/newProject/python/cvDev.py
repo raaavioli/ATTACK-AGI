@@ -77,6 +77,9 @@ def analyzeSubImage(subImage, player, position):
     #cv2.imshow("thresh%d%d" % (player, position), thresh)
     #cv2.imshow("img_contours%d%d" % (player, position), img_contours)
 
+    #sobel = cv2.Sobel(subImage,cv2.CV_64F,1,1,ksize=15)
+    #cv2.imshow("sobel%d%d" % (player, position), sobel)
+
     suit = "S"
     rank = max(1, min(rank, 6))
     return "%d:%d:%s:%d," % (player, position, suit, rank)

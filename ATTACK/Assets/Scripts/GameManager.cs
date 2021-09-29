@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ServerHandler;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,15 +19,17 @@ public class GameManager : MonoBehaviour
         T2 = new List<GameObject>();
         List<Character> characters = Character.Values();
 
-        for (int i = 0; i < teamSize; i++)
-        {
-            SpawnCharacter(characters[i], spawnPointsT1[i], Team.Left);
-        }
+        //for (int i = 0; i < teamSize; i++)
+        //{
+        //    SpawnCharacter(characters[i], spawnPointsT1[i], Team.Left);
+        //}
 
-        for (int i = 0; i < teamSize; i++)
-        {
-            SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
-        }
+        //for (int i = 0; i < teamSize; i++)
+        //{
+        //    SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
+        //}
+
+        ServerHandler.onCardDataReceived += SpawnFromCards;
 
     }
 
@@ -70,7 +73,7 @@ public class GameManager : MonoBehaviour
         Vector3 spawnPoint = spawn.transform.position;
         
         // Quaternions are required to Instantiate at a Vec3. Alternative will require a transform which makes the characters a child of their spawnpoint
-        Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1); 
+        Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1);
 
         GameObject c = Instantiate(character.GetModelPrefab(), spawnPoint, towardsMiddle);
         c.transform.localRotation = towardsMiddle;
@@ -82,6 +85,53 @@ public class GameManager : MonoBehaviour
         else
         {
             T2.Add(c);
+        }
+
+        c.transform.parent = spawn.transform;
+    }
+
+    private void SpawnFromCards() {
+        CardPosition[] cardPositions = cardInformation;
+
+        foreach (CardPosition cardPosition in cardPositions) {
+            // Decide team, and skip if the team is already full.
+            Team team = cardPosition.team;
+            if ((team == 0 && T1.Count >= 3) || (team == (Team) 1 && T2.Count >= 3)) {
+                continue;
+            }
+
+            // Decide the spawn point.
+            int position = cardPosition.position;
+            GameObject spawn;
+            if (team == 0) {
+                spawn = spawnPointsT1[(int)Mathf.Clamp(position-1, 0, 2)];
+            } else {
+                spawn = spawnPointsT2[(int)Mathf.Clamp(position-1, 0, 2)];
+            }
+
+            // Skip spawn if spawn point is not empty.
+            if (spawn.transform.childCount != 0) {
+                continue;
+            }
+
+            // Decide the character.
+            Character wantedCharacter;
+            switch (cardPosition.rank) {
+                case 1:
+                    wantedCharacter = Character.WITCH;
+                    break;
+                case 2:
+                    wantedCharacter = Character.ENIGMA;
+                    break;
+                case 3:
+                    wantedCharacter = Character.COLONEL;
+                    break;
+                default:
+                    wantedCharacter = Character.WITCH;
+                    break;
+            }
+
+            SpawnCharacter(wantedCharacter, spawn, team);
         }
     }
 }

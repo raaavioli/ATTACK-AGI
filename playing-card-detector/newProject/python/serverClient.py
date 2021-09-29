@@ -44,14 +44,18 @@ def main():
         if data:
             print("get data")
 
-            img = np.frombuffer(data, dtype='uint8')
-            img = np.reshape(img, (540, 960))
-            result = analyzeImage(img)
-            print(result)
+            try:
+                img = np.frombuffer(data, dtype='uint8')
+                img = np.reshape(img, (540, 960))
+                result = analyzeImage(img)
+                print(result)
+                if result != "":
+                    # Send the message to the Unity server.
+                    bytesToSend = result.encode("ascii")
+                    UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 50002))
 
-            # Send the message to the Unity server.
-            bytesToSend = result.encode("ascii")
-            UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 50002))
+            except:
+                print("something went wrong, nothing was processed or sent")
 
 def recvFull(connection, fullSize):
     fullData = b''

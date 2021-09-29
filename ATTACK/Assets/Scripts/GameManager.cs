@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
-        
+
+        ServerHandler.onCardDataReceived += SpawnFromCards;
 
         /*for (int i = 0; i < teamSize; i++)
         {
@@ -108,6 +109,55 @@ public class GameManager : MonoBehaviour
             T1.Add(c);
         else
             T2.Add(c);
+        }
+
+        // THIS IS NECESSARY ONLY FOR THE INITIAL WAY OF SPAWNING FROM CARD INFORMATION, SINCE IT RELIES ON CHILD COUNT CHECKING
+        c.transform.parent = spawn.transform;
+    }
+
+    private void SpawnFromCards() {
+        ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
+
+        foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
+            // Decide team, and skip if the team is already full.
+            Team team = cardPosition.team;
+            if ((team == 0 && T1.Count >= 3) || (team == (Team) 1 && T2.Count >= 3)) {
+                continue;
+            }
+
+            // Decide the spawn point.
+            int position = cardPosition.position;
+            GameObject spawn;
+            if (team == 0) {
+                spawn = spawnPointsT1[(int)Mathf.Clamp(position-1, 0, 2)];
+            } else {
+                spawn = spawnPointsT2[(int)Mathf.Clamp(position-1, 0, 2)];
+            }
+
+            // Skip spawn if spawn point is not empty.
+            if (spawn.transform.childCount != 0) {
+                continue;
+            }
+
+            // Decide the character.
+            Character wantedCharacter;
+            switch (cardPosition.rank) {
+                case 1:
+                    wantedCharacter = Character.WITCH;
+                    break;
+                case 2:
+                    wantedCharacter = Character.ENIGMA;
+                    break;
+                case 3:
+                    wantedCharacter = Character.COLONEL;
+                    break;
+                default:
+                    wantedCharacter = Character.WITCH;
+                    break;
+            }
+
+            SpawnCharacter(wantedCharacter, spawn, team);
+        }
     }
 }
 

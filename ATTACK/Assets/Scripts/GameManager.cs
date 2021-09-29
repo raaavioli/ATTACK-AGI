@@ -109,7 +109,6 @@ public class GameManager : MonoBehaviour
             T1.Add(c);
         else
             T2.Add(c);
-        }
 
         // THIS IS NECESSARY ONLY FOR THE INITIAL WAY OF SPAWNING FROM CARD INFORMATION, SINCE IT RELIES ON CHILD COUNT CHECKING
         c.transform.parent = spawn.transform;

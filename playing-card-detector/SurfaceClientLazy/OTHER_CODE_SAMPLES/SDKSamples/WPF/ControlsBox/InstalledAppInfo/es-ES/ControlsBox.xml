@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ss:ApplicationInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ss="http://schemas.microsoft.com/Surface/2008/ApplicationMetadata/Loc">
+  <Application>
+    <Title>Caja de Controles</Title>
+    <Description>Demuestra cómo usar los controles de Microsoft Surface</Description>
+    <IconImageFile>..\InstalledAppInfo\AppIcon.png</IconImageFile>
+  </Application>
+</ss:ApplicationInfo>

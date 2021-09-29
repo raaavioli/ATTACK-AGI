@@ -1,0 +1,9 @@
+﻿<Application x:Class="DataVisualizer.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
+    StartupUri="Window1.xaml"
+    >
+    <Application.Resources>         
+    </Application.Resources>
+</Application>

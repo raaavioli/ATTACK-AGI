@@ -1,0 +1,142 @@
+﻿<s:SurfaceWindow
+    x:Class="TagVisualizerEventsSample.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
+    xmlns:tve="clr-namespace:TagVisualizerEventsSample"
+    Title="TagVisualizerEventsSample"
+    >
+    <s:SurfaceWindow.Resources>
+        <!--Tag Information Text Style for RichTextBox-->
+        <Style x:Key="TagInfoTextStyle"
+         TargetType="{x:Type RichTextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static s:SurfaceColors.ControlBackgroundBrushKey}}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static s:SurfaceColors.ControlBorderBrushKey}}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static s:SurfaceColors.ControlForegroundBrushKey}}" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0,0,0,81" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="Segoe360" />
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Focusable" Value="False" />
+        </Style>
+        <Storyboard x:Key="TagsNotSupportedText" SpeedRatio=".2">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="TagsNotSupportedText" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:01.7000000" Value="1"/>
+                <SplineDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </s:SurfaceWindow.Resources>
+    <s:SurfaceWindow.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource TagsNotSupportedText}"/>
+        </EventTrigger>
+    </s:SurfaceWindow.Triggers>
+
+  <s:TagVisualizer x:Name="Visualizer" tve:TagVisualizerEvents.Mode="Auto">
+    <Grid>
+      <!-- A blob that highlights when visualization is over -->
+      <Canvas>
+        <Canvas.Resources>
+          <Style TargetType="{x:Type Path}" 
+                 BasedOn="{StaticResource TagShapeStyle}"/>
+          </Canvas.Resources>
+          <Grid x:Name="Layer_1" Height="422.485" Width="402.071" 
+                Margin="70"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+            <Path Data="M657.0576,291.5098C657.0536,279.2358,653.6236,266.8218,646.4156,255.7748C626.6576,225.4888,586.1136,216.9358,555.8036,236.6358L555.5966,236.5288C506.6486,268.4628,542.6356,308.1998,504.2656,333.2348C465.8956,358.2678,444.6526,308.9108,395.0756,341.2568L395.0896,341.4898C364.8506,361.2928,356.3456,401.8498,376.1046,432.1348C384.9626,445.7118,398.0036,454.9058,412.4236,459.1618C421.5196,462.0288,429.5156,462.4898,436.8256,461.6088C445.3696,460.8538,453.8616,458.4028,461.8056,454.1588C477.2886,447.8788,491.8076,441.6488,511.7296,451.7708C530.8626,461.4938,533.7226,475.8918,536.9326,491.2848C537.5576,496.2008,538.7636,501.0838,540.5376,505.8398C544.6896,518.7358,552.5866,531.5308,573.5236,542.1688L573.6406,542.0918C593.5956,551.6278,617.8976,550.8358,637.7756,537.8668C657.6526,524.8998,668.1666,502.9768,667.4786,480.8698L667.5186,480.8438C667.4786,480.2218,667.4256,479.6208,667.3766,479.0148C667.2176,476.3358,666.9036,473.6608,666.4116,471.0018C657.8506,418.7288,611.7426,431.3118,609.3386,388.0878C606.8296,342.9018,658.9116,347.6358,657.0576,291.5098z"
+                  Fill="#FFF2F2F2" Stretch="Fill"
+                  tve:TagVisualizerEvents.VisualizationEnter="OnVisualizationEnter"
+                  tve:TagVisualizerEvents.VisualizationLeave="OnVisualizationLeave"/>
+          </Grid>       
+     </Canvas>   
+                    
+      <!-- A partially-transparent checkerboard. When a tag visualization goes
+      over it, it becomes opaque. -->
+      <s:ScatterView>
+        <s:ScatterViewItem
+          x:Name="Checkerboard"
+          Style="{StaticResource FadeStyle}"
+          Width="400"
+          Height="400"
+          CanScale="False"
+          Background="#FFF2F2F2"
+          Orientation="-5"
+          tve:TagVisualizerEvents.VisualizationEnter="OnVisualizationEnter"
+          tve:TagVisualizerEvents.VisualizationLeave="OnVisualizationLeave">
+          <s:ScatterViewItem.Resources>
+             <Style TargetType="{x:Type s:ScatterViewItem}" 
+                   BasedOn="{StaticResource FadeStyle}"/>
+                
+          </s:ScatterViewItem.Resources>
+          <Grid >
+            <Grid.Resources>
+              <!-- The individual checkerboard squares get a highlight whenever
+              a tag visualization is over them.-->
+              <Style TargetType="{x:Type ContentControl}" 
+                     BasedOn="{StaticResource TagHighlightStyle}"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ContentControl Grid.Row="0" Grid.Column="0"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="0" Grid.Column="1"/>
+            <ContentControl Grid.Row="0" Grid.Column="2"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="0" Grid.Column="3"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="1" Grid.Column="0"/>
+            <ContentControl Grid.Row="1" Grid.Column="1"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="1" Grid.Column="2"/>
+            <ContentControl Grid.Row="1" Grid.Column="3"/>
+            <ContentControl Grid.Row="2" Grid.Column="0"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="2" Grid.Column="1"/>
+            <ContentControl Grid.Row="2" Grid.Column="2"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="2" Grid.Column="3"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="3" Grid.Column="0"/>
+            <ContentControl Grid.Row="3" Grid.Column="1"/>
+            <ContentControl Background="#FF808080" Opacity="0.6" Grid.Row="3" Grid.Column="2"/>
+            <ContentControl Grid.Row="3" Grid.Column="3"/>
+          </Grid>
+          <s:ScatterViewItem.Triggers>
+          </s:ScatterViewItem.Triggers>
+        </s:ScatterViewItem>
+      </s:ScatterView>
+
+      <!-- A square ScatterViewItem that highlights in red when a tag
+      visualization is over it. -->
+      <s:ScatterView>
+        <s:ScatterViewItem
+          x:Name="Square"
+          Width="120"
+          Height="120"
+          CanScale="False"
+          Orientation="10"
+          tve:TagVisualizerEvents.VisualizationEnter="OnVisualizationEnter"
+          tve:TagVisualizerEvents.VisualizationLeave="OnVisualizationLeave">
+          <ContentControl Background="#FFF2F2F2" 
+                          Style="{StaticResource TagHighlightStyle}"/>
+        </s:ScatterViewItem>
+      </s:ScatterView>
+
+        <RichTextBox Visibility="Collapsed" x:Name="TagsNotSupportedText" Style="{StaticResource TagInfoTextStyle}" Width="665">
+            <FlowDocument>
+                <Paragraph LineHeight="17"><Run Text="This hardware does not support the detection of tagged objects. Without support for tagged objects, this application will run with reduced functionality."/></Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+    </Grid>
+  </s:TagVisualizer>
+</s:SurfaceWindow>

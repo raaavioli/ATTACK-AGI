@@ -1,0 +1,47 @@
+<UserControl x:Class="DataVisualizer.TouchDeviceDataVisualizer" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:s="http://schemas.microsoft.com/surface/2008">
+
+    <Grid Background="Transparent">
+
+        <!-- The Grid "DiagramContainerGrid" will contain a "TouchDeviceDiagram" UserControl for each touch device. -->
+        <Grid x:Name="DiagramContainerGrid" Background="Transparent" />
+
+        <!-- The Rectangle "ActiveArea" is registered for three TouchDevice events. Diagrams are created
+      in response to the TouchDown event, updated in response to the TouchMove event, and
+      removed in response to the LostTouchCapture event.
+      In addition, the statistics information (Total Blobs, Tags and Fingers) is based on
+      all of the touch devices over this Rectangle. -->
+        <Rectangle x:Name="ActiveArea" 
+                 Fill="Transparent" 
+                 TouchDown="OnTouchDown" 
+                 TouchMove="OnTouchMove" 
+                 LostTouchCapture="OnLostTouchCapture" />
+
+        <!-- This StackPanel has a text description of the current touchDevices
+      and s:SurfaceCheckBox controls to toggle the visibility of the different types of touch devices. -->
+        <StackPanel Background="Transparent" 
+                  Orientation="Vertical" 
+                  Margin="60" 
+                  VerticalAlignment="Top" 
+                  HorizontalAlignment="Left">
+            <TextBlock x:Name="Statistics"
+                   FontSize="20" 
+                   FontFamily="Segoe360"/>
+
+            <!-- Vertical Padding on CheckBox controls increases their hit area -->
+            <s:SurfaceCheckBox x:Name="ShowBoundingRectCheckBox" 
+                           Content="Show Bounding Rectangles" 
+                           IsChecked="False" 
+                           Checked="DisplayOptionsChanged" 
+                           Unchecked="DisplayOptionsChanged"/>
+            <s:SurfaceCheckBox x:Name="ShowTouchDeviceInfoCheckBox" 
+                           Content="Show TouchDevice Information"
+                           IsChecked="True" 
+                           Checked="DisplayOptionsChanged" 
+                           Unchecked="DisplayOptionsChanged"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
+

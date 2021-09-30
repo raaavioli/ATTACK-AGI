@@ -7,10 +7,6 @@ public class SquishyAttack : Attack
 {
     GameObject Bubble;
     MaterialPropertyBlock Mpb;
-    private void OnMouseDown()
-    {
-        StartSimulation(Vector3.forward);
-    }
 
     protected override void UpdateCharge(ref ParticleSystem Charge)
     {

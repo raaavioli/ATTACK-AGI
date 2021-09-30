@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);
             if (team == 0)
-                SpawnCharacter(characters[character], spawnPointsT1[character], Team.Left);
+                SpawnCharacter(characters[3], spawnPointsT1[character], Team.Left);
             else
                 SpawnCharacter(characters[teamSize - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
             spawnedCharacters++;
@@ -150,6 +150,9 @@ public class GameManager : MonoBehaviour
                 case 3:
                     wantedCharacter = Character.COLONEL;
                     break;
+                case 4:
+                    wantedCharacter = Character.SQUISHY;
+                    break;
                 default:
                     wantedCharacter = Character.WITCH;
                     break;
@@ -171,11 +174,12 @@ public class Character
     public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab");
     public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab");
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab");
+    public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab");
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY };
     }
 
     private string ResourcePath;

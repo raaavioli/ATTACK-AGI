@@ -9,6 +9,9 @@ Shader "Unlit/NewUnlitShader"
         _SphereRadius3("Sphere radius 3", Range(0, 1)) = 0.5
         _OctaSize("Octa size", Range(0, 1)) = 0.5
         _SmoothRadius("Smooth radius", Range(0, 1)) = 0.1
+        _Scale("Scale", Range(0, 1)) = 1
+        _OuterColor("Outer color", Color) = (0.7, 0.2, 0.5, 1.0)
+        _InnerColor("Inner color", Color) = (0.3, 0, 0.1, 0.2)
     }
     SubShader
     {
@@ -75,6 +78,9 @@ Shader "Unlit/NewUnlitShader"
             float _SphereRadius3;
             float _OctaSize;
             float _SmoothRadius;
+            float _Scale;
+            float4 _OuterColor;
+            float4 _InnerColor;
 
             float SolidAngle(float3 p, float angle, float radius) {
                 float2 c = float2(sin(angle), cos(angle / 3));
@@ -98,8 +104,9 @@ Shader "Unlit/NewUnlitShader"
                 return dot(q, float2(a, b)) - r1;
             }
 
-            float GetClosestDist(float3 p) {
-                // Move this to script code //
+
+            float GetDistToSquishy(float3 p) {
+                p = (p / _Scale);
                 float time = _Time.z * PI * 2;
                 float3 _SpherePos1 = 0.1 * float3(0, sin(time / 5), 0);
                 float3 _SpherePos2 = 0.35 * float3(sin(time / 7), 0.3 + 0.5 * sin(time / 5), sin(time / 3));
@@ -121,21 +128,21 @@ Shader "Unlit/NewUnlitShader"
                 float head = smin(SolidAngle(Eye1, PI / 3, 0.1), SolidAngle(Eye2, PI / 3, 0.1), _SmoothRadius);
                 float squishy = smin(body, head, _SmoothRadius);
                 float floor = dot(p, float3(0, 1, 0)) + 0.4;
-                return max(squishy, -floor);
+                return max(squishy, -floor) * _Scale;
             }
 
             float3 GetNormal(float3 Pos) {
                 float2 e = float2(1e-2, 0);
                 // Central difference
                 float3 a = float3(
-                    GetClosestDist(Pos + e.xyy),
-                    GetClosestDist(Pos + e.yxy),
-                    GetClosestDist(Pos + e.yyx)
+                    GetDistToSquishy(Pos + e.xyy),
+                    GetDistToSquishy(Pos + e.yxy),
+                    GetDistToSquishy(Pos + e.yyx)
                 );
                 float3 b = float3(
-                    GetClosestDist(Pos - e.xyy),
-                    GetClosestDist(Pos - e.yxy),
-                    GetClosestDist(Pos - e.yyx)
+                    GetDistToSquishy(Pos - e.xyy),
+                    GetDistToSquishy(Pos - e.yxy),
+                    GetDistToSquishy(Pos - e.yyx)
                 );
 
                 return normalize(a - b);
@@ -148,7 +155,7 @@ Shader "Unlit/NewUnlitShader"
                 float rStepSize = 0;
                 for (int i = 0; i < MAX_STEPS; i++) {
                     float3 rPos = rOrigin + rDir * rStepSize;
-                    float DistToScene = GetClosestDist(rPos);
+                    float DistToScene = GetDistToSquishy(rPos);
                     rStepSize += DistToScene;
                     if (rStepSize > MAX_DISTANCE || DistToScene < MIN_DISTANCE) break;
                 }
@@ -170,9 +177,7 @@ Shader "Unlit/NewUnlitShader"
                     float3 WorldNormal = normalize(mul(unity_ObjectToWorld, float4(GetNormal(Intersection), 0)));
                     float Lambert = max(dot(WorldNormal, _WorldSpaceLightPos0), 0.0);
                     float Fresnel = 1 - dot(WorldNormal, -WorldViewDir);
-                    float4 OuterColor = float4(0.7, 0.2, 0.5, 1.0);
-                    float4 InnerColor = float4(0.3, 0, 0.1, 0.2);
-                    Color = lerp(InnerColor, OuterColor, Fresnel);
+                    Color = lerp(_InnerColor, _OuterColor, Fresnel);
                 }
 
                 return Color;

@@ -78,6 +78,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OffsetX: 0
     - _Parallax: 0.02
     - _Period: 1
     - _Rim: 1.2
@@ -90,13 +91,14 @@ Material:
     - _Strength: 1.5
     - _Tile: 5
     - _UVSec: 0
+    - _Wrap: 1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.6592748, b: 0.6901961, a: 1}
-    - _Color1: {r: 0.8901961, g: 0.7411765, b: 0.8509804, a: 1}
-    - _Color2: {r: 0.4627451, g: 0.43137255, b: 0.78039217, a: 1}
-    - _Color3: {r: 0.4627451, g: 0.6862745, b: 0.9254902, a: 1}
-    - _Color4: {r: 0.79607844, g: 0.6, b: 0.78431374, a: 1}
-    - _Color5: {r: 0.31764707, g: 0.3254902, b: 0.78039217, a: 1}
+    - _Color1: {r: 0, g: 0.7076736, b: 0.8490566, a: 1}
+    - _Color2: {r: 0.19339621, g: 0.39900103, b: 1, a: 1}
+    - _Color3: {r: 0.6179246, g: 0.8024864, b: 1, a: 1}
+    - _Color4: {r: 0.21466713, g: 0.3804578, b: 0.6792453, a: 1}
+    - _Color5: {r: 0, g: 0.6760307, b: 0.8018868, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8392970199506959811}
   - component: {fileID: 2671042716568321101}
   - component: {fileID: 6214596430779937446}
-  - component: {fileID: 3002240235020064890}
-  - component: {fileID: -3211222097268128721}
+  - component: {fileID: 5938703626466069076}
+  - component: {fileID: 4559184412209367075}
   m_Layer: 0
   m_Name: SquishyPrefab
   m_TagString: Untagged
@@ -27,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4450709443245855212}
-  m_LocalRotation: {x: -0, y: 0.7919754, z: -0, w: 0.6105531}
-  m_LocalPosition: {x: 14.67, y: 6.47, z: -18.67}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.886, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4450709443245855212}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &6214596430779937446
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83,21 +83,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3002240235020064890
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4450709443245855212}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &-3211222097268128721
+--- !u!114 &5938703626466069076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,5 +96,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChargePrefab: {fileID: 0}
-  FireStartTime: 0.5
+  FireStartTime: 1
   MaxFireTime: 0.5
+--- !u!114 &4559184412209367075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4450709443245855212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d267da0fab5e0448ca1a368ed721a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

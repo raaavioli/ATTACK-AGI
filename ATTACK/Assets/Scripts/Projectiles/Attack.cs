@@ -53,7 +53,8 @@ public abstract class Attack : MonoBehaviour
                 Charge.time = 0;
                 Charge.Play();
             }
-            Animator.SetTrigger("StartShoot");
+            if (Animator != null)
+                Animator.SetTrigger("StartShoot");
             return true;
         }
         return false;
@@ -74,18 +75,18 @@ public abstract class Attack : MonoBehaviour
         {
             SimulationTime += Time.deltaTime;
 
-            if(Charge != null)
+            if (SimulationTime < FireStartTime)
             {
-                if (SimulationTime < FireStartTime)
+                UpdateCharge(ref Charge);
+                if(Charge != null)
                 {
                     Charge.transform.position = transform.position;
                     Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - transform.position);
-                    UpdateCharge(ref Charge);
                 }
-                else if (Charge.isPlaying && SimulationTime >= FireStartTime)
-                {
-                        Charge.Stop();
-                }
+            } 
+            else if (SimulationTime >= FireStartTime  && Charge != null && Charge.isPlaying)
+            {
+                Charge.Stop();
             }
 
             if (!Shooting && SimulationTime >= FireStartTime)
@@ -104,7 +105,8 @@ public abstract class Attack : MonoBehaviour
                 Shooting = false;
                 SimulationTime = 0;
                 StopProjectile();
-                Animator.SetTrigger("StartIdle");
+                if (Animator != null)
+                    Animator.SetTrigger("StartIdle");
             }
         }
     }

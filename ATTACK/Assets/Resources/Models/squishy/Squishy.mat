@@ -66,19 +66,24 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OctaSize: 0.372
     - _Parallax: 0.02
-    - _SmoothRadius: 0.062
+    - _Scale: 0.714
+    - _SmoothRadius: 0.2
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SphereRadius1: 0.3
-    - _SphereRadius2: 0.3
-    - _SphereRadius3: 0.3
+    - _SphereRadius1: 0.11
+    - _SphereRadius2: 0.049
+    - _SphereRadius3: 0.048
+    - _SphereRadius4: 0.369
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _InnerColor: {r: 0, g: 0.09588968, b: 0.4245283, a: 0.7019608}
+    - _OuterColor: {r: 0.4669811, g: 0.66291296, b: 1, a: 1}
     - _Sphere1: {r: 0, g: 0, b: 0, a: 0}
     - _Sphere2: {r: 0, g: 0, b: 0, a: 0}
     - _SpherePos1: {r: 0.01, g: 0, b: 0, a: 0}

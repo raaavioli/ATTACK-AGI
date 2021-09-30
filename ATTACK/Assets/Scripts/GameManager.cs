@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);
             if (team == 0)
-                SpawnCharacter(characters[3], spawnPointsT1[character], Team.Left);
+                SpawnCharacter(characters[character], spawnPointsT1[character], Team.Left);
             else
-                SpawnCharacter(characters[teamSize - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
+                SpawnCharacter(characters[characters.Count - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
             spawnedCharacters++;
         }
 

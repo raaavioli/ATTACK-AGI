@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
+            Debug.Log(cardPosition.ToString());
+
             // Decide the spawn point.
             int position = cardPosition.position;
             GameObject spawn;
@@ -134,7 +136,7 @@ public class GameManager : MonoBehaviour
             }
 
             // Skip spawn if spawn point is not empty.
-            if (spawn.transform.childCount != 0) {
+            if (spawn.transform.childCount > 5) {
                 continue;
             }
 

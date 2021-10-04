@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] spawnPointsT1;
     private GameObject[] spawnPointsT2;
-    public int teamSize = 3;
+    private int teamSize = 6;
 
     private List<GameObject> T1;
     private List<GameObject> T2;
@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviour
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);
             if (team == 0)
-                SpawnCharacter(characters[character], spawnPointsT1[character], Team.Left);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT1[character], Team.Left);
             else
-                SpawnCharacter(characters[teamSize - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[character], Team.Right);
             spawnedCharacters++;
         }
     }

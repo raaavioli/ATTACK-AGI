@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         inCombatPhase = true;
+        CameraHandler.instance.StartCombatCamera();
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)

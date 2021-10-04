@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] spawnPointsT1;
     private GameObject[] spawnPointsT2;
-    private int teamSize = 6;
+    private const int TEAM_SIZE = 6;
 
     private List<GameObject> T1;
     private List<GameObject> T2;
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         // Just to test spawning, will soon be replaced by some event from the 
         // SUR40 input server
-        if (Input.GetMouseButtonDown(0) && spawnedCharacters < teamSize * 2)
+        if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2)
         {
             List<Character> characters = Character.Values();
             int team = spawnedCharacters % 2;
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
         foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
             // Decide team, and skip if the team is already full.
             Team team = cardPosition.team;
-            if ((team == 0 && T1.Count >= 3) || (team == (Team) 1 && T2.Count >= 3)) {
+            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team) 1 && T2.Count >= TEAM_SIZE)) {
                 continue;
             }
 
@@ -164,9 +164,9 @@ public class GameManager : MonoBehaviour
             int position = cardPosition.position;
             GameObject spawn;
             if (team == 0) {
-                spawn = spawnPointsT1[(int)Mathf.Clamp(position-1, 0, 2)];
+                spawn = spawnPointsT1[position - 1];
             } else {
-                spawn = spawnPointsT2[(int)Mathf.Clamp(position-1, 0, 2)];
+                spawn = spawnPointsT2[position - 1];
             }
 
             // Skip spawn if spawn point is not empty.

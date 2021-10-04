@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
         // SUR40 input server
         if (Input.GetMouseButtonDown(0) && spawnedCharacters < teamSize * 2)
         {
-            Debug.Log(spawnedCharacters);
             List<Character> characters = Character.Values();
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);

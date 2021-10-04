@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 
 public class GameManager : MonoBehaviour
@@ -12,6 +14,9 @@ public class GameManager : MonoBehaviour
     private List<GameObject> T2;
 
     private int spawnedCharacters = 0;
+
+    private bool inCombatPhase = false;
+
     public void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
@@ -30,9 +35,22 @@ public class GameManager : MonoBehaviour
         {
             SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
         }*/
+
+        StartCoroutine(SetupPhaseTimer(10));
     }
 
     public void Update()
+    {
+        if (inCombatPhase) {
+            CombatPhaseUpdate();
+        } else {
+            SetupPhaseUpdate();
+        }
+        // Restarts scene on r press.
+        if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void SetupPhaseUpdate()
     {
         // Just to test spawning, will soon be replaced by some event from the 
         // SUR40 input server
@@ -47,8 +65,11 @@ public class GameManager : MonoBehaviour
                 SpawnCharacter(characters[teamSize - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
             spawnedCharacters++;
         }
+    }
 
-        foreach (GameObject character in T1)
+    private void CombatPhaseUpdate()
+    {
+        foreach (GameObject character in T1) // Start attacks
         {
             if (character.activeSelf)
             {
@@ -60,7 +81,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        foreach (GameObject character in T2)
+        foreach (GameObject character in T2) // Start attacks
         {
             if (character.activeSelf)
             {
@@ -71,6 +92,17 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        // If one team is dead, end combat phase.
+    }
+
+    private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
+    {
+        for (int i = 0; i < seconds; i++)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        inCombatPhase = true;
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)
@@ -114,7 +146,8 @@ public class GameManager : MonoBehaviour
         c.transform.parent = spawn.transform;
     }
 
-    private void SpawnFromCards() {
+    private void SpawnFromCards() 
+    {
         ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
 
         foreach (ServerHandler.CardPosition cardPosition in cardPositions) {

@@ -1,0 +1,395 @@
+<UserControl x:Class="GrandPiano.PianoKeyboard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="http://schemas.microsoft.com/surface/2008" xml:lang="en-US" xmlns:GrandPiano="clr-namespace:GrandPiano">
+
+  <UserControl.Resources>
+    <!-- base style for all piano keys -->
+    <Style x:Key="pianoButton" BasedOn="{x:Null}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="IsTabStop" Value="False" />
+      <Setter Property="ClickMode" Value="Hover" />
+    </Style>
+
+    <!-- style for the transparent Path over the piano keys -->
+    <Style x:Key="buttonOutline" TargetType="{x:Type Path}">
+      <Setter Property="Opacity" Value="1" />
+      <Setter Property="Stretch" Value="Fill" />
+      <Setter Property="Fill" Value="Transparent" />
+      <Setter Property="Stroke" Value="{x:Null}" />
+    </Style>
+
+    <!-- button styles -->
+    <Style x:Key="buttonC7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-87,152,0,82" Width="126.5" Data="M20,152.5 L39.5,152 0.5,206 0.5,235 16,234.5 -20.5,290 -20.5,310 -87,310 -87,287.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonC_7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-146.5,126,0,159.5" Width="86" Data="M-63.5,127.5 L-86.5,126.5 -146,204 -145,230.5 -115,232 -61,152.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonD7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-141,150,0,82" Width="116.5" Data="M-37,150.5 L-25,152 -59.5,205.5 -59,230.5 -44,233.5 -75.5,289.5 -75.5,310 -140.5,310 -140.5,288 -106.5,234.5 -92.5,234 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonD_7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-154.5,126.5,0,160.5" Width="77" Data="M-80.5,127 L-105,128 -154,205 -153,230.5 -123,231 -78,151.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonE7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-179.5,151.5,0,82" Width="128" Data="M-90.5,152 L-135,233.5 -150,234 -179,288 -179,310 -113.5,310 -113.5,289.5 -52,152 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonF7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-176.5,151.5,0,82" Width="91.5" Data="M-85.5,152 L-114.5,153 -176,289.5 -176,310 -111.5,310 -111.5,289.5 -91.5,233.5 -108,232.5 -108,206.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonF_7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-170.5,127,0,160.5" Width="57" Data="M-115.5,127.5 L-140,128 -169.5,205 -170,231 -140,230 -114,152.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonG7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-179,151,0,82" Width="79" Data="M-100.5,151.5 L-121,152 -146,232.5 -159.5,233.5 -178.5,291 -178.5,310 -113,310 -113,290.5 -100.5,234 -114,233.5 -115.5,204 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonG_7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-179,126.5,0,160.5" Width="47.5" Data="M-132.5,127 L-156,127 -178.5,205.5 -177.5,231 -148,230.5 -132,153.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonA7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-193.5,151.5,0,82" Width="74.5" Data="M-128.5,152 L-151,152.5 -167,233 -180.5,234 -193,290.5 -193,310 -126,310 -126,290.5 -119.5,235 -137,233.5 -137.5,205.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonA_7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-60,127,0,160" Width="39.5" Data="M-145.5,127.5 L-169,128.5 -181.5,205.5 -181.5,230.5 -150.5,231.5 -143,152.5 z" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                  <TransformGroup>
+                    <ScaleTransform ScaleX="-1" ScaleY="1" />
+                  </TransformGroup>
+                </Path.RenderTransform>
+              </Path>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="buttonB7" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" HorizontalAlignment="Left" Margin="-105.5,152.5,0,82" Width="68.5" Data="M-112,153 L-148,152.5 -157,235.5 -173.5,235.5 -179.5,289 -179.5,310 -114.5,310 -114.5,287.5 z" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                  <TransformGroup>
+                    <ScaleTransform ScaleX="-1" ScaleY="1" />
+                    <TranslateTransform X="-3" Y="0" />
+                  </TransformGroup>
+                </Path.RenderTransform>
+              </Path>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="D_7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M551,129 L572.5,129.5 595.5,207 596,232 567.5,231 548,153 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="E7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M583.5,153 L614.5,154.5 660.5,284 660.5,291.5 660.5,310 598.5,310 598.5,292.5 585,235.5 601.5,234.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="F7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M622,153.5 L656.5,153 691.5,234.5 710,236 733.5,285.5 733.5,292.5 733.5,310 668,310 668,291.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="F_7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M661,128.5 L685.5,128.5 726.5,207.5 725,230.5 697,230.5 661.5,154 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="G7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M699.5,153 L711.5,154 756.5,234 774.5,235.5 804,287.5 804,293.5 804,310 739,310 739,291.5 716,235.5 730,235.5 729,206 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="G_7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M718,130 L741.5,130 790.5,205 789.5,231.5 761.5,230 715,151.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="A7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M759,153 L767.5,154 825.5,236 837.5,235.5 877,287.5 875,288 873,288.5 873,310 810,310 810.0,287.5 810.0,287.5 L780.00009,234.50001 793.00014,234.50001 793.00014,209.00001 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="A_7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M772,130 L793.5,130 854.5,206 853.5,230 826,229 772.5,154.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="B7Button" BasedOn="{StaticResource pianoButton}" TargetType="{x:Type s:SurfaceButton}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type s:SurfaceButton}">
+            <Grid>
+              <Path Style="{StaticResource buttonOutline}" Data="M817,153.5 L835.5,154 946,288 946,310 880,310 880,288.5 845.5,235.5 856.5,235 859,206.5 z" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </UserControl.Resources>
+  
+      <Grid Opacity="1" Margin="-12,30,9,-15" x:Name="GrandPiano" Visibility="Visible">
+        <Image Margin="340.333,0,285.667,325" x:Name="name" VerticalAlignment="Bottom" Width="398" Height="26" Source="Assets\name.jpg" Stretch="Fill" />
+
+        <!-- image for pressed and unpressed piano keys -->
+        <Grid SnapsToDevicePixels="true" x:Name="keys" Height="392" Margin="26,295,46,34">
+          <Image HorizontalAlignment="Left" Margin="24,151,0,160" x:Name="keyC6bottom" Width="124" Source="Assets\C1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="25,152,0,139" x:Name="keyC6xbottom" Width="124" Source="Assets\C1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="70,126,0,137" x:Name="keyC_6" Width="90" Source="Assets\C1_.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="72,126,0,119" x:Name="keyC_6x" Width="89" Source="Assets\C1_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="-19,0,0,33" x:Name="keyC6top" VerticalAlignment="Bottom" Width="114" Height="127" Source="Assets\C1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="-15,0,0,12" x:Name="keyC6xtop" VerticalAlignment="Bottom" Width="146" Height="127" Source="Assets\C1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="100,151,0,160" x:Name="keyD6bottom" Width="103" Source="Assets\D1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="102,151,0,140" x:Name="keyD6xbottom" Width="102" Source="Assets\D1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="136,126,0,137" x:Name="keyD_6" Width="80" Source="Assets\D1_.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="137,126,0,119" x:Name="keyD_6x" Width="79" Source="Assets\D1_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="53,0,0,33" x:Name="keyD6top" VerticalAlignment="Bottom" Width="99" Height="127" Source="Assets\D1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="55,0,0,19" x:Name="keyD6xtop" VerticalAlignment="Bottom" Width="104" Height="121" Source="Assets\D1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="165,151,0,160" x:Name="keyE6bottom" Width="92" Source="Assets\E1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="167,151,0,140" x:Name="keyE6xbottom" Width="91" Source="Assets\E1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="123,0,0,33" x:Name="keyE6top" VerticalAlignment="Bottom" Width="128" Height="127" Source="Assets\E1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="126,0,0,6" x:Name="keyE6xtop" VerticalAlignment="Bottom" Width="120" Height="134" Source="Assets\E1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="219,151,0,161" x:Name="keyF6bottom" Width="92" Source="Assets\F1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="219,151,0,140" x:Name="keyF6xbottom" Width="92" Source="Assets\F1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="264,126,0,137" x:Name="keyF_6" Width="60" Source="Assets\F1_.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="265,126,0,119" x:Name="keyF_6x" Width="59" Source="Assets\F1_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="194,0,0,33" x:Name="keyF6top" VerticalAlignment="Bottom" Width="95" Height="128" Source="Assets\F1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="196,0,0,6" x:Name="keyF6xtop" VerticalAlignment="Bottom" Width="96" Height="134" Source="Assets\F1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="294,150,0,161" x:Name="keyG6bottom" Width="71" Source="Assets\G1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="291,150,0,141" x:Name="keyG6xbottom" Width="74" Source="Assets\G1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" x:Name="keyG_6" Width="51" Source="Assets\G1_.png" Stretch="Fill" Visibility="Visible" Margin="329,126,0,137" />
+          <Image HorizontalAlignment="Left" Margin="330,126,0,119" x:Name="keyG_6x" Width="50" Source="Assets\G1_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="265,0,0,34" x:Name="keyG6top" VerticalAlignment="Bottom" Width="90" Height="127" Source="Assets\G1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="265,0,0,7" x:Name="keyG6xtop" VerticalAlignment="Bottom" Width="92" Height="134" Source="Assets\G1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="359,151,0,160" x:Name="keyA6bottom" Width="48" Source="Assets\A1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="362,150,0,141" x:Name="keyA6xbottom" Width="59" Source="Assets\A1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="394,127,0,136" x:Name="keyA_6" Width="40" Source="Assets\A1_.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="394,126,0,119" x:Name="keyA_6x" Width="40" Source="Assets\A1_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="336,0,0,33" x:Name="keyA6top" VerticalAlignment="Bottom" Width="81" Height="127" Source="Assets\A1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="338,0,0,7" x:Name="keyA6xtop" VerticalAlignment="Bottom" Width="80" Height="134" Source="Assets\A1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="426,151,0,160" x:Name="keyB6bottom" Width="50" Source="Assets\B1bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="426,151,0,140" x:Name="keyB6xbottom" Width="50" Source="Assets\B1xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Left" Margin="407,0,0,33" x:Name="keyB6top" VerticalAlignment="Bottom" Width="69" Height="127" Source="Assets\B1top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Left" Margin="407,0,0,6" x:Name="keyB6xtop" VerticalAlignment="Bottom" Width="69" Height="134" Source="Assets\B1xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,25,160" x:Name="keyB7bottom" Width="108" Source="Assets\B2bottom.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,152,26,140" x:Name="keyB7xbottom" Width="107" Source="Assets\B2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,127,73,136" x:Name="keyA_7" Width="91" Source="Assets\A2_.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,125,75,120" x:Name="keyA_7x" Width="89" Source="Assets\A2_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,-18,33" x:Name="keyB7top" VerticalAlignment="Bottom" Width="129" Height="127" Source="Assets\B2top.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,0,-16,7" x:Name="keyB7xtop" VerticalAlignment="Bottom" Width="120" Height="133" Source="Assets\B2xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,105,160" x:Name="keyA7bottom" Width="84" Source="Assets\A2bottom.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,151,104,141" x:Name="keyA7xbottom" Width="86" Source="Assets\A2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,127,137,136" x:Name="keyG_7" Width="81" Source="Assets\G2_.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,126,139,119" x:Name="keyG_7x" Width="79" Source="Assets\G2_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,53,33" x:Name="keyA7top" VerticalAlignment="Bottom" Width="119" Height="127" Source="Assets\A2top.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,0,57,8" x:Name="keyA7xtop" VerticalAlignment="Bottom" Width="119" Height="133" Source="Assets\A2xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,167,160" x:Name="keyG7bottom" Width="77" Source="Assets\G2bottom.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,151,155,141" x:Name="keyG7xbottom" Width="90" Source="Assets\G2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,127,202,136" x:Name="keyF_7" Width="71" Source="Assets\F2_.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,125,204,120" x:Name="keyF_7x" Width="69" Source="Assets\F2_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,123,33" x:Name="keyG7top" VerticalAlignment="Bottom" Width="109" Height="127" Source="Assets\G2top.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,0,125,12" x:Name="keyG7xtop" VerticalAlignment="Bottom" Width="111" Height="129" Source="Assets\G2xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,233,160" x:Name="keyF7bottom" Width="80" Source="Assets\F2bottom.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,0,194,33" x:Name="keyF7top" VerticalAlignment="Bottom" Width="114" Height="127" Source="Assets\F2top.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,151,220,141" x:Name="keyF7xbottom" Width="93" Source="Assets\F2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,195,8" x:Name="keyF7xtop" VerticalAlignment="Bottom" Width="109" Height="133" Source="Assets\F2xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,284,160" x:Name="keyE7bottom" Width="70" Source="Assets\E2bottom.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,151,285,141" x:Name="keyE7xbottom" Width="69" Source="Assets\E2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,126.5,332,137" x:Name="keyD_7" Width="51" Source="Assets\D2_.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,125.5,332,119" x:Name="keyD_7x" Width="50" Source="Assets\D2_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,266,33" x:Name="keyE7top" VerticalAlignment="Bottom" Width="92" Height="127" Source="Assets\E2top.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Right" Margin="0,0,267,8" x:Name="keyE7xtop" VerticalAlignment="Bottom" Width="88" Height="133" Source="Assets\E2xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,364,160" x:Name="keyD7bottom" Width="46" Source="Assets\D2bottom.png" Stretch="Fill" Visibility="Visible" />
+          <Image HorizontalAlignment="Right" Margin="0,153,363,140" x:Name="keyD7xbottom" Width="46" Source="Assets\D2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,151,429,160" x:Name="keyC7bottom" Width="48" Source="Assets\C2bottom.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,151,429,140" x:Name="keyC7xbottom" Width="48" Source="Assets\C2xbottom.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,127,394,136" x:Name="keyC_7" Width="41" Source="Assets\C2_.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,126,395,119" x:Name="keyC_7x" Width="40" Source="Assets\C2_x.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,336,33" x:Name="keyD7top" VerticalAlignment="Bottom" Width="82" Height="127" Source="Assets\D2top.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,0,336,6" x:Name="keyD7xtop" VerticalAlignment="Bottom" Width="82" Height="134" Source="Assets\D2xtop.png" Stretch="Fill" Visibility="Hidden" />
+          <Image HorizontalAlignment="Right" Margin="0,0,407,33" x:Name="keyC7top" VerticalAlignment="Bottom" Width="70" Height="127" Source="Assets\C2top.png" Stretch="Fill" />
+          <Image HorizontalAlignment="Right" Margin="0,0,407,6" x:Name="keyC7xtop" VerticalAlignment="Bottom" Width="70" Height="134" Source="Assets\C2xtop.png" Stretch="Fill" Visibility="Hidden" />
+
+          <!-- actual piano keys as Surface buttons -->
+          <Grid x:Name="KeyButtons" Margin="24,-1,26,0">
+            <s:SurfaceButton x:Name="C6" Style="{StaticResource buttonC7}" HorizontalAlignment="Left" Margin="46,1,0,0" Width="286" Focusable="False" />
+            <s:SurfaceButton x:Name="C_6" Style="{StaticResource buttonC_7}" Width="138" HorizontalAlignment="Left" Margin="193,1,0,0" />
+            <s:SurfaceButton x:Name="D6" Style="{StaticResource buttonD7}" Width="218" HorizontalAlignment="Left" Margin="171,1,0,0" />
+            <s:SurfaceButton x:Name="D_6" Style="{StaticResource buttonD_7}" Width="132" HorizontalAlignment="Left" Margin="266,1,0,0" />
+            <s:SurfaceButton x:Name="E6" Style="{StaticResource buttonE7}" Margin="280,1,437,0" />
+            <s:SurfaceButton x:Name="F6" Style="{StaticResource buttonF7}" Margin="347,1,384,0" />
+            <s:SurfaceButton x:Name="F_6" Style="{StaticResource buttonF_7}" Margin="412,1,319,0" />
+            <s:SurfaceButton x:Name="G6" Style="{StaticResource buttonG7}" Margin="420,1,215,0" />
+            <s:SurfaceButton x:Name="G_6" Style="{StaticResource buttonG_7}" Width="198" HorizontalAlignment="Right" Margin="0,1,221,0" />
+            <s:SurfaceButton x:Name="A6" Style="{StaticResource buttonA7}" Width="277" HorizontalAlignment="Right" Margin="0,1,121,0" />
+            <s:SurfaceButton x:Name="A_6" Style="{StaticResource buttonA_7}" RenderTransformOrigin="0.5,0.5" Width="203" HorizontalAlignment="Left" Margin="147,1,0,0">
+              <Button.RenderTransform>
+                <TransformGroup>
+                  <ScaleTransform ScaleX="-1" ScaleY="1" />
+                </TransformGroup>
+              </Button.RenderTransform>
+            </s:SurfaceButton>
+            <s:SurfaceButton x:Name="B6" Style="{StaticResource buttonB7}" RenderTransformOrigin="0.5,0.5" Width="343" HorizontalAlignment="Left" Margin="0,0,0,1">
+              <Button.RenderTransform>
+                <TransformGroup>
+                  <ScaleTransform ScaleX="-1" ScaleY="1" />
+                </TransformGroup>
+              </Button.RenderTransform>
+            </s:SurfaceButton>
+            <s:SurfaceButton x:Name="C7" Style="{StaticResource buttonB7}" Width="343" HorizontalAlignment="Right" Margin="0,1,0,0" />
+            <s:SurfaceButton x:Name="C_7" Style="{StaticResource buttonA_7}" Width="203" HorizontalAlignment="Right" Margin="0,1,149,0" />
+            <s:SurfaceButton x:Name="D7" Style="{StaticResource buttonA7}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Margin="122,1,0,0" Width="277">
+              <Button.RenderTransform>
+                <TransformGroup>
+                  <ScaleTransform ScaleX="-1" ScaleY="1" />
+                </TransformGroup>
+              </Button.RenderTransform>
+            </s:SurfaceButton>
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,128.5,307.5,160.5" x:Name="D_7" Style="{StaticResource D_7Button}" Width="49" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,152.5,243,82" x:Name="E7" Style="{StaticResource E7Button}" Width="78" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,152.5,170,82" x:Name="F7" Style="{StaticResource F7Button}" Width="112.5" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,128,177,162" x:Name="F_7" Style="{StaticResource F_7Button}" Width="66.5" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,152.5,99.5,82" x:Name="G7" Style="{StaticResource G7Button}" Width="105.5" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,130.5,114,160" x:Name="G_7" Style="{StaticResource G_7Button}" Width="76.5" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,152.5,28.427,82" x:Name="A7" Style="{StaticResource A7Button}" Width="117.073" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,129.5,49,162.5" x:Name="A_7" Style="{StaticResource A_7Button}" Width="83.5" />
+            <s:SurfaceButton HorizontalAlignment="Right" Margin="0,153,-42.5,82" x:Name="B7" Style="{StaticResource B7Button}" Width="130" />
+          </Grid>
+        </Grid>
+      </Grid>  
+</UserControl>

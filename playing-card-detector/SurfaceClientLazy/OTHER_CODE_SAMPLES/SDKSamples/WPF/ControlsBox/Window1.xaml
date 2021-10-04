@@ -1,0 +1,460 @@
+﻿<s:SurfaceWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
+    x:Class="ControlsBox.Window1"
+    xmlns:local="clr-namespace:ControlsBox"
+    xmlns:Resources="clr-namespace:ControlsBox.Resources"     
+    Title="ControlsBox">
+
+    <Grid Background="Transparent">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <s:SurfaceListBox Name="ContentSelector" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="43,0,0,0" SelectionChanged="OnSelectionChanged" >
+
+      <!-- SurfaceButton -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <s:SurfaceButton Width="184" HorizontalAlignment="Center" VerticalAlignment="Center">SurfaceButton</s:SurfaceButton>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceButton
+      </s:SurfaceListBoxItem>
+
+      <!-- SurfaceToggleButton -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <s:SurfaceToggleButton HorizontalAlignment="Center" VerticalAlignment="Center">SurfaceToggleButton</s:SurfaceToggleButton>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceToggleButton
+      </s:SurfaceListBoxItem>
+
+      <!-- SurfaceCheckBox -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <s:SurfaceCheckBox HorizontalAlignment="Center" VerticalAlignment="Center" >SurfaceCheckBox</s:SurfaceCheckBox>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceCheckBox
+      </s:SurfaceListBoxItem>
+
+      <!-- SurfaceRadioButton -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="76">
+            <s:SurfaceRadioButton HorizontalAlignment="Center" VerticalAlignment="Top" >SurfaceRadioButton</s:SurfaceRadioButton>
+            <s:SurfaceRadioButton HorizontalAlignment="Center" VerticalAlignment="Bottom" >SurfaceRadioButton</s:SurfaceRadioButton>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceRadioButton
+      </s:SurfaceListBoxItem>
+
+      <!-- SurfaceSlider -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid Height="71" Width="308" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <s:SurfaceSlider VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceSlider
+      </s:SurfaceListBoxItem>
+
+      <!-- SurfaceScrollViewer -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid Height="308" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <s:SurfaceScrollViewer>
+              <StackPanel Background="{DynamicResource {x:Static s:SurfaceColors.ListBoxBackgroundBrushKey}}">
+                <Label  Content="{x:Static Resources:Resources.Item_1}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_2}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_3}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_4}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_5}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_6}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_7}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_8}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_9}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_10}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_11}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_12}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_13}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_14}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_15}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_16}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_17}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_18}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_19}"/>
+                <Label  Content="{x:Static Resources:Resources.Item_20}"/>
+              </StackPanel>
+            </s:SurfaceScrollViewer>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceScrollViewer
+      </s:SurfaceListBoxItem>
+
+      <!-- Surface Text Input Controls -->
+      <s:SurfaceListBoxItem Content="{x:Static Resources:Resources.TextInputControls}">
+        <s:SurfaceListBoxItem.Tag>
+          <!-- Place the text controls so the keyboard won't cover them up -->
+          <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition Width="7"/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+              <Label >SurfaceTextBox</Label>
+              <s:SurfaceTextBox Width="200" Margin="7,0,10,10"/>              
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Vertical">
+              <Label >SurfacePasswordBox</Label>
+              <s:SurfacePasswordBox Width="200" Margin="7,0,10,10"/>              
+            </StackPanel>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+      </s:SurfaceListBoxItem>
+
+      <!-- SurfaceInkCanvas -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="0.85*" />
+              <RowDefinition Height="0.15*" />
+            </Grid.RowDefinitions>
+            <s:SurfaceInkCanvas Grid.Row="0" Name="SampleInkCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >              
+                <s:SurfaceInkCanvas.DefaultDrawingAttributes>
+                    <DrawingAttributes Color="#FF808080"/>
+                </s:SurfaceInkCanvas.DefaultDrawingAttributes>
+            </s:SurfaceInkCanvas>
+            <s:SurfaceButton Grid.Row="1"  Height="38" Width="184" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OnInkCanvasClearClick" Content="{x:Static Resources:Resources.Clear}" />
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        SurfaceInkCanvas
+      </s:SurfaceListBoxItem>
+
+      <!-- ScatterView -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <s:ScatterView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+              <s:ScatterViewItem Height="186" Width="308" FontSize="20" Padding="7,0,10,10"
+                                Content="{x:Static Resources:Resources.LargeItem}"/>
+              <!-- "Large Item" -->
+              <s:ScatterViewItem FontSize="20" Padding="7,0,10,10">ScatterViewItem</s:ScatterViewItem>
+              <s:ScatterViewItem FontSize="20" Width="482" Padding="7,0,10,10" Content="{x:Static Resources:Resources.MaximumDefaultSize}"/>
+                
+              <!-- "The maximum default size is 20% of the size of the parent ScatterView" />-->
+              <s:ScatterViewItem></s:ScatterViewItem>
+            </s:ScatterView>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        ScatterView
+      </s:SurfaceListBoxItem>
+
+      <!-- Surface Library Controls -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.Resources>
+
+              <!-- A template describing the view of each piece of library data -->
+              <DataTemplate x:Key="LibraryItemTemplate">
+                <Viewbox Stretch="Uniform">
+                  <Image Source="{Binding}" />
+                </Viewbox>
+              </DataTemplate>
+
+              <!-- Styles to ensure each library control uses the above defined templates -->
+              <Style TargetType="{x:Type s:LibraryStack}">
+                <Setter Property="ItemTemplate" Value="{StaticResource LibraryItemTemplate}"/>             
+              </Style>
+              <Style TargetType="{x:Type s:LibraryBar}">
+                <Setter Property="ItemTemplate" Value="{StaticResource LibraryItemTemplate}"/>              
+              </Style>
+         
+              <DataTemplate x:Key="itemTemplate">
+                    <Image Source="{Binding XPath=@FullPath}"/>                   
+              </DataTemplate>
+            </Grid.Resources>
+            <s:ScatterView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+              <s:ScatterViewItem Style="{StaticResource LibraryControlInScatterViewItemContentStyle}" 
+                                 Orientation="0.0">
+                <s:LibraryStack Width="270" Height="270">
+                  <BitmapImage UriSource="Resources/Images/Blue1.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Blue2.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Blue3.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Green1.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Green2.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Green3.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Orange1.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Orange2.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Orange3.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Rhodamine1.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Rhodamine2.jpg"/>
+                  <BitmapImage UriSource="Resources/Images/Rhodamine3.jpg"/>
+                 </s:LibraryStack>
+              </s:ScatterViewItem>
+
+              <s:ScatterViewItem Style="{StaticResource LibraryControlInScatterViewItemContentStyle}"
+                                 Orientation="0.0">
+                <s:LibraryBar Width="607" Height="270" Rows="1">
+                    <BitmapImage UriSource="Resources/Images/Blue4.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Blue5.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Blue6.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Green4.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Green5.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Green6.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Orange4.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Orange5.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Orange6.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Rhodamine4.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Rhodamine5.jpg"/>
+                    <BitmapImage UriSource="Resources/Images/Rhodamine6.jpg"/>
+                </s:LibraryBar>
+              </s:ScatterViewItem>
+            </s:ScatterView>
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        Surface Library Controls
+      </s:SurfaceListBoxItem>
+
+      <!-- Surface Library Containers -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.Resources>
+
+                    <!-- A template describing the view of each piece of library data -->
+                    <DataTemplate x:Key="LibraryItemTemplate">
+                        <Viewbox Stretch="Uniform">
+                            <Image Source="{Binding Bitmap}" />
+                        </Viewbox>
+                    </DataTemplate>
+                    
+                    <!--Style for each data item on Scatter or Stack-->
+                    <Style x:Key="DataItemScatterItemStyle" TargetType="{x:Type s:ScatterViewItem}">
+                        <Setter Property="MinWidth" Value="69" />
+                        <Setter Property="MinHeight" Value="69" />                        
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type s:ScatterViewItem}">
+                                    <Border x:Name="container">
+                                      <Viewbox Stretch="Uniform">
+                                         <Image Source="{Binding Bitmap}" />
+                                      </Viewbox>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                  </Grid.Resources>
+                <s:ScatterView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                     <!-- Using LibraryContainerInScatterViewItemStyle style since the library container 
+                    is part of the content of the scatter view item. Notice that OnViewingModeChanged needs
+                    to update the minimum and maximum size changes and ensure that after the resize the 
+                    library container is still within the bounds of the scatter view -->              
+                  <s:ScatterViewItem Style="{StaticResource LibraryContainerInScatterViewItemStyle}"       
+                                     Width="320" Height="320"
+                                      Orientation="0.0">
+                        <s:LibraryContainer Name="libraryContainer1">
+                            <s:LibraryContainer.StackView>
+                                <s:StackView ItemTemplate="{StaticResource LibraryItemTemplate}">
+                                </s:StackView>
+                            </s:LibraryContainer.StackView>
+                            <s:LibraryContainer.BarView>
+                                <s:BarView ItemTemplate="{StaticResource LibraryItemTemplate}"
+                                           DragCursorStyle="{StaticResource DataItemScatterItemStyle}">
+                                </s:BarView>
+                            </s:LibraryContainer.BarView>
+                        </s:LibraryContainer>
+                    </s:ScatterViewItem>
+
+                       <!-- Using LibraryContainerInScatterViewItemStyle style since the library container 
+                    is part of the data template used to show the scatter view item content. Notice that 
+                    OnViewingModeChanged needs to update the minimum and maximum size changes and ensure 
+                    that after the resize the library container is still within the bounds of 
+                    the scatter view -->
+                    <s:ScatterViewItem Style="{StaticResource LibraryContainerInScatterViewItemStyle}"             
+                                       Width="720" Height="320"
+                                       Orientation="0.0" >
+                        <s:LibraryContainer Name="libraryContainer2" ViewingMode="Bar">
+                            <s:LibraryContainer.StackView>
+                                <s:StackView ItemTemplate="{StaticResource LibraryItemTemplate}">
+                                </s:StackView>
+                            </s:LibraryContainer.StackView>
+                            <s:LibraryContainer.BarView>
+                                <s:BarView ItemTemplate="{StaticResource LibraryItemTemplate}" 
+                                           DragCursorStyle="{StaticResource DataItemScatterItemStyle}">
+                                </s:BarView>
+                            </s:LibraryContainer.BarView>
+                        </s:LibraryContainer>
+                    </s:ScatterViewItem>
+                </s:ScatterView>
+            </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        Surface Library Containers
+      </s:SurfaceListBoxItem>
+
+       <!-- ElementMenu -->
+      <s:SurfaceListBoxItem>
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <s:ScatterView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+              <s:ScatterView.Resources>
+                <Image x:Shared="false" x:Key="IconPhoto" Source="Resources\Icons\photo.png"/>
+                <Image x:Shared="false" x:Key="IconPhotoCopy" Source="Resources\Icons\photo - copy.png"/>
+                <Image x:Shared="false" x:Key="IconPhotoCrop" Source="Resources\Icons\photo - crop.png"/>
+                <Image x:Shared="false" x:Key="IconPhotoDelete" Source="Resources\Icons\photo - delete.png"/>
+                <Image x:Shared="false" x:Key="IconPhotoRedeye" Source="Resources\Icons\photo - redeye correction.png"/>
+
+                <Image x:Shared="false" x:Key="IconFile" Source="Resources\Icons\file.png"/>
+                <Image x:Shared="false" x:Key="IconFileCopy" Source="Resources\Icons\file - copy.png"/>
+                <Image x:Shared="false" x:Key="IconFileEdit" Source="Resources\Icons\edit.png"/>
+                <Image x:Shared="false" x:Key="IconFilePrint" Source="Resources\Icons\print.png"/>
+                <Image x:Shared="false" x:Key="IconFileClose" Source="Resources\Icons\file - close.png"/>
+
+                <Image x:Shared="false" x:Key="IconDoc" Source="Resources\Icons\document.png"/>
+                <Image x:Shared="false" x:Key="IconDocCopy" Source="Resources\Icons\document - copy.png"/>
+                <Image x:Shared="false" x:Key="IconDocDelete" Source="Resources\Icons\document - delete.png"/>
+
+                <Image x:Shared="false" x:Key="IconTools" Source="Resources\Icons\tools.png"/>
+                <Image x:Shared="false" x:Key="IconToolsSearch" Source="Resources\Icons\search.png"/>
+                <Image x:Shared="false" x:Key="IconToolsTrash" Source="Resources\Icons\trash.png"/>
+                <Image x:Shared="false" x:Key="IconToolsUSB" Source="Resources\Icons\usb.png"/>
+
+                <Image x:Shared="false" x:Key="IconMail" Source="Resources\Icons\mail.png"/>                
+                <Image x:Shared="false" x:Key="IconMailCopy" Source="Resources\Icons\mail - copy.png"/>
+                <Image x:Shared="false" x:Key="IconMailDelete" Source="Resources\Icons\mail - delete.png"/>
+                <Image x:Shared="false" x:Key="IconMailAttach" Source="Resources\Icons\attach.png"/>
+                <Image x:Shared="false" x:Key="IconChat" Source="Resources\Icons\chat.png"/>
+                <Image x:Shared="false" x:Key="IconRefresh" Source="Resources\Icons\refresh.png"/>
+              </s:ScatterView.Resources>
+              <!-- ElementMenu always visible. Demonstrates the ActivationMode property.-->
+              <s:ScatterViewItem 
+                Height="139" 
+                Width="224" 
+                Orientation="-23"
+                Background="#FF787878">
+                <s:ElementMenu 
+                  ActivationMode="AlwaysActive"
+                  HorizontalAlignment="Left" 
+                  VerticalAlignment="Top">
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Photo}" Icon="{StaticResource IconPhoto}" >
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconPhotoCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Crop}" Icon="{StaticResource IconPhotoCrop}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Delete}" Icon="{StaticResource IconPhotoDelete}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Redeye_Correction}" Icon="{StaticResource IconPhotoRedeye}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                  </s:ElementMenuItem>
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.File}"  Icon="{StaticResource IconFile}" >
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconFileCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Edit}" Icon="{StaticResource IconFileEdit}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Print}" Icon="{StaticResource IconFilePrint}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Close}" Icon="{StaticResource IconFileClose}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                  </s:ElementMenuItem>
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Document}" Icon="{StaticResource IconDoc}" >
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconDocCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Delete}" Icon="{StaticResource IconDocDelete}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                  </s:ElementMenuItem>
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Tools}" Icon="{StaticResource IconTools}" >
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Search}" Icon="{StaticResource IconToolsSearch}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Recycle_Bin}" Icon="{StaticResource IconToolsTrash}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Find_Devices}"  Icon="{StaticResource IconToolsUSB}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>                    
+                  </s:ElementMenuItem>
+                </s:ElementMenu>
+              </s:ScatterViewItem>
+              <!-- ElementMenu becomes visible only when the containing ScatterViewItem is touched. Demonstrates the ActivationHost and ActivationMode properties. -->
+              <s:ScatterViewItem 
+                Height="139" 
+                Width="224" 
+                Orientation="3"
+                Background="#FF4D4D4D">
+                <s:ElementMenu 
+                  ActivationMode="HostInteraction"
+                  ActivationHost="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type s:ScatterViewItem}}}"
+                  HorizontalAlignment="Left" 
+                  VerticalAlignment="Top">
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Photo}" Icon="{StaticResource IconPhoto}">
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconPhotoCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Crop}" Icon="{StaticResource IconPhotoCrop}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Delete}" Icon="{StaticResource IconPhotoDelete}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Redeye_Correction}" Icon="{StaticResource IconPhotoRedeye}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    </s:ElementMenuItem>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.File}"  Icon="{StaticResource IconFile}">
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconFileCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Edit}" Icon="{StaticResource IconFileEdit}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Print}" Icon="{StaticResource IconFilePrint}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Close}" Icon="{StaticResource IconFileClose}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    </s:ElementMenuItem>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Document}" Icon="{StaticResource IconDoc}">
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconDocCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Delete}" Icon="{StaticResource IconDocDelete}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    </s:ElementMenuItem>
+                    <s:ElementMenuItem  Header="{x:Static Resources:Resources.Tools}" Icon="{StaticResource IconTools}">
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Search}" Icon="{StaticResource IconToolsSearch}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Recycle_Bin}" Icon="{StaticResource IconToolsTrash}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem  Header="{x:Static Resources:Resources.Find_Devices}" Icon="{StaticResource IconToolsUSB}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    </s:ElementMenuItem>
+                  </s:ElementMenu>
+              </s:ScatterViewItem>
+              <!-- ElementMenu always open and rotated 90 degrees. Demonstrates the ActivationMode and Orientation properties. -->
+              <s:ScatterViewItem 
+                Height="139" 
+                Width="224" 
+                Orientation="28"
+                Background="#FFA0A0A0">
+                <s:ElementMenu 
+                  ActivationMode="AlwaysActive"
+                  HorizontalAlignment="Right" 
+                  VerticalAlignment="Center"
+                  Orientation="90">
+
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Chat}" Icon="{StaticResource IconChat}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Refresh}" Icon="{StaticResource IconRefresh}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                  <!-- Rotate 180 degrees to prevent overlaping items -->
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Mail}" Icon="{StaticResource IconMail}" Orientation="180">
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Copy}" Icon="{StaticResource IconMailCopy}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Delete}" Icon="{StaticResource IconMailDelete}"  Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <s:ElementMenuItem Header="{x:Static Resources:Resources.Attach}" Icon="{StaticResource IconMailAttach}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>                    
+                  </s:ElementMenuItem>
+                  <s:ElementMenuItem Header="{x:Static Resources:Resources.Print}" Icon="{StaticResource IconFilePrint}" Command="{x:Static local:Window1.ShowMessageCommand}" CommandParameter="{Binding Path=Header, RelativeSource={x:Static RelativeSource.Self}}"/>
+                </s:ElementMenu>
+              </s:ScatterViewItem>
+            </s:ScatterView>
+            <TextBlock x:Name="textMessage" Width="500" Margin="40" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Segoe360" FontSize="17" />
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        ElementMenu
+      </s:SurfaceListBoxItem>
+
+      <!-- TagVisualizer, visible based on hardware capabilities -->
+      <s:SurfaceListBoxItem x:Name="TagVisualizerItem">
+        <s:SurfaceListBoxItem.Tag>
+          <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <s:TagVisualizer Name="Visualizer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >            
+                 <s:TagVisualizer.Definitions>
+                    <s:TagVisualizationDefinition Value="0xC0" TagRemovedBehavior="Fade" Source="TagVisual.xaml"/>
+                 </s:TagVisualizer.Definitions>
+            </s:TagVisualizer>
+            <Label IsHitTestVisible="false" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Content="{x:Static Resources:Resources.PlaceTagHere}"/>
+            <!-- "Place tag 0xC0 here." -->
+          </Grid>
+        </s:SurfaceListBoxItem.Tag>
+        TagVisualizer
+      </s:SurfaceListBoxItem>
+
+    </s:SurfaceListBox>
+
+    <Grid   Grid.Column="1" Background="Transparent" Name="ContentArea" Margin="7"/>
+  </Grid>
+</s:SurfaceWindow>

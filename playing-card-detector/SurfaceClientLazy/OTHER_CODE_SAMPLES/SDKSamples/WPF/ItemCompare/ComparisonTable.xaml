@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="ItemCompare.ComparisonTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:s="http://schemas.microsoft.com/surface/2008"
+             Name="TwoItemComparisonTable"
+             MinWidth="726" 
+	         MinHeight="726"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+  <Grid Name="grid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="260" />
+      <ColumnDefinition Width="17" />
+      <ColumnDefinition Width="260" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+      
+    <!--this element is used by the tethers so that they remain centered on the circle ring -->
+    <Rectangle x:Name="TetherSpaceBinding"             
+               Fill="Transparent"
+               Grid.Column="0"               
+               Grid.Row="1"
+               IsEnabled="False"
+               IsHitTestVisible="False"
+               Width="Auto"
+               Height="Auto" />
+    <Ellipse Fill="{StaticResource GlowRing}"                          
+             Grid.ColumnSpan="5"
+             Grid.Column="0"
+             Width="{Binding Path=ActualHeight, ElementName=grid, Mode=Default}"
+             Height="{Binding Path=ActualHeight, ElementName=grid, Mode=Default}"
+             Grid.RowSpan="3"/>
+    <Grid Grid.Column="0"
+          Grid.RowSpan="3"
+          Grid.ColumnSpan="5"
+          Width="{Binding Path=ActualHeight, ElementName=grid, Mode=Default}"
+          Height="{Binding Path=ActualHeight, ElementName=grid, Mode=Default}"
+          HorizontalAlignment="Stretch">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="2*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Rectangle HorizontalAlignment="Left"
+                 VerticalAlignment="Stretch"
+                 Width="{Binding Path=ActualWidth, ElementName=TetherSpaceBinding, Mode=Default}"
+                 Height="Auto"
+                 Opacity="0.2"                 
+                 Grid.Row="1"                
+                 Fill="Transparent" />
+      <Rectangle VerticalAlignment="Stretch"
+                 HorizontalAlignment="Right"
+                 Height="Auto"                 
+                 Opacity="0.2"
+                 Grid.Row="1"
+                 RenderTransformOrigin="0.5,0.5"                 
+                 Grid.Column="2"                
+                 Width="{Binding Path=ActualWidth, ElementName=TetherSpaceBinding, Mode=Default}"
+                 Fill="Transparent" />
+    </Grid>      
+    <Rectangle Fill="{StaticResource ItemBackgroundFill}"     
+               HorizontalAlignment="Stretch"
+               Width="Auto"
+               Grid.RowSpan="1"               
+               Grid.ColumnSpan="1"
+               Grid.Column="1"
+               Grid.Row="1" />      
+    <Rectangle Fill="{StaticResource ItemBackgroundFill}"
+               HorizontalAlignment="Stretch"
+               Width="Auto"
+               Grid.RowSpan="1"
+               Grid.Column="3"                              
+               Grid.ColumnSpan="1"
+               Grid.Row="1" 
+               Effect="{Binding Path=Effect, ElementName=LeftBackground, Mode=Default}"/>     
+    <s:SurfaceScrollViewer VerticalScrollBarVisibility="Hidden"
+                           HorizontalScrollBarVisibility="Disabled"                       
+                           Grid.ColumnSpan="3"
+                           Grid.Row="1"
+                           Grid.Column="1">
+      <Grid x:Name="RowHost"     
+            Width="Auto"
+            Height="Auto" />
+    </s:SurfaceScrollViewer>
+
+    <TextBlock x:Name="ItemBrand2"
+            Style="{StaticResource CompareBrandTextStyle}"
+            VerticalAlignment="Bottom"
+            Text="BrandText"                   
+            Visibility="Visible"
+            Grid.Column="3"               
+            HorizontalAlignment="Stretch"
+            Grid.ColumnSpan="1"
+            Margin="0,0,0,35" />
+      
+    <TextBlock x:Name="ItemName2"
+            Style="{StaticResource CompareHeadingLabelTextStyle}"
+            VerticalAlignment="Bottom"
+            Text="SomePlaceHolderText"                   
+            Visibility="Visible"
+            Grid.Column="3"               
+            HorizontalAlignment="Stretch"
+            Grid.ColumnSpan="1"
+            Margin="0,0,0,3" />
+
+    <TextBlock x:Name="ItemBrand1"
+            Style="{StaticResource CompareBrandTextStyle}"
+            VerticalAlignment="Bottom"
+            Text="BrandText"                   
+            Visibility="Visible"
+            Grid.Column="1"               
+            HorizontalAlignment="Stretch"
+            Grid.ColumnSpan="1"
+            Margin="0,0,0,32" />
+      
+    <TextBlock x:Name="ItemName1"
+               Style="{StaticResource CompareHeadingLabelTextStyle}"
+               VerticalAlignment="Bottom"
+               Text="SomePlaceHolderText"
+               Visibility="Visible"              
+               HorizontalAlignment="Stretch"
+               Grid.ColumnSpan="1"
+               Margin="0,0,0,3"
+               Grid.Column="1" />
+  </Grid>
+</UserControl>

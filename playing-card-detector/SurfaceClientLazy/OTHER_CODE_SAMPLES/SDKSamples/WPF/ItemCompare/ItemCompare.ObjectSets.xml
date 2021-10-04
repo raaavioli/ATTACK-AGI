@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ss:ObjectDescriptions  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:ss="http://schemas.microsoft.com/Surface/2010/ObjectDescription">
+
+  <Object Id="WirelessLaserMouse">
+    <Layout Text="Microsoft Wireless Laser Mouse"
+      BoundingBoxWidth="3.5"
+      BoundingBoxHeight="2.0"
+      PhysicalCenterOffsetFromTagX="2.5"
+      PhysicalCenterOffsetFromTagY="-0.5"
+      OrientationOffsetFromTag="-90" />
+    <ObjectTagSet>
+      <Schema>
+        <Single Value="*" />
+      </Schema>
+      <Series>
+        <Single Value="*" />
+      </Series>
+      <ExtendedValue>
+        <Single Value="*" />
+      </ExtendedValue>
+      <Value>
+        <Single Value="0xC1" />
+        <Single Value="0xC3" />
+      </Value>
+    </ObjectTagSet>
+  </Object>
+
+  <Object Id="ExplorerMouse">
+    <Layout Text="Microsoft Explorer Mouse"
+      BoundingBoxWidth="3.5"
+      BoundingBoxHeight="2.0"
+      PhysicalCenterOffsetFromTagX="2.5"
+      PhysicalCenterOffsetFromTagY="-0.5"
+      OrientationOffsetFromTag="-90" />
+    <ObjectTagSet>
+      <Schema>
+        <Single Value="*" />
+      </Schema>
+      <Series>
+        <Single Value="*" />
+      </Series>
+      <ExtendedValue>
+        <Single Value="*" />
+      </ExtendedValue>
+      <Value>
+        <Single Value="0xC2" />
+      </Value>
+    </ObjectTagSet>
+  </Object>
+
+</ss:ObjectDescriptions>

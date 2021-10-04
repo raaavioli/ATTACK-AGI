@@ -27,10 +27,6 @@ public class DamageScript : MonoBehaviour
             {
                 enemy.TakeDamage(damage);
             }
-            else
-            {
-                Debug.Log("Hit Something else!");
-            }
         }
     }
 }

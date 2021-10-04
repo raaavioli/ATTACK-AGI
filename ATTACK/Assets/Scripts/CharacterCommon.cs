@@ -10,6 +10,8 @@ public class CharacterCommon : MonoBehaviour
     private Team team;
     private Attack attack;
 
+    public int health;
+
     public bool CanAttack() {
         if (attack == null)
             return false;
@@ -45,5 +47,11 @@ public class CharacterCommon : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(DirToTarget);
 
         return attack.StartSimulation(targetPoint);
+    }
+
+    public void TakeDamage(int amount){
+        health -= amount;
+
+        if (health < 0) gameManager.KillCharacter(team, gameObject);
     }
 }

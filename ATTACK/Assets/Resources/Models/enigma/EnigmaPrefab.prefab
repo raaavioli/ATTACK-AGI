@@ -170,6 +170,9 @@ MonoBehaviour:
   ChargePrefab: {fileID: 1942519772477316185, guid: fcfe389e040f3d54db86da55db63b3ab, type: 3}
   FireStartTime: 1.55
   MaxFireTime: 0.6
+  hiddenDamageCollider: {fileID: 8603471838256999585, guid: dc4a74e0c5d89461fbf774f9b9498cbf, type: 3}
+  timeToHit: 0.3
+  damage: 10
   LaserMaterial: {fileID: 2100000, guid: 9932d72d08bbc984c939bfdaa89b3262, type: 2}
 --- !u!1 &5589603267448117598
 GameObject:
@@ -182,6 +185,7 @@ GameObject:
   - component: {fileID: 5105272327817118692}
   - component: {fileID: 4707153723235227057}
   - component: {fileID: 5006809353957251700}
+  - component: {fileID: 1286860853968901973}
   m_Layer: 0
   m_Name: EnigmaPrefab
   m_TagString: Untagged
@@ -236,6 +240,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d267da0fab5e0448ca1a368ed721a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+--- !u!135 &1286860853968901973
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589603267448117598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6615920728115432811
 GameObject:
   m_ObjectHideFlags: 0

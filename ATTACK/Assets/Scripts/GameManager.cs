@@ -132,19 +132,6 @@ public class GameManager : MonoBehaviour
         }
         return Team.Left;
     }
-    
-    public void KillCharacter(Team team, GameObject character)
-    {
-        if (team == Team.Left)
-        {
-            T1.Remove(character);
-        } 
-        else 
-        {
-            T2.Remove(character);
-        }
-        Destroy(character);
-    }
 
     private void SpawnCharacter(Character character, GameObject spawn, Team team)
     {     

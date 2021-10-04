@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2052955311974634372}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlaneArmature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3262134929504140431}
   - component: {fileID: 5095496958053718213}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1720947074256590865}
   - component: {fileID: 474800043207386347}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlaneModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 6161337347670845778}
   - component: {fileID: -3712142403925282116}
   - component: {fileID: 42524400995386496}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlanePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &7830487941789171917
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4048240289102404224}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7765032379360785391}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Root_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}

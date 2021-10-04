@@ -1,0 +1,13 @@
+<s:SurfaceWindow x:Class="DataVisualizer.Window1" 
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                 xmlns:s="http://schemas.microsoft.com/surface/2008" 
+                 xmlns:dv="clr-namespace:DataVisualizer" Title="DataVisualizer" 
+                 s:TouchVisualizer.ShowsVisualizations="False">
+
+    <Grid>
+    <!-- TouchDataVisualizer is a UserControl defined in the DataVisualizer namespace.
+    The xmlns:dv attribute in the Window tag maps the prefix dv: to the DataVisualizer namespace.-->
+    <dv:TouchDeviceDataVisualizer />
+  </Grid>
+</s:SurfaceWindow>

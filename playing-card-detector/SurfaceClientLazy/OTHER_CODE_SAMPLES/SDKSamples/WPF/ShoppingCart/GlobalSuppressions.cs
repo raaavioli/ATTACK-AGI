@@ -1,0 +1,5 @@
+// Supress FxCop messages for violations that occur in generated code.
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Scope = "member", Target = "ShoppingCart.MainWindow.#.cctor()", Justification = "Static constructor is required to register event handlers for WPF events.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "Strong name is not needed in the sample code.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "ShoppingCart.MainWindow.#CheckoutCommand", Justification = "CheckoutCommand's fields are not possible to be changed in this sample.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "ShoppingCart.MainWindow.#TagInfoText", Justification="Field used in XAML")]

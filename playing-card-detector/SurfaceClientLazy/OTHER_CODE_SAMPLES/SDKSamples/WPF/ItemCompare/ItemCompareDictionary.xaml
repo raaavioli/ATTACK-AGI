@@ -1,0 +1,92 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:s="http://schemas.microsoft.com/surface/2008"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+  <!--Colors and Drawing Brushes-->
+    
+  <SolidColorBrush x:Key="ItemBackgroundFill"
+                   Color="#CC372D2A" />
+    
+  <SolidColorBrush x:Key="GlowRing" 
+                   Color="{DynamicResource {x:Static s:SurfaceColors.Accent4ColorKey}}"/>   
+    
+  <!--Styles for ItemCompare-->
+  <Style x:Key="BrandTextStyle"
+         TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily"
+            Value="Segoe360" />
+        <Setter Property="FontSize"
+            Value="18" />
+        <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static s:SurfaceColors.Accent4BrushKey}}" />
+        <Setter Property="TextWrapping"
+            Value="Wrap" />
+  </Style>
+    
+  <Style x:Key="HeadingLabelTextStyle"
+         BasedOn="{StaticResource BrandTextStyle}"
+         TargetType="{x:Type TextBlock}">    
+    <Setter Property="FontSize"
+            Value="24" />
+  </Style>
+
+  <Style x:Key="CompareBrandTextStyle"
+         TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily"
+            Value="Segoe360" />
+        <Setter Property="FontSize"
+            Value="18" />
+        <Setter Property="Foreground"
+            Value="#FFFFFFFF" />
+        <Setter Property="TextWrapping"
+            Value="Wrap" />
+  </Style>
+
+  <Style x:Key="CompareHeadingLabelTextStyle"
+         BasedOn="{StaticResource CompareBrandTextStyle}"
+         TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize"
+            Value="24" />
+  </Style>
+
+  <Style x:Key="BodyTextStyle"
+         BasedOn="{StaticResource HeadingLabelTextStyle}"
+         TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize"
+            Value="12" />
+    <Setter Property="Foreground"
+            Value="#CCFFFFFF" />
+  </Style>
+
+  <Style x:Key="PriceTextStyle"
+        BasedOn="{StaticResource HeadingLabelTextStyle}"
+        TargetType="{x:Type TextBlock}">    
+    <Setter Property="Foreground"
+            Value="#FFFFFFFF"/>
+  </Style>
+    
+  <Style x:Key="ObjectTitleTextStyle"
+         BasedOn="{StaticResource HeadingLabelTextStyle}"
+         TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize"
+            Value="12" />
+  </Style>    
+    
+  <!--Tag Information Text Style for RichTextBox-->
+  <Style x:Key="TagInfoTextStyle"
+         TargetType="{x:Type RichTextBox}">     
+    <Setter Property="Background" Value="{x:Null}" />
+    <Setter Property="BorderBrush" Value="{x:Null}" />
+    <Setter Property="BorderThickness" Value="0,0,0,0" />
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static s:SurfaceColors.ControlForegroundBrushKey}}" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Margin" Value="0,0,0,81" />
+    <Setter Property="Width" Value="Auto" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="FontFamily" Value="Segoe360" />
+    <Setter Property="Opacity" Value="0" />
+    <Setter Property="IsHitTestVisible" Value="False" />
+    <Setter Property="Focusable" Value="False" />
+ </Style>
+</ResourceDictionary>

@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 
 public class GameManager : MonoBehaviour
@@ -12,14 +14,18 @@ public class GameManager : MonoBehaviour
     private List<GameObject> T2;
 
     private int spawnedCharacters = 0;
-    
+
+    private bool inCombatPhase = false;
+
     public void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
-        
+
+        ServerHandler.onCardDataReceived += SpawnFromCards;
+
         /*for (int i = 0; i < teamSize; i++)
         {
             SpawnCharacter(characters[i], spawnPointsT1[i], Team.Left);
@@ -29,9 +35,22 @@ public class GameManager : MonoBehaviour
         {
             SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
         }*/
+
+        StartCoroutine(SetupPhaseTimer(10));
     }
 
     public void Update()
+    {
+        if (inCombatPhase) {
+            CombatPhaseUpdate();
+        } else {
+            SetupPhaseUpdate();
+        }
+        // Restarts scene on r press.
+        if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void SetupPhaseUpdate()
     {
         // Just to test spawning, will soon be replaced by some event from the 
         // SUR40 input server
@@ -46,8 +65,11 @@ public class GameManager : MonoBehaviour
                 SpawnCharacter(characters[teamSize - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
             spawnedCharacters++;
         }
+    }
 
-        foreach (GameObject character in T1)
+    private void CombatPhaseUpdate()
+    {
+        foreach (GameObject character in T1) // Start attacks
         {
             if (character.activeSelf)
             {
@@ -59,7 +81,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        foreach (GameObject character in T2)
+        foreach (GameObject character in T2) // Start attacks
         {
             if (character.activeSelf)
             {
@@ -70,6 +92,17 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        // If one team is dead, end combat phase.
+    }
+
+    private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
+    {
+        for (int i = 0; i < seconds; i++)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        inCombatPhase = true;
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)
@@ -121,6 +154,57 @@ public class GameManager : MonoBehaviour
             T1.Add(c);
         else
             T2.Add(c);
+
+        // THIS IS NECESSARY ONLY FOR THE INITIAL WAY OF SPAWNING FROM CARD INFORMATION, SINCE IT RELIES ON CHILD COUNT CHECKING
+        c.transform.parent = spawn.transform;
+    }
+
+    private void SpawnFromCards() 
+    {
+        ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
+
+        foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
+            // Decide team, and skip if the team is already full.
+            Team team = cardPosition.team;
+            if ((team == 0 && T1.Count >= 3) || (team == (Team) 1 && T2.Count >= 3)) {
+                continue;
+            }
+
+            Debug.Log(cardPosition.ToString());
+
+            // Decide the spawn point.
+            int position = cardPosition.position;
+            GameObject spawn;
+            if (team == 0) {
+                spawn = spawnPointsT1[(int)Mathf.Clamp(position-1, 0, 2)];
+            } else {
+                spawn = spawnPointsT2[(int)Mathf.Clamp(position-1, 0, 2)];
+            }
+
+            // Skip spawn if spawn point is not empty.
+            if (spawn.transform.childCount > 5) {
+                continue;
+            }
+
+            // Decide the character.
+            Character wantedCharacter;
+            switch (cardPosition.rank) {
+                case 1:
+                    wantedCharacter = Character.WITCH;
+                    break;
+                case 2:
+                    wantedCharacter = Character.ENIGMA;
+                    break;
+                case 3:
+                    wantedCharacter = Character.COLONEL;
+                    break;
+                default:
+                    wantedCharacter = Character.WITCH;
+                    break;
+            }
+
+            SpawnCharacter(wantedCharacter, spawn, team);
+        }
     }
 }
 

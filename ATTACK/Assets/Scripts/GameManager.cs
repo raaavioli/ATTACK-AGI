@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
         
-
         /*for (int i = 0; i < teamSize; i++)
         {
             SpawnCharacter(characters[i], spawnPointsT1[i], Team.Left);
@@ -99,6 +98,19 @@ public class GameManager : MonoBehaviour
                 break;
         }
         return Team.Left;
+    }
+    
+    public void KillCharacter(Team team, GameObject character)
+    {
+        if (team == Team.Left)
+        {
+            T1.Remove(character);
+        } 
+        else 
+        {
+            T2.Remove(character);
+        }
+        Destroy(character);
     }
 
     private void SpawnCharacter(Character character, GameObject spawn, Team team)

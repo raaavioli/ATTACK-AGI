@@ -52,6 +52,6 @@ public class CharacterCommon : MonoBehaviour
     public void TakeDamage(int amount){
         health -= amount;
 
-        if (health < 0) Destroy(gameObject);
+        if (health < 0) gameManager.KillCharacter(team, gameObject);
     }
 }

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> T2;
 
     private int spawnedCharacters = 0;
+    
     public void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");

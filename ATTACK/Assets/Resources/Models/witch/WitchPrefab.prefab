@@ -164,6 +164,9 @@ MonoBehaviour:
   ChargePrefab: {fileID: 7922952976278620387, guid: 68df0ee2fca31f841a6b81378cb40fb0, type: 3}
   FireStartTime: 0.9
   MaxFireTime: 0.422
+  hiddenDamageCollider: {fileID: 8603471838256999585, guid: dc4a74e0c5d89461fbf774f9b9498cbf, type: 3}
+  timeToHit: 0.75
+  damage: 10
   ProjectilePrefab: {fileID: 5252260672383280543, guid: 5d4fff743a29e0348ab226e8442c034c, type: 3}
 --- !u!1 &4148917198139910838
 GameObject:
@@ -176,6 +179,7 @@ GameObject:
   - component: {fileID: 3663742726460092428}
   - component: {fileID: 3842278449459598170}
   - component: {fileID: 446682311612437287}
+  - component: {fileID: -5898900832401531918}
   m_Layer: 0
   m_Name: WitchPrefab
   m_TagString: Untagged
@@ -230,6 +234,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d267da0fab5e0448ca1a368ed721a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+--- !u!135 &-5898900832401531918
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4148917198139910838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4152340679684514469
 GameObject:
   m_ObjectHideFlags: 0

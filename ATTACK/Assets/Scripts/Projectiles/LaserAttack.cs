@@ -46,4 +46,14 @@ public class LaserAttack : Attack
         Laser.transform.position = gameObject.transform.position + Laser.transform.up * Length;
     }
 
+    private void OnDestroy()
+    {
+        Destroy(Laser);
+    }
+
+    private void OnDisable()
+    {
+        Laser.SetActive(false);
+    }
+
 }

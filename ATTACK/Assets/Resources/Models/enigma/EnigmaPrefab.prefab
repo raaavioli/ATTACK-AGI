@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChargePrefab: {fileID: 1942519772477316185, guid: fcfe389e040f3d54db86da55db63b3ab, type: 3}
+  ChargeSound: {fileID: 8300000, guid: d14c052d51e45ab4497cb40fb3a72aac, type: 3}
+  FireSound: {fileID: 8300000, guid: 058cfe5fee13d5847bdc055c778175d6, type: 3}
   FireStartTime: 1.55
   MaxFireTime: 0.6
   LaserMaterial: {fileID: 2100000, guid: 9932d72d08bbc984c939bfdaa89b3262, type: 2}

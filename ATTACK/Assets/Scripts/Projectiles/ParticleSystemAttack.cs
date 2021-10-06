@@ -34,4 +34,14 @@ public class ParticleSystemAttack : Attack
     {
         Projectile.Stop();
     }
+
+    private void OnDestroy()
+    {
+        Destroy(Projectile);
+    }
+
+    private void OnDisable()
+    {
+        Projectile.Stop();
+    }
 }

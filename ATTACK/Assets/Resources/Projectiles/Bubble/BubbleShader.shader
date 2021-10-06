@@ -61,10 +61,7 @@
             o.Gloss = 0.0;
             o.Specular = 0.0;
             o.Alpha = 1.0;
-            float4 ScreenDepthDiff0 = LinearEyeDepth(tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(IN.screenPos)).r) - IN.screenPos.z;
-            float4 Saturate0 = 0.3 * fixed4(1.0,1.0,1.0,1.0);
-            float4 Fresnel0_1_NoInput = fixed4(0,0,1.0,1.0);
-            float f = 1.0 - dot(normalize(IN.viewDir), normalize(Fresnel0_1_NoInput.xyz));
+            float f = 1.0 - dot(normalize(IN.viewDir), fixed4(0, 0, 1.0, 0.0));
             float4 Fresnel0 = float4(f,f,f,f);
             float4 Step0 = step(Fresnel0,float4(1.0,1.0,1.0,1.0));
             float4 Clamp0 = clamp(Step0,_Inside.xxxx,float4(1.0,1.0,1.0,1.0));
@@ -76,7 +73,7 @@
             float4 Multiply2 = Tex2D0 * _Strength.xxxx;
             float4 Multiply0 = Pow0 * Multiply2;
             float4 Multiply3 = Clamp0 * Multiply0;
-            float4 Multiply4 = Saturate0 * Multiply3;
+            float4 Multiply4 = 0.3 * fixed4(1.0, 1.0, 1.0, 1.0) * Multiply3;
 
             o.Alpha = Multiply3.w * _Color.a;
             o.Emission = Multiply4.xyz * _Color.rgb * texCUBE(_Cube, IN.worldRefl).xyz * _Glow;

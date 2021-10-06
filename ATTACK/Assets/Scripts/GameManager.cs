@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             if (team == 0)
                 SpawnCharacter(characters[character % characters.Count], spawnPointsT1[character], Team.Left);
             else
-                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[character], Team.Right);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[TEAM_SIZE - 1 - character], Team.Right);
             spawnedCharacters++;
         }
     }
@@ -133,6 +133,19 @@ public class GameManager : MonoBehaviour
         }
         return Team.Left;
     }
+    
+    public void KillCharacter(Team team, GameObject character)
+    {
+        if (team == Team.Left)
+        {
+            T1.Remove(character);
+        } 
+        else 
+        {
+            T2.Remove(character);
+        }
+        Destroy(character);
+    }
 
     private void SpawnCharacter(Character character, GameObject spawn, Team team)
     {     
@@ -154,7 +167,8 @@ public class GameManager : MonoBehaviour
         foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
             // Decide team, and skip if the team is already full.
             Team team = cardPosition.team;
-            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team) 1 && T2.Count >= TEAM_SIZE)) {
+            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
+            {
                 continue;
             }
 
@@ -163,11 +177,10 @@ public class GameManager : MonoBehaviour
             // Decide the spawn point.
             int position = cardPosition.position;
             GameObject spawn;
-            if (team == 0) {
+            if (team == 0)
                 spawn = spawnPointsT1[position - 1];
-            } else {
+            else
                 spawn = spawnPointsT2[position - 1];
-            }
 
             // Skip spawn if spawn point is not empty.
             if (spawn.transform.childCount > 5) {
@@ -185,6 +198,9 @@ public class GameManager : MonoBehaviour
                     break;
                 case 3:
                     wantedCharacter = Character.COLONEL;
+                    break;
+                case 4:
+                    wantedCharacter = Character.SQUISHY;
                     break;
                 default:
                     wantedCharacter = Character.WITCH;
@@ -207,11 +223,12 @@ public class Character
     public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab");
     public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab");
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab");
+    public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab");
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY };
     }
 
     private string ResourcePath;

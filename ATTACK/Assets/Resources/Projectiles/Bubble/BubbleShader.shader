@@ -1,6 +1,7 @@
 ﻿Shader "Bubble"
 {
-    //http://forum.unity3d.com/threads/179374-Soap-bubble-shader
+    // Inspired by:
+    // http://forum.unity3d.com/threads/179374-Soap-bubble-shader
     Properties
     {
         _Color("_Color", Color) = (0.0,1.0,0.0,1.0)

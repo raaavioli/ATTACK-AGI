@@ -37,13 +37,15 @@ public abstract class Attack : MonoBehaviour
         if (ChargeSource == null)
         {
             ChargeSource = gameObject.AddComponent<AudioSource>();
+            ChargeSource.playOnAwake = false;
             ChargeSource.clip = ChargeSound;
-            ChargeSource.spatialBlend = 0.95f;
+            ChargeSource.spatialBlend = 0.9f;
             ChargeSource.Stop();
         }
         if (FireSource == null)
         {
             FireSource = gameObject.AddComponent<AudioSource>();
+            FireSource.playOnAwake = false;
             FireSource.clip = FireSound;
             FireSource.spatialBlend = 0.95f;
             FireSource.Stop();

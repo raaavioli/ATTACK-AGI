@@ -23,9 +23,12 @@ public class LaserAttack : Attack
     }
     protected override void UpdateProjectile()
     {
-        float MaxRadius = 0.7f;
-        float t = ((SimulationTime - FireStartTime) / MaxFireTime) * (float) Math.PI;
-        float Radius = (float) Math.Sin(t) * MaxRadius;
+        float MaxRadius = 0.8f;
+        float t = (SimulationTime - FireStartTime) / MaxFireTime;
+        float tStart = Utils.Remap(0, 0.2f, 0, 1, t);
+        float tEnd = Utils.Remap(0.2f, 1, 1, 0, t);
+        t = tStart * tEnd;
+        float Radius = (float) Math.Sin(t * (float)Math.PI / 2) * MaxRadius;
         UpdateTransform(Radius);
     }
 
@@ -36,8 +39,7 @@ public class LaserAttack : Attack
 
     private void UpdateTransform (float Radius)
     {
-        // Make Length based on target position
-        float Length = 25.0f;
+        float Length = (transform.position - TargetPosition).magnitude / 2.0f;
         Vector3 Rotation = Laser.transform.rotation.eulerAngles;
         Rotation.x = 90;
         Rotation.y = gameObject.transform.eulerAngles.y;

@@ -53,7 +53,7 @@
                 float t = sin(i.uv.x * 13 * pi);
                 float CoreColorRatio = lerp(DistToCenter, 1, t);
 
-                t = sin(i.uv.x * 8 * pi);
+                t = sin(i.uv.x * 5 * pi);
                 float MinCoreIntensity = _MaxLightCoreIntensity / 2;
                 float CoreIntensity = lerp(MinCoreIntensity, _MaxLightCoreIntensity, t);
                 float4 CoreColor = float4(CoreIntensity, CoreIntensity, CoreIntensity, 1);

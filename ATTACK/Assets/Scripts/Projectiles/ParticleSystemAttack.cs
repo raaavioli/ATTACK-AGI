@@ -9,7 +9,7 @@ public class ParticleSystemAttack : Attack
 {
     public ParticleSystem ProjectilePrefab;
 
-    private ParticleSystem Projectile;
+    protected ParticleSystem Projectile;
 
 
     protected override void InstantiateProjectile()

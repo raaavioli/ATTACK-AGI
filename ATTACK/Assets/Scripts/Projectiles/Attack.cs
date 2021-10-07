@@ -136,11 +136,6 @@ public abstract class Attack : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        Destroy(Charge);
-    }
-
     private void OnDisable()
     {
         if (Charge != null)

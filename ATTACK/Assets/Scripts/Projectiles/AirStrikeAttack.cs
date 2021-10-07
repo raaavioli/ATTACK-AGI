@@ -56,13 +56,9 @@ public class AirStrikeAttack : Attack
         }
     }
 
-    private void OnDestroy()
-    {
-        Destroy(Plane);
-    }
-
     private void OnDisable()
     {
-        Plane.SetActive(false);
+        if (Plane != null)
+            Plane.SetActive(false);
     }
 }

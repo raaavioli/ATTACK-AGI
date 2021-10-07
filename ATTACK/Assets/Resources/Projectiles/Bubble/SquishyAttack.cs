@@ -56,4 +56,10 @@ public class SquishyAttack : Attack
             Bubble.transform.position = Position + Swirl;
         }
     }
+
+    private void OnDisable()
+    {
+        if (Bubble != null)
+            Bubble.SetActive(false);
+    }
 }

@@ -170,26 +170,29 @@ public class GameManager : MonoBehaviour
     {
         ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
 
-        foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
-            // Decide team, and skip if the team is already full.
-            Team team = cardPosition.team;
-            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
-            {
-                continue;
+        if (cardPositions != null)
+        {
+            foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
+                // Decide team, and skip if the team is already full.
+                Team team = cardPosition.team;
+                if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
+                {
+                    continue;
+                }
+
+                // Decide the spawn point.
+                int position = cardPosition.position;
+                GameObject spawn;
+                if (team == 0)
+                    spawn = spawnPointsT1[position - 1];
+                else
+                    spawn = spawnPointsT2[position - 1];
+
+                // Decide the character.
+                Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
+
+                SpawnCharacter(wantedCharacter, spawn, team);
             }
-
-            // Decide the spawn point.
-            int position = cardPosition.position;
-            GameObject spawn;
-            if (team == 0)
-                spawn = spawnPointsT1[position - 1];
-            else
-                spawn = spawnPointsT2[position - 1];
-
-            // Decide the character.
-            Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
-
-            SpawnCharacter(wantedCharacter, spawn, team);
         }
     }
 }

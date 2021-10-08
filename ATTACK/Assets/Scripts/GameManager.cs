@@ -10,9 +10,6 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT2;
     private const int TEAM_SIZE = 6;
 
-    List<Triple> charsToSpawnT1 = new List<Triple>();
-    List<Triple> charsToSpawnT2 = new List<Triple>();
-
     private List<GameObject> T1;
     private List<GameObject> T2;
 
@@ -26,8 +23,6 @@ public class GameManager : MonoBehaviour
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
-
-        ServerHandler.onCardDataReceived += SpawnFromCards;
 
         /*for (int i = 0; i < teamSize; i++)
         {
@@ -101,25 +96,13 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
-        charsToSpawnT1.Clear(); charsToSpawnT2.Clear();
         for (int i = 0; i < seconds; i++)
         {
             yield return new WaitForSeconds(1f);
         }
         inCombatPhase = true;
+        SpawnFromCards();
         CameraHandler.instance.StartCombatCamera();
-
-        SpawnCharactersAtCombat();
-    }
-
-    private void SpawnCharactersAtCombat() 
-    {
-        foreach (Triple triple in charsToSpawnT1) {
-            SpawnCharacter(triple.character, triple.spawn, triple.team);
-        }
-        foreach (Triple triple in charsToSpawnT2) {
-            SpawnCharacter(triple.character, triple.spawn, triple.team);
-        }
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)
@@ -183,12 +166,10 @@ public class GameManager : MonoBehaviour
         foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
             // Decide team, and skip if the team is already full.
             Team team = cardPosition.team;
-            if ((team == 0 && charsToSpawnT1.Count >= TEAM_SIZE) || (team == (Team)1 && charsToSpawnT2.Count >= TEAM_SIZE))
+            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
             {
                 continue;
             }
-
-            Debug.Log(cardPosition.ToString());
 
             // Decide the spawn point.
             int position = cardPosition.position;
@@ -198,36 +179,10 @@ public class GameManager : MonoBehaviour
             else
                 spawn = spawnPointsT2[position - 1];
 
-            // Skip spawn if spawn point is not empty.
-            if (spawn.transform.childCount > 5) {
-                continue;
-            }   
-
             // Decide the character.
-            Character wantedCharacter;
-            switch (cardPosition.rank) {
-                case 1:
-                    wantedCharacter = Character.WITCH;
-                    break;
-                case 2:
-                    wantedCharacter = Character.ENIGMA;
-                    break;
-                case 3:
-                    wantedCharacter = Character.COLONEL;
-                    break;
-                case 4:
-                    wantedCharacter = Character.SQUISHY;
-                    break;
-                default:
-                    wantedCharacter = Character.WITCH;
-                    break;
-            }
+            Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
 
-            if (team == 0) charsToSpawnT1.Add(new Triple(wantedCharacter, spawn, team));
-            else charsToSpawnT2.Add(new Triple(wantedCharacter, spawn, team));
-            //Add lighting or somethingorother.
-
-            // SpawnCharacter(wantedCharacter, spawn, team);
+            SpawnCharacter(wantedCharacter, spawn, team);
         }
     }
 }

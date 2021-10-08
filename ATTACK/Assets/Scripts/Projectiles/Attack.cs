@@ -6,10 +6,16 @@ public abstract class Attack : MonoBehaviour
 {
     public ParticleSystem ChargePrefab;
 
+    public AudioClip ChargeSound;
+    public AudioClip FireSound;
+    private AudioSource ChargeSource;
+    private AudioSource FireSource;
+
     [Range(0.1f, 3.0f)]
     public float FireStartTime = 1.0f;
     [Range(0.1f, 3.0f)]
     public float MaxFireTime = 0.5f;
+
 
     private ParticleSystem Charge = null;
     private bool Simulating = false;
@@ -28,6 +34,23 @@ public abstract class Attack : MonoBehaviour
     public void Awake()
     {
         Animator = gameObject.GetComponentInParent<Animator>();
+        if (ChargeSource == null)
+        {
+            ChargeSource = gameObject.AddComponent<AudioSource>();
+            ChargeSource.playOnAwake = false;
+            ChargeSource.clip = ChargeSound;
+            ChargeSource.spatialBlend = 0.9f;
+            ChargeSource.Stop();
+        }
+        if (FireSource == null)
+        {
+            FireSource = gameObject.AddComponent<AudioSource>();
+            FireSource.playOnAwake = false;
+            FireSource.clip = FireSound;
+            FireSource.spatialBlend = 0.95f;
+            FireSource.Stop();
+        }
+
         if (ChargePrefab != null)
         {
             Charge = Instantiate(ChargePrefab, this.transform.position, this.transform.rotation);
@@ -52,6 +75,8 @@ public abstract class Attack : MonoBehaviour
             {
                 Charge.time = 0;
                 Charge.Play();
+                ChargeSource.time = 0f;
+                ChargeSource.Play();
             }
             if (Animator != null)
                 Animator.SetTrigger("StartShoot");
@@ -93,6 +118,8 @@ public abstract class Attack : MonoBehaviour
             {
                 Shooting = true;
                 StartProjectile();
+                FireSource.time = 0;
+                FireSource.Play();
             }
             else if (Shooting && SimulationTime >= FireStartTime && SimulationTime < FireStartTime + MaxFireTime)
             {
@@ -109,5 +136,11 @@ public abstract class Attack : MonoBehaviour
                     Animator.SetTrigger("StartIdle");
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        if (Charge != null)
+            Charge.Stop();
     }
 }

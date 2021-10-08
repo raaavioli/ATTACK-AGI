@@ -9,7 +9,7 @@ public class ParticleSystemAttack : Attack
 {
     public ParticleSystem ProjectilePrefab;
 
-    private ParticleSystem Projectile;
+    protected ParticleSystem Projectile;
 
 
     protected override void InstantiateProjectile()
@@ -33,5 +33,11 @@ public class ParticleSystemAttack : Attack
     protected override void StopProjectile()
     {
         Projectile.Stop();
+    }
+
+    private void OnDisable()
+    {
+        if (Projectile != null)
+            Projectile.Stop();
     }
 }

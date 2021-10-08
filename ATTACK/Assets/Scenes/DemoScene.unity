@@ -201,7 +201,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 006ec6967a5be044cb6c42e2db25b66e, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 006ec6967a5be044cb6c42e2db25b66e, type: 3}
       propertyPath: m_LocalScale.x
@@ -524,11 +524,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9b8b8127160640fbbc8f2e2dbbc512f, type: 3}
---- !u!4 &111160765 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5689455462472072897, guid: 006ec6967a5be044cb6c42e2db25b66e, type: 3}
-  m_PrefabInstance: {fileID: 59668649}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &104007560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8376923936441145031, guid: a4817bbccf8b9ab478e7da25958d9c58, type: 3}
@@ -629,6 +624,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &111160765 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5689455462472072897, guid: 006ec6967a5be044cb6c42e2db25b66e, type: 3}
+  m_PrefabInstance: {fileID: 59668649}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &111611790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2535,7 +2535,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -3792,7 +3792,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.5882353}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}

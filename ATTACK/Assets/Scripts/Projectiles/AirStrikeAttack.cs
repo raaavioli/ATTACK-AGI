@@ -55,4 +55,10 @@ public class AirStrikeAttack : Attack
             Plane.transform.rotation = Quaternion.LookRotation(currentDirection);
         }
     }
+
+    private void OnDisable()
+    {
+        if (Plane != null)
+            Plane.SetActive(false);
+    }
 }

@@ -5,7 +5,7 @@ public class Spawner : MonoBehaviour
 {
     GameObject SpawnedCharacter;
     bool Spawning = false;
-    const float TotalSpawnTime = 0.75f;
+    const float TotalSpawnTime = 1f;
     float CurrentTime = 0;
 
     Vector3 MaxScale = Vector3.zero;
@@ -52,6 +52,8 @@ public class Spawner : MonoBehaviour
         SpawnedCharacter.transform.localRotation = towardsMiddle;
         SpawnedCharacter.GetComponent<CharacterCommon>().SetTeam(team);
         SpawnedCharacter.SetActive(false);
+
+        GetComponent<AudioSource>().Play();
 
         Spawning = true;
 

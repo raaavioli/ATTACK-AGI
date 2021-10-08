@@ -96,8 +96,13 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
+        const float startSoundTime = 3.0f;
+        Assert.IsTrue(seconds > startSoundTime);
+
         for (int i = 0; i < seconds; i++)
         {
+            if (seconds - i == startSoundTime)
+                GetComponent<AudioSource>().Play();
             yield return new WaitForSeconds(1f);
         }
         inCombatPhase = true;

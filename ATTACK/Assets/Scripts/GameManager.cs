@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT2;
     private const int TEAM_SIZE = 6;
 
-    List<Action> charsToSpawn new List<Action>;
+    List<Triple> charsToSpawn = new List<Triple>();
 
     private List<GameObject> T1;
     private List<GameObject> T2;
@@ -107,8 +107,15 @@ public class GameManager : MonoBehaviour
         }
         inCombatPhase = true;
         CameraHandler.instance.StartCombatCamera();
-        
-        foreach(Action action in charsToSpawn) action();
+
+        SpawnCharactersAtCombat();
+    }
+
+    private void SpawnCharactersAtCombat() 
+    {
+        foreach (Triple triple in charsToSpawn) {
+            SpawnCharacter(triple.character, triple.spawn, triple.team);
+        }
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)
@@ -212,7 +219,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            charsToSpawn.Add(SpawnCharacter(wantedCharacter, spawn, team));
+            charsToSpawn.Add(new Triple(wantedCharacter, spawn, team));
             //Add lighting or somethingorother.
 
             // SpawnCharacter(wantedCharacter, spawn, team);
@@ -247,5 +254,19 @@ public class Character
     {
         string path = ResourcePath + "/" + PrefabName;
         return Resources.Load<GameObject>(path);
+    }
+}
+
+// Used for spawn at combat phase start.
+public struct Triple
+{
+    public Character character;
+    public GameObject spawn;
+    public Team team;
+
+    public Triple(Character character_, GameObject spawn_, Team team_) {
+        character = character_;
+        spawn = spawn_;
+        team = team_;
     }
 }

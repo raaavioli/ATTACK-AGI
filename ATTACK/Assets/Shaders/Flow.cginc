@@ -13,4 +13,11 @@ float3 FlowUVW(float2 uv, float2 flowVector, float2 jump, float flowOffset, floa
 	return uvw;
 }
 
+float2 DirectionalFlowUVW(float2 uv, float2 flowVector, float tiling, float time) {
+	float2 dir = normalize(flowVector.xy);
+	uv = mul(float2x2(dir.y, -dir.x, dir.x, dir.y), uv);
+	uv.y -= time;
+	return uv * tiling;
+}
+
 #endif

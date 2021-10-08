@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT2;
     private const int TEAM_SIZE = 6;
 
-    List<Triple> charsToSpawn = new List<Triple>();
+    List<Triple> charsToSpawnT1 = new List<Triple>();
+    List<Triple> charsToSpawnT2 = new List<Triple>();
 
     private List<GameObject> T1;
     private List<GameObject> T2;
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
-        charsToSpawn.Clear();
+        charsToSpawnT1.Clear(); charsToSpawnT2.Clear();
         for (int i = 0; i < seconds; i++)
         {
             yield return new WaitForSeconds(1f);
@@ -113,7 +114,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCharactersAtCombat() 
     {
-        foreach (Triple triple in charsToSpawn) {
+        foreach (Triple triple in charsToSpawnT1) {
+            SpawnCharacter(triple.character, triple.spawn, triple.team);
+        }
+        foreach (Triple triple in charsToSpawnT2) {
             SpawnCharacter(triple.character, triple.spawn, triple.team);
         }
     }
@@ -179,7 +183,7 @@ public class GameManager : MonoBehaviour
         foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
             // Decide team, and skip if the team is already full.
             Team team = cardPosition.team;
-            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
+            if ((team == 0 && charsToSpawnT1.Count >= TEAM_SIZE) || (team == (Team)1 && charsToSpawnT2.Count >= TEAM_SIZE))
             {
                 continue;
             }
@@ -219,7 +223,8 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            charsToSpawn.Add(new Triple(wantedCharacter, spawn, team));
+            if (team == 0) charsToSpawnT1.Add(new Triple(wantedCharacter, spawn, team));
+            else charsToSpawnT2.Add(new Triple(wantedCharacter, spawn, team));
             //Add lighting or somethingorother.
 
             // SpawnCharacter(wantedCharacter, spawn, team);

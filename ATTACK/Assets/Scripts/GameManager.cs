@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
-        charsToSpawn.Clear();
+        charsToSpawnT1.Clear(); charsToSpawnT2.Clear();
         for (int i = 0; i < seconds; i++)
         {
             yield return new WaitForSeconds(1f);
@@ -114,7 +114,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCharactersAtCombat() 
     {
-        foreach (Triple triple in charsToSpawn) {
+        foreach (Triple triple in charsToSpawnT1) {
+            SpawnCharacter(triple.character, triple.spawn, triple.team);
+        }
+        foreach (Triple triple in charsToSpawnT2) {
             SpawnCharacter(triple.character, triple.spawn, triple.team);
         }
     }

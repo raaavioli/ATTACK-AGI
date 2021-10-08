@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
             SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
         }*/
 
-        StartCoroutine(SetupPhaseTimer(10));
+        StartCoroutine(SetupPhaseTimer(30));
     }
 
     public void Update()
@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         }
         // Restarts scene on r press.
         if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
 
     private void SetupPhaseUpdate()

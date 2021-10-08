@@ -3722,6 +3722,7 @@ GameObject:
   - component: {fileID: 1153865618}
   - component: {fileID: 1153865617}
   - component: {fileID: 1153865616}
+  - component: {fileID: 1153865620}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3811,6 +3812,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1153865620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153865615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd59edba34c03640aac1864a09acef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  T1CardAnimators:
+  - {fileID: 1239935857}
+  - {fileID: 224321033}
+  - {fileID: 1911367291}
+  - {fileID: 1435872022}
+  - {fileID: 1921053073}
+  - {fileID: 594365836}
+  T2CardAnimators:
+  - {fileID: 1583647096}
+  - {fileID: 1735398502}
+  - {fileID: 1858252788}
+  - {fileID: 111150466}
+  - {fileID: 1417781237}
+  - {fileID: 363762238}
 --- !u!1001 &1192534112
 PrefabInstance:
   m_ObjectHideFlags: 0

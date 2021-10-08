@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT2;
     private const int TEAM_SIZE = 6;
 
+    List<Action> charsToSpawn new List<Action>;
+
     private List<GameObject> T1;
     private List<GameObject> T2;
 
@@ -98,12 +100,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
+        charsToSpawn.Clear();
         for (int i = 0; i < seconds; i++)
         {
             yield return new WaitForSeconds(1f);
         }
         inCombatPhase = true;
         CameraHandler.instance.StartCombatCamera();
+        
+        foreach(Action action in charsToSpawn) action();
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)
@@ -185,7 +190,7 @@ public class GameManager : MonoBehaviour
             // Skip spawn if spawn point is not empty.
             if (spawn.transform.childCount > 5) {
                 continue;
-            }
+            }   
 
             // Decide the character.
             Character wantedCharacter;
@@ -207,7 +212,10 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            SpawnCharacter(wantedCharacter, spawn, team);
+            charsToSpawn.Add(SpawnCharacter(wantedCharacter, spawn, team));
+            //Add lighting or somethingorother.
+
+            // SpawnCharacter(wantedCharacter, spawn, team);
         }
     }
 }

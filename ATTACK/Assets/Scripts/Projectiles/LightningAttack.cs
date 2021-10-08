@@ -14,4 +14,13 @@ public class LightningAttack : ParticleSystemAttack
 
         Charge.transform.localScale = new Vector3(scale, scale, scale);
     }
+
+    protected override void StartProjectile()
+    {
+        float Distance = (transform.position - TargetPosition).magnitude;
+        Projectile.time = 0;
+        ParticleSystem.MainModule main = Projectile.main;
+        main.startLifetime = Distance * 1.1f / main.startSpeed.constant;
+        Projectile.Play();
+    }
 }

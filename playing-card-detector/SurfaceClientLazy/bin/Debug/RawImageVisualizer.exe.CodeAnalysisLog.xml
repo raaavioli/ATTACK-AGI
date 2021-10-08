@@ -2,14 +2,14 @@
 <?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio\2019\community\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
 <FxCopReport Version="16.0">
  <Targets>
-  <Target Name="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy\bin\Debug\RawImageVisualizer.exe">
+  <Target Name="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy\bin\Debug\RawImageVisualizer.exe">
    <Modules>
     <Module Name="rawimagevisualizer.exe">
      <Messages>
-      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
        <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Sign 'RawImageVisualizer.exe' with a strong name key.</Issue>
       </Message>
-      <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+      <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
        <Issue Certainty="95" Level="Warning">Because assembly 'RawImageVisualizer.exe' contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Issue>
       </Message>
      </Messages>
@@ -18,46 +18,46 @@
        <Types>
         <Type Name="Server" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
            <Issue Certainty="95" Level="Error">'Server' should be declared inside a namespace.</Issue>
           </Message>
-          <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+          <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
            <Issue Name="System" Certainty="95" Level="Error">The type name 'Server' conflicts in whole or in part with the namespace name 'Microsoft.SqlServer.Server' defined in the .NET Framework. Rename the type to eliminate the conflict.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name="#.ctor(System.Net.IPAddress,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="ip" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="Server.cs" Line="17">In method 'Server.Server(IPAddress, int)', correct the spelling of 'ip' in parameter name 'ip' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            <Message Id="ip" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="Server.cs" Line="17">In method 'Server.Server(IPAddress, int)', correct the spelling of 'ip' in parameter name 'ip' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#alive" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="Warning">It appears that field 'Server.alive' is never used or is only ever assigned to. Use this field or remove it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#client" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="Warning">It appears that field 'Server.client' is never used or is only ever assigned to. Use this field or remove it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#CloseServer()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="Server.cs" Line="86">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'Server.CloseServer()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="Server.cs" Line="86">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'Server.CloseServer()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#InitializeServer()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="Server.cs" Line="74">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'Server.InitializeServer()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="Server.cs" Line="74">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'Server.InitializeServer()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -65,66 +65,66 @@
         </Type>
         <Type Name="ServerThread" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
            <Issue Certainty="95" Level="Error">'ServerThread' should be declared inside a namespace.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name="#.ctor(System.Net.Sockets.TcpClient)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="32">In method 'ServerThread.ServerThread(TcpClient)', consider providing a more meaningful name than parameter name 't'.</Issue>
+            <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="MemberParameterMoreMeaningfulName" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="32">In method 'ServerThread.ServerThread(TcpClient)', consider providing a more meaningful name than parameter name 't'.</Issue>
             </Message>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
-             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="38">In externally visible method 'ServerThread.ServerThread(TcpClient)', validate parameter 't' before using it.</Issue>
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="38">In externally visible method 'ServerThread.ServerThread(TcpClient)', validate parameter 't' before using it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#CloseConnection()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="153">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.CloseConnection()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="153">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.CloseConnection()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#ProcessRequests(System.Int32)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="req" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="113">In method 'ServerThread.ProcessRequests(int)', correct the spelling of 'req' in parameter name 'req' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            <Message Id="req" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="113">In method 'ServerThread.ProcessRequests(int)', correct the spelling of 'req' in parameter name 'req' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#SendVideoRect()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="188">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.SendVideoRect()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="188">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.SendVideoRect()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#server_loop()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalError" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="81">Modify 'ServerThread.server_loop()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="81">Modify 'ServerThread.server_loop()' to catch a more specific exception than 'Exception' or rethrow the exception.</Issue>
             </Message>
-            <Message Id="loop" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="47">Correct the casing of 'loop' in member name 'ServerThread.server_loop()' by changing it to 'Loop'.</Issue>
+            <Message Id="loop" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="47">Correct the casing of 'loop' in member name 'ServerThread.server_loop()' by changing it to 'Loop'.</Issue>
             </Message>
-            <Message Id="server" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="47">Correct the casing of 'server' in member name 'ServerThread.server_loop()' by changing it to 'Server'.</Issue>
+            <Message Id="server" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="47">Correct the casing of 'server' in member name 'ServerThread.server_loop()' by changing it to 'Server'.</Issue>
             </Message>
-            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="47">Remove the underscores from member name 'ServerThread.server_loop()'.</Issue>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="47">Remove the underscores from member name 'ServerThread.server_loop()'.</Issue>
             </Message>
-            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="54">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.server_loop()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="76">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.server_loop()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="54">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.server_loop()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="76">Because the behavior of 'int.ToString()' could vary based on the current user's locale settings, replace this call in 'ServerThread.server_loop()' with a call to 'int.ToString(IFormatProvider)'. If the result of 'int.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#ValidateRequest(System.Int32)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="req" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="ServerThread.cs" Line="140">In method 'ServerThread.ValidateRequest(int)', correct the spelling of 'req' in parameter name 'req' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            <Message Id="req" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="ServerThread.cs" Line="140">In method 'ServerThread.ValidateRequest(int)', correct the spelling of 'req' in parameter name 'req' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -132,63 +132,63 @@
         </Type>
         <Type Name="SocketThreadManager" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
            <Issue Certainty="95" Level="Error">'SocketThreadManager' should be declared inside a namespace.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name="#.cctor()" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="90" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="SocketThreadManager.cs" Line="38">Initialize all static fields in 'SocketThreadManager' when those fields are declared and remove the explicit static constructor.</Issue>
+            <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="SocketThreadManager.cs" Line="38">Initialize all static fields in 'SocketThreadManager' when those fields are declared and remove the explicit static constructor.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#ActiveConnections" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Warning">Consider making 'SocketThreadManager.ActiveConnections' non-public or a constant.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#ActiveThreads" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Warning">Consider making 'SocketThreadManager.ActiveThreads' non-public or a constant.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#Alive" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Warning">Consider making 'SocketThreadManager.Alive' non-public or a constant.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#CreateServer(System.String,System.Int32)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="ip" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="SocketThreadManager.cs" Line="50">In method 'SocketThreadManager.CreateServer(string, int)', correct the spelling of 'ip' in parameter name 'ip' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
+            <Message Id="ip" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="75" Level="CriticalWarning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="SocketThreadManager.cs" Line="50">In method 'SocketThreadManager.CreateServer(string, int)', correct the spelling of 'ip' in parameter name 'ip' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#FrameRecieved" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="Recieved" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message Id="Recieved" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="75" Level="CriticalWarning">Correct the spelling of 'Recieved' in member name 'SocketThreadManager.FrameRecieved' or remove it entirely if it represents any sort of Hungarian notation.</Issue>
             </Message>
-            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Warning">Consider making 'SocketThreadManager.FrameRecieved' non-public or a constant.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#OnApplicationQuit()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="SocketThreadManager.cs" Line="69">'SocketThreadManager.OnApplicationQuit()' appears to have no upstream public or protected callers.</Issue>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="SocketThreadManager.cs" Line="69">'SocketThreadManager.OnApplicationQuit()' appears to have no upstream public or protected callers.</Issue>
             </Message>
-            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="SocketThreadManager.cs" Line="69">The 'this' parameter (or 'Me' in Visual Basic) of 'SocketThreadManager.OnApplicationQuit()' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="SocketThreadManager.cs" Line="69">The 'this' parameter (or 'Me' in Visual Basic) of 'SocketThreadManager.OnApplicationQuit()' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -196,46 +196,46 @@
         </Type>
         <Type Name="StaticNetworkUtilities" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+          <Message TypeName="DeclareTypesInNamespaces" Category="Microsoft.Design" CheckId="CA1050" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
            <Issue Certainty="95" Level="Error">'StaticNetworkUtilities' should be declared inside a namespace.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name="#compressFrame(System.Byte[],System.Boolean)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Certainty="75" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="104">Replace method 'StaticNetworkUtilities.compressFrame(byte[], bool)' with an overload that supplies all default arguments.</Issue>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="104">Replace method 'StaticNetworkUtilities.compressFrame(byte[], bool)' with an overload that supplies all default arguments.</Issue>
             </Message>
-            <Message Id="compress" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="104">Correct the casing of 'compress' in member name 'StaticNetworkUtilities.compressFrame(byte[], bool)' by changing it to 'Compress'.</Issue>
+            <Message Id="compress" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="104">Correct the casing of 'compress' in member name 'StaticNetworkUtilities.compressFrame(byte[], bool)' by changing it to 'Compress'.</Issue>
             </Message>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning">In externally visible method 'StaticNetworkUtilities.compressFrame(byte[], bool)', validate parameter 'data' before using it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#compressFrame_assumeNoZero(System.Byte[])" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="assume" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="44">Correct the casing of 'assume' in member name 'StaticNetworkUtilities.compressFrame_assumeNoZero(byte[])' by changing it to 'Assume'.</Issue>
+            <Message Id="assume" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="44">Correct the casing of 'assume' in member name 'StaticNetworkUtilities.compressFrame_assumeNoZero(byte[])' by changing it to 'Assume'.</Issue>
             </Message>
-            <Message Id="compress" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="44">Correct the casing of 'compress' in member name 'StaticNetworkUtilities.compressFrame_assumeNoZero(byte[])' by changing it to 'Compress'.</Issue>
+            <Message Id="compress" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="44">Correct the casing of 'compress' in member name 'StaticNetworkUtilities.compressFrame_assumeNoZero(byte[])' by changing it to 'Compress'.</Issue>
             </Message>
-            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="44">Remove the underscores from member name 'StaticNetworkUtilities.compressFrame_assumeNoZero(byte[])'.</Issue>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="44">Remove the underscores from member name 'StaticNetworkUtilities.compressFrame_assumeNoZero(byte[])'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#decompressFrame(System.Byte[],System.Byte[])" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Certainty="75" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="189">Replace method 'StaticNetworkUtilities.decompressFrame(byte[], byte[])' with an overload that supplies all default arguments.</Issue>
+            <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Certainty="75" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="189">Replace method 'StaticNetworkUtilities.decompressFrame(byte[], byte[])' with an overload that supplies all default arguments.</Issue>
             </Message>
-            <Message Id="decompress" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
-             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="189">Correct the casing of 'decompress' in member name 'StaticNetworkUtilities.decompressFrame(byte[], byte[])' by changing it to 'Decompress'.</Issue>
+            <Message Id="decompress" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="StaticNetworkUtilities.cs" Line="189">Correct the casing of 'decompress' in member name 'StaticNetworkUtilities.decompressFrame(byte[], byte[])' by changing it to 'Decompress'.</Issue>
             </Message>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning">In externally visible method 'StaticNetworkUtilities.decompressFrame(byte[], byte[])', validate parameter 'data' before using it.</Issue>
             </Message>
            </Messages>
@@ -250,61 +250,61 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
-             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="46">In method 'App1.App1()', object 'new BlendState()' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'new BlendState()' before all references to it are out of scope.</Issue>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="46">In method 'App1.App1()', object 'new BlendState()' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'new BlendState()' before all references to it are out of scope.</Issue>
             </Message>
-            <Message Id="System.Console.WriteLine(System.String)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="60">Method 'App1.App1()' passes a literal string as parameter 'value' of a call to 'Console.WriteLine(string)'. Retrieve the following string(s) from a resource table instead: "HELLO".</Issue>
+            <Message Id="System.Console.WriteLine(System.String)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="60">Method 'App1.App1()' passes a literal string as parameter 'value' of a call to 'Console.WriteLine(string)'. Retrieve the following string(s) from a resource table instead: "HELLO".</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#compressRawimage()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="233">'App1.compressRawimage()' appears to have no upstream public or protected callers.</Issue>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="233">'App1.compressRawimage()' appears to have no upstream public or protected callers.</Issue>
             </Message>
-            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="233">The 'this' parameter (or 'Me' in Visual Basic) of 'App1.compressRawimage()' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
+            <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="233">The 'this' parameter (or 'Me' in Visual Basic) of 'App1.compressRawimage()' is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#normalizedImage" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Warning">Consider making 'App1.normalizedImage' non-public or a constant.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#normalizedImage_compressed" Kind="Field" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="Breaking">
+            <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Warning">Consider making 'App1.normalizedImage_compressed' non-public or a constant.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#OnTouchTargetFrameReceived(System.Object,Microsoft.Surface.Core.FrameReceivedEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="System.Console.WriteLine(System.String)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="181">Method 'App1.OnTouchTargetFrameReceived(object, FrameReceivedEventArgs)' passes a literal string as parameter 'value' of a call to 'Console.WriteLine(string)'. Retrieve the following string(s) from a resource table instead: "iamm null".</Issue>
+            <Message Id="System.Console.WriteLine(System.String)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="181">Method 'App1.OnTouchTargetFrameReceived(object, FrameReceivedEventArgs)' passes a literal string as parameter 'value' of a call to 'Console.WriteLine(string)'. Retrieve the following string(s) from a resource table instead: "iamm null".</Issue>
             </Message>
-            <Message Id="iamm" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="DependsOnFix">
-             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="181">Correct the spelling of the unrecognized token 'iamm' in the literal '"iamm null"'.</Issue>
+            <Message Id="iamm" TypeName="Literals should be spelled correctly" Category="Microsoft.Naming" CheckId="CA2204" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="181">Correct the spelling of the unrecognized token 'iamm' in the literal '"iamm null"'.</Issue>
             </Message>
-            <Message Id="System.Int64.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="App1.cs" Line="223">Because the behavior of 'long.ToString()' could vary based on the current user's locale settings, replace this call in 'App1.OnTouchTargetFrameReceived(object, FrameReceivedEventArgs)' with a call to 'long.ToString(IFormatProvider)'. If the result of 'long.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            <Message Id="System.Int64.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="App1.cs" Line="223">Because the behavior of 'long.ToString()' could vary based on the current user's locale settings, replace this call in 'App1.OnTouchTargetFrameReceived(object, FrameReceivedEventArgs)' with a call to 'long.ToString(IFormatProvider)'. If the result of 'long.ToString(IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#totalFrames" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="Warning">It appears that field 'App1.totalFrames' is never used or is only ever assigned to. Use this field or remove it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#totalTime" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+            <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="Warning">It appears that field 'App1.totalTime' is never used or is only ever assigned to. Use this field or remove it.</Issue>
             </Message>
            </Messages>
@@ -317,23 +317,23 @@
        <Types>
         <Type Name="Client" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
          <Messages>
-          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
            <Issue Name="NonBreaking" Certainty="95" Level="CriticalError">Implement IDisposable on 'Client' because it creates members of the following IDisposable types: 'TcpClient'.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name="#Process(System.Byte[])" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
            <Messages>
-            <Message Id="e" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="Client.cs" Line="29">'Client.Process(byte[])' declares a variable, 'e', of type 'IOException', which is never used or is only assigned to. Use this variable or remove it.</Issue>
+            <Message Id="e" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="Client.cs" Line="29">'Client.Process(byte[])' declares a variable, 'e', of type 'IOException', which is never used or is only assigned to. Use this variable or remove it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#TryConnect()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="e" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2021-09-29 09:46:42Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="Client.cs" Line="41">'Client.TryConnect()' declares a variable, 'e', of type 'ObjectDisposedException', which is never used or is only assigned to. Use this variable or remove it.</Issue>
-             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\newProject\SurfaceClientLazy" File="Client.cs" Line="39">'Client.TryConnect()' declares a variable, 'e', of type 'SocketException', which is never used or is only assigned to. Use this variable or remove it.</Issue>
+            <Message Id="e" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2021-10-01 13:40:59Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="Client.cs" Line="41">'Client.TryConnect()' declares a variable, 'e', of type 'ObjectDisposedException', which is never used or is only assigned to. Use this variable or remove it.</Issue>
+             <Issue Certainty="95" Level="Warning" Path="C:\Users\O saft!\Documents\git\ATTACK-AGI\playing-card-detector\SurfaceClientLazy" File="Client.cs" Line="39">'Client.TryConnect()' declares a variable, 'e', of type 'SocketException', which is never used or is only assigned to. Use this variable or remove it.</Issue>
             </Message>
            </Messages>
           </Member>

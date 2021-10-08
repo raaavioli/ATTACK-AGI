@@ -1,25 +1,28 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 
 public class GameManager : MonoBehaviour
 {
     private GameObject[] spawnPointsT1;
     private GameObject[] spawnPointsT2;
-    public int teamSize = 3;
+    private const int TEAM_SIZE = 6;
 
     private List<GameObject> T1;
     private List<GameObject> T2;
 
     private int spawnedCharacters = 0;
+
+    private bool inCombatPhase = false;
+
     public void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
-
-        ServerHandler.onCardDataReceived += SpawnFromCards;
 
         /*for (int i = 0; i < teamSize; i++)
         {
@@ -30,25 +33,43 @@ public class GameManager : MonoBehaviour
         {
             SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
         }*/
+
+        StartCoroutine(SetupPhaseTimer(30));
     }
 
     public void Update()
     {
+        if (inCombatPhase) {
+            CombatPhaseUpdate();
+        } else {
+            SetupPhaseUpdate();
+        }
+        // Restarts scene on r press.
+        if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+    }
+
+    private void SetupPhaseUpdate()
+    {
         // Just to test spawning, will soon be replaced by some event from the 
         // SUR40 input server
-        if (Input.GetMouseButtonDown(0) && spawnedCharacters < teamSize * 2)
+        if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2)
         {
             List<Character> characters = Character.Values();
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);
             if (team == 0)
-                SpawnCharacter(characters[character], spawnPointsT1[character], Team.Left);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT1[character], Team.Left);
             else
-                SpawnCharacter(characters[teamSize - 1 - character], spawnPointsT2[teamSize - 1 - character], Team.Right);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[TEAM_SIZE - 1 - character], Team.Right);
             spawnedCharacters++;
         }
+    }
 
-        foreach (GameObject character in T1)
+    private void CombatPhaseUpdate()
+    {
+        foreach (GameObject character in T1) // Start attacks
         {
             if (character.activeSelf)
             {
@@ -60,7 +81,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        foreach (GameObject character in T2)
+        foreach (GameObject character in T2) // Start attacks
         {
             if (character.activeSelf)
             {
@@ -71,6 +92,24 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        // If one team is dead, end combat phase.
+    }
+
+    private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
+    {
+        const float startSoundTime = 3.0f;
+        Assert.IsTrue(seconds > startSoundTime);
+
+        for (int i = 0; i < seconds; i++)
+        {
+            if (seconds - i == startSoundTime)
+                GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(1f);
+        }
+        inCombatPhase = true;
+        SpawnFromCards();
+        CameraHandler.instance.StartCombatCamera();
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)
@@ -100,6 +139,19 @@ public class GameManager : MonoBehaviour
         }
         return Team.Left;
     }
+    
+    public void KillCharacter(Team team, GameObject character)
+    {
+        if (team == Team.Left)
+        {
+            T1.Remove(character);
+        } 
+        else 
+        {
+            T2.Remove(character);
+        }
+        Destroy(character);
+    }
 
     private void SpawnCharacter(Character character, GameObject spawn, Team team)
     {     
@@ -114,46 +166,28 @@ public class GameManager : MonoBehaviour
         c.transform.parent = spawn.transform;
     }
 
-    private void SpawnFromCards() {
+    private void SpawnFromCards() 
+    {
         ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
 
         foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
             // Decide team, and skip if the team is already full.
             Team team = cardPosition.team;
-            if ((team == 0 && T1.Count >= 3) || (team == (Team) 1 && T2.Count >= 3)) {
+            if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
+            {
                 continue;
             }
 
             // Decide the spawn point.
             int position = cardPosition.position;
             GameObject spawn;
-            if (team == 0) {
-                spawn = spawnPointsT1[(int)Mathf.Clamp(position-1, 0, 2)];
-            } else {
-                spawn = spawnPointsT2[(int)Mathf.Clamp(position-1, 0, 2)];
-            }
-
-            // Skip spawn if spawn point is not empty.
-            if (spawn.transform.childCount != 0) {
-                continue;
-            }
+            if (team == 0)
+                spawn = spawnPointsT1[position - 1];
+            else
+                spawn = spawnPointsT2[position - 1];
 
             // Decide the character.
-            Character wantedCharacter;
-            switch (cardPosition.rank) {
-                case 1:
-                    wantedCharacter = Character.WITCH;
-                    break;
-                case 2:
-                    wantedCharacter = Character.ENIGMA;
-                    break;
-                case 3:
-                    wantedCharacter = Character.COLONEL;
-                    break;
-                default:
-                    wantedCharacter = Character.WITCH;
-                    break;
-            }
+            Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
 
             SpawnCharacter(wantedCharacter, spawn, team);
         }
@@ -171,11 +205,12 @@ public class Character
     public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab");
     public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab");
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab");
+    public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab");
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY };
     }
 
     private string ResourcePath;
@@ -186,5 +221,19 @@ public class Character
     {
         string path = ResourcePath + "/" + PrefabName;
         return Resources.Load<GameObject>(path);
+    }
+}
+
+// Used for spawn at combat phase start.
+public struct Triple
+{
+    public Character character;
+    public GameObject spawn;
+    public Team team;
+
+    public Triple(Character character_, GameObject spawn_, Team team_) {
+        character = character_;
+        spawn = spawn_;
+        team = team_;
     }
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AirStrikeAttack : Attack
@@ -43,19 +39,22 @@ public class AirStrikeAttack : Attack
             Vector3 NewDir = ((TargetPosition + Vector3.down) - Plane.transform.position);
             const float Dist = 3;
             float Magnitude = NewDir.magnitude;
-            if (Magnitude > Dist)
-            {
-                // When plane is far away from the target we want to adapt its trajectory towards the target
-                Direction = NewDir.normalized;
-            }
-            else
+            Vector3 currentDirection = Direction;
+            // When plane is far away from the target we want to adapt its trajectory towards the target
+            if (Magnitude <= Dist)
             {
                 // When the plane is close, we want it to turn down
                 float _t = Magnitude / Dist;
-                Direction = (Direction + Vector3.down * (1 - _t)).normalized; 
+                currentDirection = (Direction + Vector3.down * (1 - _t)).normalized;
             }
-            Plane.transform.position += MetersPerSecond * Direction;
-            Plane.transform.rotation = Quaternion.LookRotation(Direction);
+            Plane.transform.position += MetersPerSecond * currentDirection;
+            Plane.transform.rotation = Quaternion.LookRotation(currentDirection);
         }
+    }
+
+    private void OnDisable()
+    {
+        if (Plane != null)
+            Plane.SetActive(false);
     }
 }

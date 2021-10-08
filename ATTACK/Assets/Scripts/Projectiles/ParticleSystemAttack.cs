@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
-using UnityEditor.UIElements;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 public class ParticleSystemAttack : Attack
 {
     public ParticleSystem ProjectilePrefab;
 
-    private ParticleSystem Projectile;
+    protected ParticleSystem Projectile;
 
 
     protected override void InstantiateProjectile()
@@ -33,5 +28,11 @@ public class ParticleSystemAttack : Attack
     protected override void StopProjectile()
     {
         Projectile.Stop();
+    }
+
+    private void OnDisable()
+    {
+        if (Projectile != null)
+            Projectile.Stop();
     }
 }

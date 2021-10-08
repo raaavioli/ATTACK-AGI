@@ -70,11 +70,12 @@ public class ServerHandler : MonoBehaviour {
     void Update() {
         if (socket.Available > 0) {
             socket.ReceiveFrom(data, ref senderRemote);
-            Debug.Log(socket.Available);
             string cards = Encoding.ASCII.GetString(data);
             Debug.Log(cards);
             cardInformation = ParseCards(cards);
-            onCardDataReceived();
+            if (onCardDataReceived != null) {
+                onCardDataReceived();
+            }
         }
     }
 

@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviour
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);
             if (team == 0)
-                SpawnCharacter(characters[character % characters.Count], spawnPointsT1[character], Team.Left);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT1[character], Team.One);
             else
-                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[TEAM_SIZE - 1 - character], Team.Right);
+                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[TEAM_SIZE - 1 - character], Team.Two);
             spawnedCharacters++;
         }
     }
@@ -114,9 +114,9 @@ public class GameManager : MonoBehaviour
 
     public Vector3 GetRandomTarget(Team characterTeam)
     {
-        if (characterTeam == Team.Left && T2.Count > 0)
+        if (characterTeam == Team.One && T2.Count > 0)
             return T2[(int)Random.Range(0, T2.Count)].transform.position;
-        else if (characterTeam == Team.Right && T1.Count > 0)
+        else if (characterTeam == Team.Two && T1.Count > 0)
             return T1[(int)Random.Range(0, T1.Count)].transform.position;
 
         Debug.LogError("Could not get random target, there are no targets in the opposing team");
@@ -129,20 +129,20 @@ public class GameManager : MonoBehaviour
         switch (tag)
         {
             case "Team1Spawn":
-                return Team.Left;
+                return Team.One;
             case "Team2Spawn":
-                return Team.Right;
+                return Team.Two;
             default:
                 Debug.LogError("There is no team with tag: " + tag);
                 Assert.IsTrue(false);
                 break;
         }
-        return Team.Left;
+        return Team.One;
     }
     
     public void KillCharacter(Team team, GameObject character)
     {
-        if (team == Team.Left)
+        if (team == Team.One)
         {
             T1.Remove(character);
         } 
@@ -196,8 +196,8 @@ public class GameManager : MonoBehaviour
 
 public enum Team : ushort
 {
-    Left = 0,
-    Right = 1,
+    One = 0,
+    Two = 1,
 }
 
 public class Character

@@ -25,7 +25,7 @@ public class CardUI : MonoBehaviour {
             foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
                 Team team = cardPosition.team;
                 if (i == cardPosition.position - 1) {
-                    if (team == Team.Left) {
+                    if (team == Team.One) {
                         T1Found[i] = true;
                         if (!T1PresentCards[i]) {
                             T1CardAnimators[i].SetTrigger("FadeIn");

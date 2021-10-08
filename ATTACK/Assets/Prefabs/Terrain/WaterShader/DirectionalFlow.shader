@@ -1,15 +1,14 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Custom/DirectionalFlow" {
 	Properties{
 		_Color("Color", Color) = (1,1,1,1)
 		[NoScaleOffset] _MainTex("Deriv (AG) Height (B)", 2D) = "black" {}
-		[NoScaleOffset] _FlowMap("Flow (RG)", 2D) = "black" {}
 		_Tiling("Tiling", Float) = 1
 		_Speed("Speed", Float) = 1
-		_FlowStrength("Flow Strength", Float) = 1
-		_HeightScale("Height Scale, Constant", Float) = 0.25
-		_HeightScaleModulated("Height Scale, Modulated", Float) = 0.75
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
-		_Metallic("Metallic", Range(0,1)) = 0.0
 	}
 		SubShader{
 			Tags { "RenderType" = "Opaque" }
@@ -21,9 +20,8 @@ Shader "Custom/DirectionalFlow" {
 
 			#include "Assets/Shaders/Flow.cginc"
 
-			sampler2D _MainTex, _FlowMap;
-			float _Tiling, _Speed, _FlowStrength;
-			float _HeightScale, _HeightScaleModulated;
+			sampler2D _MainTex;
+			float _Tiling, _Speed;
 
 			struct Input {
 				float2 uv_MainTex;
@@ -36,7 +34,7 @@ Shader "Custom/DirectionalFlow" {
 
 			void vert(inout appdata_full v, out Input o) {
 				UNITY_INITIALIZE_OUTPUT(Input, o);
-				o.vertexNormal = normalize(v.normal);
+				o.vertexNormal = v.normal;// mul(unity_ObjectToWorld, float4(v.normal, 0.0)).xyz;
 			}
 
 			float3 UnpackDerivativeHeight(float4 textureData) {
@@ -45,17 +43,22 @@ Shader "Custom/DirectionalFlow" {
 				return dh;
 			}
 
+			float map(float value, float min1, float max1, float min2, float max2) {
+				return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+			}
+
 			void surf(Input IN, inout SurfaceOutputStandard o) {
 				float normalDot = dot(IN.vertexNormal, float3(0.0f, 1.0f, 0.0f));
-				float localSpeed = _Speed * (1 - normalDot);
+				float localSpeed = - _Speed * (1 - normalDot);
+				//float localSpeed = _Speed * map(normalDot, 0, 1, 0, -1);
 				float time = _Time.y * localSpeed;
-				//float time = _Time.y * _Speed;
 				float2 uvFlow = DirectionalFlowUVW(IN.uv_MainTex, float2(0, 1), _Tiling, time);
 				float3 dh = UnpackDerivativeHeight(tex2D(_MainTex, uvFlow));
 				fixed4 c = dh.z * dh.z * _Color;
+				//o.Albedo = float3(normalDot, normalDot, normalDot) - 2;
+				o.Albedo = IN.vertexNormal;
 				o.Albedo = c.rgb;
 				o.Normal = normalize(float3(-dh.xy, 1));
-				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
 				o.Alpha = c.a;
 			}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -105,11 +106,27 @@ public class GameManager : MonoBehaviour
         {
             if (seconds - i == startSoundTime)
                 GetComponent<AudioSource>().Play();
+            updateUITimer(seconds - i);
             yield return new WaitForSeconds(1f);
         }
+        GameObject.Find("SetupTimer").SetActive(false);
         inCombatPhase = true;
         SpawnFromCards();
         CameraHandler.instance.StartCombatCamera();
+    }
+
+    private void updateUITimer(int secondsLeft)
+    {
+        GameObject.Find("SetupTimer").GetComponent<Text>().text = ""+secondsLeft;
+        if(secondsLeft < 4)
+        {
+            if(secondsLeft == 1)
+                GameObject.Find("SetupTimer").GetComponent<Text>().color = Color.red;
+            else
+                GameObject.Find("SetupTimer").GetComponent<Text>().color = Color.yellow;
+            GameObject.Find("SetupTimer").GetComponent<Text>().fontSize += 16;
+        } 
+        
     }
 
     public Vector3 GetRandomTarget(Team characterTeam)

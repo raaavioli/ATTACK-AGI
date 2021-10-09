@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCharacter(Character character, ServerHandler.Suit suit, GameObject spawn, Team team)
     {     
-        GameObject c = spawn.GetComponent<Spawner>().Spawn(character);
+        GameObject c = spawn.GetComponent<Spawner>().Spawn(character, suit);
         CharacterCommon cc = c.GetComponent<CharacterCommon>();
         if (suit == ServerHandler.Suit.SPADES)
             cc.SetType(Attack.AttackType.Weak);

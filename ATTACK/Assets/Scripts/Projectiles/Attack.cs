@@ -9,7 +9,7 @@ public abstract class Attack : MonoBehaviour
         Strong,
         Weak,
     }
-    public AttackType Type;
+    public AttackType Type = AttackType.Weak;
 
     public ParticleSystem ChargePrefab;
 

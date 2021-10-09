@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviour
             int team = spawnedCharacters % 2;
             int character = (int)(spawnedCharacters / 2f);
             if (team == 0)
-                SpawnCharacter(characters[character % characters.Count], spawnPointsT1[character], Team.One);
+                SpawnCharacter(characters[character % characters.Count], ServerHandler.Suit.SPADES, spawnPointsT1[character], Team.One);
             else
-                SpawnCharacter(characters[character % characters.Count], spawnPointsT2[TEAM_SIZE - 1 - character], Team.Two);
+                SpawnCharacter(characters[character % characters.Count], ServerHandler.Suit.CLUBS, spawnPointsT2[TEAM_SIZE - 1 - character], Team.Two);
             spawnedCharacters++;
         }
     }
@@ -143,19 +143,24 @@ public class GameManager : MonoBehaviour
     public void KillCharacter(Team team, GameObject character)
     {
         if (team == Team.One)
-        {
             T1.Remove(character);
-        } 
         else 
-        {
             T2.Remove(character);
-        }
         Destroy(character);
     }
 
-    private void SpawnCharacter(Character character, GameObject spawn, Team team)
+
+
+    private void SpawnCharacter(Character character, ServerHandler.Suit suit, GameObject spawn, Team team)
     {     
         GameObject c = spawn.GetComponent<Spawner>().Spawn(character);
+        CharacterCommon cc = c.GetComponent<CharacterCommon>();
+        if (suit == ServerHandler.Suit.SPADES)
+            cc.SetType(Attack.AttackType.Weak);
+        else if (suit == ServerHandler.Suit.CLUBS)
+            cc.SetType(Attack.AttackType.Strong);
+        else
+            Debug.LogError("Unimplemented suit received from server");
 
         if (team == 0)
             T1.Add(c);
@@ -176,22 +181,16 @@ public class GameManager : MonoBehaviour
                 // Decide team, and skip if the team is already full.
                 Team team = cardPosition.team;
                 if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
-                {
                     continue;
-                }
 
                 // Decide the spawn point.
                 int position = cardPosition.position;
-                GameObject spawn;
-                if (team == 0)
-                    spawn = spawnPointsT1[position - 1];
-                else
-                    spawn = spawnPointsT2[position - 1];
+                GameObject spawn = team == 0 ? spawnPointsT1[position - 1] : spawnPointsT2[position - 1];
 
                 // Decide the character.
                 Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
 
-                SpawnCharacter(wantedCharacter, spawn, team);
+                SpawnCharacter(wantedCharacter, cardPosition.suit, spawn, team);
             }
         }
     }
@@ -224,19 +223,5 @@ public class Character
     {
         string path = ResourcePath + "/" + PrefabName;
         return Resources.Load<GameObject>(path);
-    }
-}
-
-// Used for spawn at combat phase start.
-public struct Triple
-{
-    public Character character;
-    public GameObject spawn;
-    public Team team;
-
-    public Triple(Character character_, GameObject spawn_, Team team_) {
-        character = character_;
-        spawn = spawn_;
-        team = team_;
     }
 }

@@ -10,12 +10,6 @@ public class CharacterCommon : MonoBehaviour
     private Team team;
     private Attack attack;
 
-    public bool CanAttack() {
-        if (attack == null)
-            return false;
-        return attack.CanAttack;
-    }
-
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -31,6 +25,18 @@ public class CharacterCommon : MonoBehaviour
     public Team GetTeam()
     {
         return this.team;
+    }
+    public bool CanAttack()
+    {
+        if (attack == null)
+            return false;
+        return attack.CanAttack;
+    }
+
+    public void SetType (Attack.AttackType type)
+    {
+        if (attack != null)
+            attack.Type = type;
     }
 
     /**

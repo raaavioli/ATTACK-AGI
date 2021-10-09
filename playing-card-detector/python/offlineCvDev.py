@@ -2,6 +2,9 @@
 
 import cv2
 import numpy as np
+import os
+
+file_path = os.path.dirname(__file__)
 
 HEIGHT = 540
 WIDTH = 960
@@ -13,8 +16,11 @@ CARD_AREA_MAX = 6000
 SUIT_AREA_MIN = 50
 SUIT_AREA_MAX = 500
 
+clubs = cv2.imread(file_path + "\..\sur40screenshots\clubs.png", cv2.IMREAD_GRAYSCALE)
+
 def main():
-    path = "playing-card-detector/sur40screenshots/correctedImage.png"
+    print(file_path)
+    path = file_path + "\..\sur40screenshots\correctedImage.png"
     image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     print(analyzeImage(image))
 
@@ -55,6 +61,7 @@ def splitImage(image):
 
     return subImages
 
+
 # Analyzes a single sub-image for the given player and position and returns the string for that particular sub-image.
 # If nothing is found, an empty string is returned.
 def analyzeSubImage(subImage, player, position):
@@ -71,17 +78,27 @@ def analyzeSubImage(subImage, player, position):
     for contour in contours:
         if SUIT_AREA_MIN <= cv2.contourArea(contour) <= SUIT_AREA_MAX: rank += 1
 
-    # Debug drawing.
-    #img_contours = np.zeros(subImage.shape)
-    #cv2.drawContours(img_contours, contours, -1, 255, 1)
-    #cv2.imshow("thresh%d%d" % (player, position), thresh)
-    #cv2.imshow("img_contours%d%d" % (player, position), img_contours)
+    img_contours = np.zeros(subImage.shape, dtype=np.uint8)
+    cv2.drawContours(img_contours, contours, -1, 255, 1)
+    # cv2.imshow("thresh%d%d" % (player, position), thresh)
+    # cv2.imshow("img_contours%d%d" % (player, position), img_contours)
+
+    H, W = clubs.shape 
+    result = cv2.matchTemplate(img_contours, clubs, cv2.TM_CCORR)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    
+    suit = "S"
+    location = max_loc
+    bottom_right = (location[0] + W, location[1] + H)
+    if (bottom_right[0] > (RECT_WIDTH / 2)):
+        suit = "C"
+        cv2.rectangle(img_contours, location,bottom_right, 255, 1)
+        cv2.imshow("img%d%d" % (player, position), img_contours)
 
     # Sobel testing
     #sobel = cv2.Sobel(subImage,cv2.CV_64F,1,1,ksize=15)
     #cv2.imshow("sobel%d%d" % (player, position), sobel)
 
-    suit = "S"
     rank = max(1, min(rank, 6))
     return "%d:%d:%s:%d," % (player, position, suit, rank)
 

@@ -4,6 +4,10 @@ import sys
 import signal
 import cv2
 import numpy as np
+import os
+
+file_path = os.path.dirname(__file__)
+club_img = cv2.imread(file_path + "\..\sur40screenshots\clubs.png", cv2.IMREAD_GRAYSCALE)
 
 HEIGHT = 540
 WIDTH = 960
@@ -118,13 +122,27 @@ def analyzeSubImage(subImage, player, position):
     if len(contours) == 0 or not (CARD_AREA_MIN <= cv2.contourArea(contours[0]) <= CARD_AREA_MAX):
         return ""
 
-    # Count contours that are large enough but not too small to be a suit marker.
+    # Count contours that are large enough but not too small to be a suit marker to find rank.
     rank = 0
     for contour in contours:
         if SUIT_AREA_MIN <= cv2.contourArea(contour) <= SUIT_AREA_MAX: rank += 1
-
-    suit = "S"
     rank = max(1, min(rank, 6))
+
+    # Match template to find out if card is Clubs or Spades
+    img_contours = np.zeros(subImage.shape, dtype=np.uint8)
+    cv2.drawContours(img_contours, contours, -1, 255, 1)
+    result = cv2.matchTemplate(img_contours, club_img, cv2.TM_CCORR)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    
+    suit = "S"
+    location = max_loc
+    H, W = club_img.shape 
+    bottom_right = (location[0] + W, location[1] + H)
+    if (bottom_right[0] > (RECT_WIDTH / 2)):
+        suit = "C"
+        cv2.rectangle(img_contours, location,bottom_right, 255, 1)
+        cv2.imshow("img%d%d" % (player, position), img_contours)
+
     return "%d:%d:%s:%d," % (player, position, suit, rank)
 
 if __name__ == "__main__":

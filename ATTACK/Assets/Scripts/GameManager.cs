@@ -117,14 +117,15 @@ public class GameManager : MonoBehaviour
 
     private void updateUITimer(int secondsLeft)
     {
-        GameObject.Find("SetupTimer").GetComponent<Text>().text = ""+secondsLeft;
+        Text setupTimerText = GameObject.Find("SetupTimer").GetComponent<Text>();
+        setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
         {
             if(secondsLeft == 1)
-                GameObject.Find("SetupTimer").GetComponent<Text>().color = Color.red;
+                setupTimerText.color = Color.red;
             else
-                GameObject.Find("SetupTimer").GetComponent<Text>().color = Color.yellow;
-            GameObject.Find("SetupTimer").GetComponent<Text>().fontSize += 16;
+                setupTimerText.color = Color.yellow;
+            setupTimerText.fontSize += 16;
         } 
         
     }

@@ -6,8 +6,8 @@ public abstract class Attack : MonoBehaviour
 {
     public enum AttackType
     {
-        Strong,
         Weak,
+        Strong,
     }
     public AttackType Type = AttackType.Weak;
 

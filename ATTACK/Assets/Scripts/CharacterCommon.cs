@@ -10,7 +10,7 @@ public class CharacterCommon : MonoBehaviour
     private Team team;
     private Attack attack;
 
-    void Start()
+    void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponentInChildren<Attack>();

@@ -18,12 +18,18 @@ public class GameManager : MonoBehaviour
 
     private bool inCombatPhase = false;
 
+    private CardUI canvasScript;
+
     public void Start()
     {
         spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
         spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
+
+        canvasScript = GameObject.Find("Canvas").GetComponent<CardUI>();
+
+        canvasScript.roundWinnerText.SetActive(false);
 
         /*for (int i = 0; i < teamSize; i++)
         {
@@ -70,6 +76,22 @@ public class GameManager : MonoBehaviour
 
     private void CombatPhaseUpdate()
     {
+        if(T1.Count == 0 && T2.Count == 0)
+        {
+            canvasScript.roundWinnerText.SetActive(true);
+            canvasScript.roundWinnerText.GetComponent<Text>().text = "Round ends in a tie!";
+        }
+        else if(T1.Count == 0)
+        {
+            canvasScript.roundWinnerText.SetActive(true);
+            canvasScript.roundWinnerText.GetComponent<Text>().text = "Right Player won this round!";
+        }
+        else if(T2.Count == 0)
+        {
+            canvasScript.roundWinnerText.SetActive(true);
+            canvasScript.roundWinnerText.GetComponent<Text>().text = "Left Player won this round!";
+        }
+
         foreach (GameObject character in T1) // Start attacks
         {
             if (character.activeSelf)
@@ -101,6 +123,7 @@ public class GameManager : MonoBehaviour
     {
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
+        canvasScript.setupTimer.SetActive(true);
 
         for (int i = 0; i < seconds; i++)
         {
@@ -109,7 +132,7 @@ public class GameManager : MonoBehaviour
             updateUITimer(seconds - i);
             yield return new WaitForSeconds(1f);
         }
-        GameObject.Find("SetupTimer").SetActive(false);
+        canvasScript.setupTimer.SetActive(false);
         inCombatPhase = true;
         SpawnFromCards();
         CameraHandler.instance.StartCombatCamera();
@@ -117,7 +140,7 @@ public class GameManager : MonoBehaviour
 
     private void updateUITimer(int secondsLeft)
     {
-        Text setupTimerText = GameObject.Find("SetupTimer").GetComponent<Text>();
+        Text setupTimerText = canvasScript.setupTimer.GetComponent<Text>();
         setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
         {

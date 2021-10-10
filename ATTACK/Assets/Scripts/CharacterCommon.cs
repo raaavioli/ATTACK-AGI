@@ -10,6 +10,10 @@ public class CharacterCommon : MonoBehaviour
     private Team team;
     private Attack attack;
 
+    private Animator animator;
+
+    public int health = 100;
+
     public bool CanAttack() {
         if (attack == null)
             return false;
@@ -21,6 +25,8 @@ public class CharacterCommon : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponentInChildren<Attack>();
         Assert.IsNotNull(attack);
+
+        animator = gameObject.GetComponent<Animator>();
     }
 
     public void SetTeam(Team team)
@@ -45,5 +51,15 @@ public class CharacterCommon : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(DirToTarget);
 
         return attack.StartSimulation(targetPoint);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+
+        // Some characters dont have an animator, so this is a hacky solution for now.
+        if (animator != null) animator.SetTrigger("StartGetHit");
+
+        if (health <= 0) gameManager.KillCharacter(team, gameObject);
     }
 }

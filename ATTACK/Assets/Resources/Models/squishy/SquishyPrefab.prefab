@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6214596430779937446}
   - component: {fileID: 5938703626466069076}
   - component: {fileID: 4559184412209367075}
+  - component: {fileID: -6705443303823762064}
   m_Layer: 0
   m_Name: SquishyPrefab
   m_TagString: Untagged
@@ -96,9 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChargePrefab: {fileID: 0}
+  ChargeSound: {fileID: 0}
+  FireSound: {fileID: 0}
   FireStartTime: 1
   MaxFireTime: 0.5
-  hiddenDamageCollider: {fileID: 8603471838256999585, guid: dc4a74e0c5d89461fbf774f9b9498cbf, type: 3}
   timeToHit: 0.5
   damage: 10
 --- !u!114 &4559184412209367075
@@ -114,3 +116,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+--- !u!135 &-6705443303823762064
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4450709443245855212}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

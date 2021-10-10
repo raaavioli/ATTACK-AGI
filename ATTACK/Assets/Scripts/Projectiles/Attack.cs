@@ -24,6 +24,10 @@ public abstract class Attack : MonoBehaviour
     protected Vector3 TargetPosition;
     Animator Animator;
 
+    private GameObject hiddenDamageCollider;
+    public float timeToHit = 1.0f;
+    public int damage;
+
     public bool CanAttack => !Simulating;
 
     protected abstract void InstantiateProjectile();
@@ -57,6 +61,10 @@ public abstract class Attack : MonoBehaviour
             Charge.Stop();
         }
         InstantiateProjectile();
+    }
+
+    private void Start() {
+        hiddenDamageCollider = Resources.Load<GameObject>("Projectiles/HiddenDamageCollider");    
     }
 
     public void Update()
@@ -118,6 +126,9 @@ public abstract class Attack : MonoBehaviour
             {
                 Shooting = true;
                 StartProjectile();
+
+                fireDamageProjectile();
+
                 FireSource.time = 0;
                 FireSource.Play();
             }
@@ -138,7 +149,25 @@ public abstract class Attack : MonoBehaviour
         }
     }
 
+    private void fireDamageProjectile()
+    {
+        GameObject hiddenAttack = Instantiate(hiddenDamageCollider, gameObject.transform.position, Quaternion.identity);
+        hiddenAttack.transform.LookAt(TargetPosition);
+
+        HiddenDamageScript stats = hiddenAttack.GetComponent<HiddenDamageScript>();
+        stats.SetTeam(gameObject.GetComponentInParent<CharacterCommon>().GetTeam());
+        stats.timeToHit = timeToHit;
+        stats.distance = (TargetPosition - gameObject.transform.position).magnitude;
+        stats.damage = damage;
+    }
+
     private void OnDisable()
+    {
+        if (Charge != null)
+            Charge.Stop();
+    }
+
+    private void OnDestroy()
     {
         if (Charge != null)
             Charge.Stop();

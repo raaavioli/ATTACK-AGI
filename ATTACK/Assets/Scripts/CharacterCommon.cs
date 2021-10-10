@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class CharacterCommon : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class CharacterCommon : MonoBehaviour
     private Animator animator;
 
     public int health = 100;
+    private HealthScript healthScript;
 
     public bool CanAttack() {
         if (attack == null)
@@ -25,7 +28,8 @@ public class CharacterCommon : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponentInChildren<Attack>();
         Assert.IsNotNull(attack);
-
+        string parentName = transform.parent.name;
+        healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(6-((int)parentName[3] - '0')).GetComponent<HealthScript>();
         animator = gameObject.GetComponent<Animator>();
     }
 
@@ -57,9 +61,14 @@ public class CharacterCommon : MonoBehaviour
     {
         health -= amount;
 
+        healthScript.SetHealth((float)health / 100f);
         // Some characters dont have an animator, so this is a hacky solution for now.
         if (animator != null) animator.SetTrigger("StartGetHit");
 
-        if (health <= 0) gameManager.KillCharacter(team, gameObject);
+        if (health <= 0)
+        {
+            gameManager.KillCharacter(team, gameObject);
+            healthScript.transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 }

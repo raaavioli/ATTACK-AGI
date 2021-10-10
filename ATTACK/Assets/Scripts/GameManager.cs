@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -116,6 +117,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Debug.Log(spawnPointsT2[5].transform.GetChild(5).GetComponent<CharacterCommon>().health);
+
         // If one team is dead, end combat phase.
     }
 
@@ -133,6 +136,18 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         canvasScript.setupTimer.SetActive(false);
+        for (int i = 0; i < spawnPointsT1.Length; i++)
+        {
+            if(spawnPointsT1[5 - i].transform.childCount == 6)
+            {
+                GameObject.Find("Canvas").transform.GetChild(0).GetChild(i).GetChild(0).gameObject.SetActive(true);
+            }
+
+            if (spawnPointsT2[5 - i].transform.childCount == 6)
+            {
+                GameObject.Find("Canvas").transform.GetChild(1).GetChild(i).GetChild(0).gameObject.SetActive(true);
+            }
+        }
         inCombatPhase = true;
         SpawnFromCards();
         CameraHandler.instance.StartCombatCamera();
@@ -156,9 +171,9 @@ public class GameManager : MonoBehaviour
     public Vector3 GetRandomTarget(Team characterTeam)
     {
         if (characterTeam == Team.One && T2.Count > 0)
-            return T2[(int)Random.Range(0, T2.Count)].transform.position;
+            return T2[(int)UnityEngine.Random.Range(0, T2.Count)].transform.position;
         else if (characterTeam == Team.Two && T1.Count > 0)
-            return T1[(int)Random.Range(0, T1.Count)].transform.position;
+            return T1[(int)UnityEngine.Random.Range(0, T1.Count)].transform.position;
 
         Debug.LogError("Could not get random target, there are no targets in the opposing team");
         Assert.IsTrue(false);

@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     [Range(1, 30)]
     private int setupTime = 30;
 
-    private GameObject[] spawnPointsT1;
-    private GameObject[] spawnPointsT2;
+    public GameObject[] spawnPointsT1;
+    public GameObject[] spawnPointsT2;
     private const int TEAM_SIZE = 6;
 
     private List<GameObject> T1;
@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        spawnPointsT1 = GameObject.FindGameObjectsWithTag("Team1Spawn");
-        spawnPointsT2 = GameObject.FindGameObjectsWithTag("Team2Spawn");
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
 

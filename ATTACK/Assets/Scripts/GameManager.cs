@@ -71,20 +71,19 @@ public class GameManager : MonoBehaviour
 
     private void CombatPhaseUpdate()
     {
-        if(T1.Count == 0 && T2.Count == 0)
-        {
+        if (T1.Count == 0 && T2.Count == 0) {
             canvasScript.roundWinnerText.SetActive(true);
-            canvasScript.roundWinnerText.GetComponent<Text>().text = "Round ends in a tie!";
+            canvasScript.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
         }
         else if(T1.Count == 0)
         {
             canvasScript.roundWinnerText.SetActive(true);
-            canvasScript.roundWinnerText.GetComponent<Text>().text = "Right Player won this round!";
+            canvasScript.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Right Player won this round!";
         }
         else if(T2.Count == 0)
         {
             canvasScript.roundWinnerText.SetActive(true);
-            canvasScript.roundWinnerText.GetComponent<Text>().text = "Left Player won this round!";
+            canvasScript.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Left Player won this round!";
         }
 
         foreach (GameObject character in T1) // Start attacks

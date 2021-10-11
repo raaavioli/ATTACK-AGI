@@ -90,7 +90,6 @@ def analyzeImage(image):
         position = (i % 6) + 1
         resultString += analyzeSubImage(subImage, player, position)
 
-    #cv2.imshow("image", image)
     cv2.waitKey(0)
 
     return resultString
@@ -140,8 +139,6 @@ def analyzeSubImage(subImage, player, position):
     bottom_right = (location[0] + W, location[1] + H)
     if (bottom_right[0] > (RECT_WIDTH / 2)):
         suit = "C"
-        cv2.rectangle(img_contours, location,bottom_right, 255, 1)
-        cv2.imshow("img%d%d" % (player, position), img_contours)
 
     return "%d:%d:%s:%d," % (player, position, suit, rank)
 

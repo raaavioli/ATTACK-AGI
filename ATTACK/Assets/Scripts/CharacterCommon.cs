@@ -29,7 +29,7 @@ public class CharacterCommon : MonoBehaviour
         attack = GetComponentInChildren<Attack>();
         Assert.IsNotNull(attack);
         string parentName = transform.parent.name;
-        healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(6-((int)parentName[3] - '0')).GetComponent<HealthScript>();
+        healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(((int)parentName[3] - '0') - 1).GetComponent<HealthScript>();
         animator = gameObject.GetComponent<Animator>();
     }
 

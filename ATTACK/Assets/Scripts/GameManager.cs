@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    [Range(1, 30)]
+    private int setupTime = 30;
+
     private GameObject[] spawnPointsT1;
     private GameObject[] spawnPointsT2;
     private const int TEAM_SIZE = 6;
@@ -32,17 +36,7 @@ public class GameManager : MonoBehaviour
 
         canvasScript.roundWinnerText.SetActive(false);
 
-        /*for (int i = 0; i < teamSize; i++)
-        {
-            SpawnCharacter(characters[i], spawnPointsT1[i], Team.Left);
-        }
-
-        for (int i = 0; i < teamSize; i++)
-        {
-            SpawnCharacter(characters[i], spawnPointsT2[i], Team.Right);
-        }*/
-
-        StartCoroutine(SetupPhaseTimer(30));
+        StartCoroutine(SetupPhaseTimer(setupTime));
     }
 
     public void Update()
@@ -117,8 +111,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //Debug.Log(spawnPointsT2[5].transform.GetChild(5).GetComponent<CharacterCommon>().health);
-
         // If one team is dead, end combat phase.
     }
 
@@ -136,18 +128,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         canvasScript.setupTimer.SetActive(false);
-        for (int i = 0; i < spawnPointsT1.Length; i++)
-        {
-            if(spawnPointsT1[5 - i].transform.childCount == 6)
-            {
-                GameObject.Find("Canvas").transform.GetChild(0).GetChild(i).GetChild(0).gameObject.SetActive(true);
-            }
-
-            if (spawnPointsT2[5 - i].transform.childCount == 6)
-            {
-                GameObject.Find("Canvas").transform.GetChild(1).GetChild(i).GetChild(0).gameObject.SetActive(true);
-            }
-        }
+        
         inCombatPhase = true;
         SpawnFromCards();
         CameraHandler.instance.StartCombatCamera();
@@ -237,17 +218,18 @@ public class GameManager : MonoBehaviour
                 }
 
                 // Decide the spawn point.
-                int position = cardPosition.position;
+                int position = cardPosition.position - 1;
                 GameObject spawn;
                 if (team == 0)
-                    spawn = spawnPointsT1[position - 1];
+                    spawn = spawnPointsT1[position];
                 else
-                    spawn = spawnPointsT2[position - 1];
+                    spawn = spawnPointsT2[position];
 
                 // Decide the character.
                 Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
 
                 SpawnCharacter(wantedCharacter, spawn, team);
+                GameObject.Find("Canvas").transform.GetChild((int)team).GetChild(position).GetChild(0).gameObject.SetActive(true);
             }
         }
     }

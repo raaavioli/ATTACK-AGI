@@ -18,10 +18,12 @@ public class CardUI : MonoBehaviour {
     void Start() {
         ServerHandler.onCardDataReceived += UpdateAnimations;
 
-        for (int i = 0; i < 6; i++)
-        {
-            transform.GetChild(0).GetChild(i).GetChild(0).gameObject.SetActive(false);
-            transform.GetChild(1).GetChild(i).GetChild(0).gameObject.SetActive(false);
+        foreach (Animator animator in T1CardAnimators) {
+            animator.transform.Find("HealthBar").gameObject.SetActive(false);
+        }
+
+        foreach (Animator animator in T2CardAnimators) {
+            animator.transform.Find("HealthBar").gameObject.SetActive(false);
         }
     }
 

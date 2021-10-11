@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour {
     [SerializeField]
@@ -11,8 +12,19 @@ public class CardUI : MonoBehaviour {
     private bool[] T1PresentCards = new bool[6];
     private bool[] T2PresentCards = new bool[6];
 
+    public GameObject setupTimer;
+    public GameObject roundWinnerText;
+
     void Start() {
         ServerHandler.onCardDataReceived += UpdateAnimations;
+
+        foreach (Animator animator in T1CardAnimators) {
+            animator.transform.Find("HealthBar").gameObject.SetActive(false);
+        }
+
+        foreach (Animator animator in T2CardAnimators) {
+            animator.transform.Find("HealthBar").gameObject.SetActive(false);
+        }
     }
 
     private void OnEnable() {

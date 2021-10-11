@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
 {
+    public enum AttackType
+    {
+        Weak,
+        Strong,
+    }
+    public AttackType Type = AttackType.Weak;
+
     public ParticleSystem ChargePrefab;
 
     public AudioClip ChargeSound;
@@ -15,7 +22,6 @@ public abstract class Attack : MonoBehaviour
     public float FireStartTime = 1.0f;
     [Range(0.1f, 3.0f)]
     public float MaxFireTime = 0.5f;
-
 
     private ParticleSystem Charge = null;
     private bool Simulating = false;

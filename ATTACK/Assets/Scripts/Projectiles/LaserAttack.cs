@@ -9,8 +9,10 @@ public class LaserAttack : Attack
     public Material LaserMaterial;
 
     private GameObject Laser;
+    private MaterialPropertyBlock Mpb;
     protected override void InstantiateProjectile()
     {
+        Mpb = new MaterialPropertyBlock();
         Laser = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Laser.GetComponent<Renderer>().material = LaserMaterial;
         UpdateTransform(0f);
@@ -19,6 +21,19 @@ public class LaserAttack : Attack
 
     protected override void StartProjectile()
     {
+        if (Type == AttackType.Weak)
+        {
+            Mpb.SetColor("_CoreColor", new Color(0.19f, 0.764f, 0.80f));
+            Mpb.SetColor("_OuterSwirlColor", new Color(0.024f, 0.37f, 0.46f));
+            Mpb.SetColor("_InnerSwirlColor", new Color(0.30f, 0.21f, 0.90f));
+        }
+        else if (Type == AttackType.Strong)
+        {
+            Mpb.SetColor("_CoreColor", new Color(1f, 0.67f, 0.30f));
+            Mpb.SetColor("_OuterSwirlColor", new Color(0.95f, 0.74f, 0.18f));
+            Mpb.SetColor("_InnerSwirlColor", new Color(0.83f, 0.31f, 0f));
+        }
+        Laser.GetComponent<Renderer>().SetPropertyBlock(Mpb);
         Laser.SetActive(true);
     }
     protected override void UpdateProjectile()

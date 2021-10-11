@@ -5,10 +5,11 @@ public class ParticleSystemAttack : Attack
     public ParticleSystem ProjectilePrefab;
 
     protected ParticleSystem Projectile;
-
+    protected MaterialPropertyBlock ProjectileMPB;
 
     protected override void InstantiateProjectile()
     {
+        ProjectileMPB = new MaterialPropertyBlock();
         Projectile = Instantiate(ProjectilePrefab, transform.position + new Vector3(0, 0, 1), transform.rotation);
         Projectile.Stop();
     }

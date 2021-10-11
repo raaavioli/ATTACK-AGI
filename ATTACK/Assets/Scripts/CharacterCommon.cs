@@ -17,13 +17,7 @@ public class CharacterCommon : MonoBehaviour
     public int health = 100;
     private HealthScript healthScript;
 
-    public bool CanAttack() {
-        if (attack == null)
-            return false;
-        return attack.CanAttack;
-    }
-
-    void Start()
+    void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponentInChildren<Attack>();
@@ -41,6 +35,18 @@ public class CharacterCommon : MonoBehaviour
     public Team GetTeam()
     {
         return this.team;
+    }
+    public bool CanAttack()
+    {
+        if (attack == null)
+            return false;
+        return attack.CanAttack;
+    }
+
+    public void SetType (Attack.AttackType type)
+    {
+        if (attack != null)
+            attack.Type = type;
     }
 
     /**

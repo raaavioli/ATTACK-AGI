@@ -17,6 +17,12 @@ public class LightningAttack : ParticleSystemAttack
 
     protected override void StartProjectile()
     {
+        if (Type == AttackType.Weak)
+            ProjectileMPB.SetColor("_Color", new Color(0, 0.88f, 1));
+        else if (Type == AttackType.Strong)
+            ProjectileMPB.SetColor("_Color", new Color(1, 0.21f, 0));
+        Projectile.GetComponent<Renderer>().SetPropertyBlock(ProjectileMPB);
+        
         float Distance = (transform.position - TargetPosition).magnitude;
         Projectile.time = 0;
         ParticleSystem.MainModule main = Projectile.main;

@@ -8,9 +8,12 @@ public class Spawner : MonoBehaviour
     const float TotalSpawnTime = 1f;
     float CurrentTime = 0;
 
+    private MaterialPropertyBlock Mpb;
+
     Vector3 MaxScale = Vector3.zero;
-    private void Start()
+    private void Awake()
     {
+        Mpb = new MaterialPropertyBlock();
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -43,10 +46,35 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public GameObject Spawn(Character character)
+    public GameObject Spawn(Character character, ServerHandler.Suit suit)
     {
-        Team team = GameManager.GetTeamFromTag(tag);
+        if (suit == ServerHandler.Suit.SPADES)
+        {
+            Mpb.SetColor("_CoreColor", new Color(0.36f, 0.36f, 0.67f));
+            Mpb.SetColor("_OuterSwirlColor", new Color(0.04f, 0.23f, 0.30f));
+            Mpb.SetColor("_InnerSwirlColor", new Color(0f, 0.13f, 0.42f));
+        }
+        else if (suit == ServerHandler.Suit.CLUBS)
+        {
+            Mpb.SetColor("_CoreColor", new Color(0.44f, 0.19f, 0.21f));
+            Mpb.SetColor("_OuterSwirlColor", new Color(0.67f, 0.25f, 0f));
+            Mpb.SetColor("_InnerSwirlColor", new Color(0.88f, 0.19f, 0f));
+        }
+        else
+        {
+            Debug.LogError("Non implemented suit used for Spawner");
+        }
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (child.tag.Equals("SpawnBulb"))
+            {
+                child.GetComponent<Renderer>().SetPropertyBlock(Mpb);
+            }
+        }
 
+        Team team = GameManager.GetTeamFromTag(tag);
         Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1);
         SpawnedCharacter = Instantiate(character.GetModelPrefab(), transform);
         SpawnedCharacter.transform.localRotation = towardsMiddle;

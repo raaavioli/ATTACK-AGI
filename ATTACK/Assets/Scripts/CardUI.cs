@@ -15,6 +15,18 @@ public class CardUI : MonoBehaviour {
         ServerHandler.onCardDataReceived += UpdateAnimations;
     }
 
+    private void OnEnable() {
+        ServerHandler.onCardDataReceived += UpdateAnimations;
+    }
+
+    private void OnDisable() {
+        ServerHandler.onCardDataReceived -= UpdateAnimations;
+    }
+
+    private void OnDestroy() {
+        ServerHandler.onCardDataReceived -= UpdateAnimations;
+    }
+
     private void UpdateAnimations() {
         ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
 

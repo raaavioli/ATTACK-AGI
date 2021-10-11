@@ -34,7 +34,7 @@ Shader "Custom/DirectionalFlow" {
 
 			void vert(inout appdata_full v, out Input o) {
 				UNITY_INITIALIZE_OUTPUT(Input, o);
-				o.vertexNormal = v.normal;// mul(unity_ObjectToWorld, float4(v.normal, 0.0)).xyz;
+				o.vertexNormal = v.normal;
 			}
 
 			float3 UnpackDerivativeHeight(float4 textureData) {
@@ -49,13 +49,11 @@ Shader "Custom/DirectionalFlow" {
 
 			void surf(Input IN, inout SurfaceOutputStandard o) {
 				float normalDot = dot(IN.vertexNormal, float3(0.0f, 1.0f, 0.0f));
-				float localSpeed = - _Speed * (1 - normalDot);
-				//float localSpeed = _Speed * map(normalDot, 0, 1, 0, -1);
+				float localSpeed = - _Speed * (1 - normalDot) * (1 - normalDot) * (1 - normalDot);
 				float time = _Time.y * localSpeed;
 				float2 uvFlow = DirectionalFlowUVW(IN.uv_MainTex, float2(0, 1), _Tiling, time);
 				float3 dh = UnpackDerivativeHeight(tex2D(_MainTex, uvFlow));
 				fixed4 c = dh.z * dh.z * _Color;
-				//o.Albedo = float3(normalDot, normalDot, normalDot) - 2;
 				o.Albedo = IN.vertexNormal;
 				o.Albedo = c.rgb;
 				o.Normal = normalize(float3(-dh.xy, 1));

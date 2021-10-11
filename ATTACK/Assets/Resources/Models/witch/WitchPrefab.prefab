@@ -166,6 +166,8 @@ MonoBehaviour:
   FireSound: {fileID: 8300000, guid: c6fbed1262f94ef4385f46c2d186297c, type: 3}
   FireStartTime: 0.9
   MaxFireTime: 0.422
+  timeToHit: 0.8
+  damage: 10
   ProjectilePrefab: {fileID: 5252260672383280543, guid: 5d4fff743a29e0348ab226e8442c034c, type: 3}
 --- !u!1 &4148917198139910838
 GameObject:
@@ -178,6 +180,7 @@ GameObject:
   - component: {fileID: 3663742726460092428}
   - component: {fileID: 3842278449459598170}
   - component: {fileID: 446682311612437287}
+  - component: {fileID: 8302219546856853417}
   m_Layer: 0
   m_Name: WitchPrefab
   m_TagString: Untagged
@@ -232,6 +235,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d267da0fab5e0448ca1a368ed721a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+--- !u!135 &8302219546856853417
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4148917198139910838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4152340679684514469
 GameObject:
   m_ObjectHideFlags: 0

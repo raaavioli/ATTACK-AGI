@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject[] spawnPointsT1;
+    public GameObject[] spawnPointsT2;
+    
     [SerializeField]
     [Range(1, 30)]
     private int setupTime = 30;
-
-    public GameObject[] spawnPointsT1;
-    public GameObject[] spawnPointsT2;
-    private const int TEAM_SIZE = 6;
+    private const int TEAM_SIZE = CardManager.MAX_CARDS_PER_TEAM;
 
     private List<GameObject> T1;
     private List<GameObject> T2;
@@ -57,12 +57,13 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2)
         {
             List<Character> characters = Character.Values();
-            int team = spawnedCharacters % 2;
-            int character = (int)(spawnedCharacters / 2f);
-            if (team == 0)
-                SpawnCharacter(characters[character % characters.Count], ServerHandler.Suit.SPADES, spawnPointsT1[character], Team.One);
+            int position = (int)(spawnedCharacters / 2f);
+            if ((spawnedCharacters % 2).AsTeam() == Team.One)
+                SpawnCharacter(characters[position % characters.Count], CharacterMode.Offensive, 
+                    spawnPointsT1[position], Team.One);
             else
-                SpawnCharacter(characters[character % characters.Count], ServerHandler.Suit.CLUBS, spawnPointsT2[TEAM_SIZE - 1 - character], Team.Two);
+                SpawnCharacter(characters[position % characters.Count], CharacterMode.Defensive, 
+                    spawnPointsT2[TEAM_SIZE - 1 - position], Team.Two);
             spawnedCharacters++;
         }
     }
@@ -185,18 +186,12 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void SpawnCharacter(Character character, ServerHandler.Suit suit, GameObject spawn, Team team)
+    private void SpawnCharacter(Character character, CharacterMode mode, GameObject spawn, Team team)
     {     
-        GameObject c = spawn.GetComponent<Spawner>().Spawn(character, suit);
+        GameObject c = spawn.GetComponent<Spawner>().Spawn(character, mode);
         CharacterCommon cc = c.GetComponent<CharacterCommon>();
-        if (suit == ServerHandler.Suit.SPADES)
-            cc.SetType(Attack.AttackType.Weak);
-        else if (suit == ServerHandler.Suit.CLUBS)
-            cc.SetType(Attack.AttackType.Strong);
-        else
-            Debug.LogError("Unimplemented suit received from server");
 
-        if (team == 0)
+        if (team == Team.One)
             T1.Add(c);
         else
             T2.Add(c);
@@ -207,34 +202,40 @@ public class GameManager : MonoBehaviour
 
     private void SpawnFromCards() 
     {
-        ServerHandler.CardPosition[] cardPositions = ServerHandler.cardInformation;
-
-        if (cardPositions != null)
+        foreach (Team team in Enum.GetValues(typeof(Team)))
         {
-            foreach (ServerHandler.CardPosition cardPosition in cardPositions) {
-                // Decide team, and skip if the team is already full.
-                Team team = cardPosition.team;
-                if ((team == 0 && T1.Count >= TEAM_SIZE) || (team == (Team)1 && T2.Count >= TEAM_SIZE))
-                    continue;
+            for(int i = 0; i < TEAM_SIZE; i++) {
+                if (CardManager.HasCard(team, i)) {
+                    Card card = CardManager.GetCard(team, i);
+                    GameObject spawn = team == Team.One ? spawnPointsT1[card.position] : spawnPointsT2[card.position];
+                    Character character = Character.Values()[card.rank % Character.Values().Count];
+                    CharacterMode mode = card.rotated ?
+                        CharacterMode.Defensive :
+                        CharacterMode.Offensive;
 
-                // Decide the spawn point.
-                int position = cardPosition.position - 1;
-                GameObject spawn = team == 0 ? spawnPointsT1[position] : spawnPointsT2[position];
+                    SpawnCharacter(character, mode, spawn, team);
 
-                // Decide the character.
-                Character wantedCharacter = Character.Values()[cardPosition.rank % Character.Values().Count];
-
-                SpawnCharacter(wantedCharacter, cardPosition.suit, spawn, team);
-                GameObject.Find("Canvas").transform.GetChild((int)team).GetChild(position).GetChild(0).gameObject.SetActive(true);
+                    GameObject.Find("Canvas").GetComponent<CardUI>().EnableHealthBar(true, team, i);
+                }
             }
         }
     }
 }
 
-public enum Team : ushort
+public enum Team : int
 {
     One = 0,
     Two = 1,
+}
+
+public static class TeamExtension
+{
+    public static Team AsTeam(this int team)
+    {
+        if (team == 0)
+            return Team.One;
+        return Team.Two;
+    }
 }
 
 public class Character

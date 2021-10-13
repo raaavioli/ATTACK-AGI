@@ -6,8 +6,14 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
+public enum CharacterMode
+{
+    Offensive,
+    Defensive
+}
 public class CharacterCommon : MonoBehaviour
 {
+
     private GameManager gameManager;
     private Team team;
     private Attack attack;

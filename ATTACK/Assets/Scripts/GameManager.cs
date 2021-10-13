@@ -58,12 +58,12 @@ public class GameManager : MonoBehaviour
         {
             List<Character> characters = Character.Values();
             int position = (int)(spawnedCharacters / 2f);
-            if ((spawnedCharacters % 2).AsTeam() == Team.One)
-                SpawnCharacter(characters[position % characters.Count], CharacterMode.Offensive, 
-                    spawnPointsT1[position], Team.One);
-            else
-                SpawnCharacter(characters[position % characters.Count], CharacterMode.Defensive, 
-                    spawnPointsT2[TEAM_SIZE - 1 - position], Team.Two);
+            Team team = (spawnedCharacters % 2).AsTeam();
+            GameObject spawnPoint = team == Team.One ? spawnPointsT1[position] : spawnPointsT2[position];
+            CharacterMode mode = team == Team.One ? CharacterMode.Defensive : CharacterMode.Offensive;
+            SpawnCharacter(characters[position % characters.Count], mode, spawnPoint, team);
+            canvasScript.EnableHealthBar(true, team, position);
+
             spawnedCharacters++;
         }
     }
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
 
                     SpawnCharacter(character, mode, spawn, team);
 
-                    GameObject.Find("Canvas").GetComponent<CardUI>().EnableHealthBar(true, team, i);
+                    canvasScript.EnableHealthBar(true, team, i);
                 }
             }
         }

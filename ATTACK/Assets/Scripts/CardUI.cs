@@ -27,7 +27,7 @@ public class CardUI : MonoBehaviour {
         if (team == Team.One)
             T1CardAnimators[index].transform.Find("HealthBar").gameObject.SetActive(enable);
         else
-            T1CardAnimators[index].transform.Find("HealthBar").gameObject.SetActive(enable);
+            T2CardAnimators[index].transform.Find("HealthBar").gameObject.SetActive(enable);
     }
 
     void Update()

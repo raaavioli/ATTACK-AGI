@@ -33,13 +33,10 @@ public abstract class Attack : MonoBehaviour
     Animator Animator;
 
     private CharacterCommon Target;
+    protected Vector3 TargetPosition;
 
     public bool CanAttack => !Simulating;
 
-    protected Vector3 TargetPosition
-    {
-        get{ return Target.transform.position; }
-    }
     protected abstract void InstantiateProjectile();
     protected abstract void StartProjectile();
     protected abstract void UpdateProjectile();
@@ -83,6 +80,7 @@ public abstract class Attack : MonoBehaviour
         if (!Simulating)
         {
             this.Target = Target;
+            this.TargetPosition = Target.transform.position;
             TargetHit = false;
             // Start charging
             Simulating = true;
@@ -143,7 +141,8 @@ public abstract class Attack : MonoBehaviour
                 if (SimulationTime - FireStartTime >= TimeToHit && !TargetHit)
                 {
                     TargetHit = true;
-                    Target.TakeDamage(Damage);
+                    if (Target != null)
+                        Target.TakeDamage(Damage);
                 }
             }
             else if (Shooting && SimulationTime >= FireStartTime + MaxFireTime)

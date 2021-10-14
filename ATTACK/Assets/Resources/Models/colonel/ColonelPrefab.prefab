@@ -340,13 +340,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f524a69b265d44dade665cc14531ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   ChargePrefab: {fileID: 0}
   ChargeSound: {fileID: 0}
   FireSound: {fileID: 8300000, guid: a71033bd7de1f1a47a443d716f76c87e, type: 3}
   FireStartTime: 0.75
   MaxFireTime: 1.58
-  timeToHit: 0.6
-  damage: 10
+  TimeToHit: 1.5
+  Damage: 10
 --- !u!114 &7672568902818300787
 MonoBehaviour:
   m_ObjectHideFlags: 0

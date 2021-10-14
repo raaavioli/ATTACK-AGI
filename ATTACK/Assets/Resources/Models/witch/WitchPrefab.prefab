@@ -161,13 +161,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ec2be6b363d483fa976312a87050f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   ChargePrefab: {fileID: 7922952976278620387, guid: 68df0ee2fca31f841a6b81378cb40fb0, type: 3}
   ChargeSound: {fileID: 0}
   FireSound: {fileID: 8300000, guid: c6fbed1262f94ef4385f46c2d186297c, type: 3}
   FireStartTime: 0.9
   MaxFireTime: 0.422
-  timeToHit: 0.8
-  damage: 10
+  TimeToHit: 0.1
+  Damage: 10
   ProjectilePrefab: {fileID: 5252260672383280543, guid: 5d4fff743a29e0348ab226e8442c034c, type: 3}
 --- !u!1 &4148917198139910838
 GameObject:

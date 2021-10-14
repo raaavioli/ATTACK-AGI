@@ -13,7 +13,7 @@ public enum CharacterMode
 }
 public class CharacterCommon : MonoBehaviour
 {
-    public CharacterMode Mode;
+    public CharacterMode Mode = CharacterMode.Offensive;
     public int health = 100;
 
     private GameManager gameManager;

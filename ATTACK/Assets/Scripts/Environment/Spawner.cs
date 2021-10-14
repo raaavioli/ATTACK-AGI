@@ -3,6 +3,8 @@ using UnityEngine.Rendering;
 
 public class Spawner : MonoBehaviour
 {
+    public GameObject SpawnBulb;
+
     GameObject SpawnedCharacter;
     bool Spawning = false;
     const float TotalSpawnTime = 1f;
@@ -79,6 +81,7 @@ public class Spawner : MonoBehaviour
         SpawnedCharacter = Instantiate(character.GetModelPrefab(), transform);
         SpawnedCharacter.transform.localRotation = towardsMiddle;
         SpawnedCharacter.GetComponent<CharacterCommon>().SetTeam(team);
+        SpawnedCharacter.GetComponent<CharacterCommon>().Mode = mode;
         SpawnedCharacter.SetActive(false);
 
         GetComponent<AudioSource>().Play();
@@ -88,15 +91,8 @@ public class Spawner : MonoBehaviour
         return SpawnedCharacter;
     }
 
-    private void SetSpawnBulbSize(float t)
+    private void SetSpawnBulbSize(float size)
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            if (child.gameObject.name.Contains("SpawnBulb"))
-            {
-                child.transform.localScale = t * MaxScale;
-            }
-        }
+        SpawnBulb.transform.localScale = size * MaxScale;
     }
 }

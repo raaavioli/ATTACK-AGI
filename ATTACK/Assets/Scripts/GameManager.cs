@@ -8,8 +8,10 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] spawnPointsT1;
-    public GameObject[] spawnPointsT2;
+    [SerializeField]
+    private GameObject[] spawnPointsT1;
+    [SerializeField]
+    private GameObject[] spawnPointsT2;
     
     [SerializeField]
     [Range(1, 30)]
@@ -23,16 +25,12 @@ public class GameManager : MonoBehaviour
 
     private bool inCombatPhase = false;
 
-    private CardUI canvasScript;
-
     public void Start()
     {
         T1 = new List<GameObject>();
         T2 = new List<GameObject>();
 
-        canvasScript = GameObject.Find("Canvas").GetComponent<CardUI>();
-
-        canvasScript.roundWinnerText.SetActive(false);
+        GameObject.Find("Canvas").GetComponent<CardUI>().roundWinnerText.SetActive(false);
 
         StartCoroutine(SetupPhaseTimer(setupTime));
     }
@@ -62,7 +60,7 @@ public class GameManager : MonoBehaviour
             GameObject spawnPoint = team == Team.One ? spawnPointsT1[position] : spawnPointsT2[position];
             CharacterMode mode = team == Team.One ? CharacterMode.Defensive : CharacterMode.Offensive;
             SpawnCharacter(characters[position % characters.Count], mode, spawnPoint, team);
-            canvasScript.EnableHealthBar(true, team, position);
+            GameObject.Find("Canvas").GetComponent<CardUI>().EnableHealthBar(true, team, position);
 
             spawnedCharacters++;
         }
@@ -70,19 +68,20 @@ public class GameManager : MonoBehaviour
 
     private void CombatPhaseUpdate()
     {
+        CardUI cardUI = GameObject.Find("Canvas").GetComponent<CardUI>();
         if (T1.Count == 0 && T2.Count == 0) {
-            canvasScript.roundWinnerText.SetActive(true);
-            canvasScript.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
+            cardUI.roundWinnerText.SetActive(true);
+            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
         }
         else if(T1.Count == 0)
         {
-            canvasScript.roundWinnerText.SetActive(true);
-            canvasScript.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Right Player won this round!";
+            cardUI.roundWinnerText.SetActive(true);
+            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Right Player won this round!";
         }
         else if(T2.Count == 0)
         {
-            canvasScript.roundWinnerText.SetActive(true);
-            canvasScript.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Left Player won this round!";
+            cardUI.roundWinnerText.SetActive(true);
+            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Left Player won this round!";
         }
 
         foreach (GameObject character in T1) // Start attacks
@@ -116,8 +115,9 @@ public class GameManager : MonoBehaviour
     {
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
-        canvasScript.setupTimer.SetActive(true);
-
+        
+        CardUI cardUI = GameObject.Find("Canvas").GetComponent<CardUI>();
+        cardUI.setupTimer.SetActive(true);
         for (int i = 0; i < seconds; i++)
         {
             if (seconds - i == startSoundTime)
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
             updateUITimer(seconds - i);
             yield return new WaitForSeconds(1f);
         }
-        canvasScript.setupTimer.SetActive(false);
+        cardUI.setupTimer.SetActive(false);
         
         inCombatPhase = true;
         SpawnFromCards();
@@ -134,7 +134,8 @@ public class GameManager : MonoBehaviour
 
     private void updateUITimer(int secondsLeft)
     {
-        Text setupTimerText = canvasScript.setupTimer.GetComponent<Text>();
+        CardUI cardUI = GameObject.Find("Canvas").GetComponent<CardUI>();
+        Text setupTimerText = cardUI.setupTimer.GetComponent<Text>();
         setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
         {
@@ -228,7 +229,7 @@ public class GameManager : MonoBehaviour
 
                     SpawnCharacter(character, mode, spawn, team);
 
-                    canvasScript.EnableHealthBar(true, team, i);
+                    GameObject.Find("Canvas").GetComponent<CardUI>().EnableHealthBar(true, team, i);
                 }
             }
         }

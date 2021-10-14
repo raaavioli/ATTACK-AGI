@@ -32,7 +32,7 @@ public class SquishyAttack : Attack
     {
         GameObject BubblePrefab = Resources.Load<GameObject>("Projectiles/Bubble/BubblePrefab");
         Bubble = Instantiate(BubblePrefab);
-        Bubble.transform.position = transform.position;
+        Bubble.transform.position = AttackSource.transform.position;
         Bubble.SetActive(true);
     }
 
@@ -49,7 +49,7 @@ public class SquishyAttack : Attack
             float t = (SimulationTime - FireStartTime) / MaxFireTime;
             if (t < 0)
                 t = 0;
-            Vector3 Position = (1 - t) * transform.position + t * TargetPosition;
+            Vector3 Position = (1 - t) * AttackSource.transform.position + t * TargetPosition;
             float s = Mathf.Sin(t * 60 * Mathf.PI);
             float c = Mathf.Cos(t * 60 * Mathf.PI);
             Vector3 Swirl = 0.1f * new Vector3(s, c, s);

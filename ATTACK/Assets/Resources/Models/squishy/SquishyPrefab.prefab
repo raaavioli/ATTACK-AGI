@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c755252dec4744aa76c89d8e8f28df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  AttackSource: {fileID: 4450709443245855212}
   ChargePrefab: {fileID: 0}
   ChargeSound: {fileID: 0}
   FireSound: {fileID: 0}
@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d267da0fab5e0448ca1a368ed721a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mode: 0
   health: 100
 --- !u!135 &-6705443303823762064
 SphereCollider:

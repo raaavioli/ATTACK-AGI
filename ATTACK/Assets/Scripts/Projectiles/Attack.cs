@@ -4,12 +4,7 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
 {
-    public enum AttackType
-    {
-        Weak,
-        Strong,
-    }
-    public AttackType Type = AttackType.Weak;
+    public GameObject AttackSource;
 
     public ParticleSystem ChargePrefab;
     private ParticleSystem Charge = null;
@@ -36,6 +31,14 @@ public abstract class Attack : MonoBehaviour
     protected Vector3 TargetPosition;
 
     public bool CanAttack => !Simulating;
+
+    protected CharacterMode Mode
+    {
+        get
+        {
+            return GetComponent<CharacterCommon>().Mode;
+        }
+    }
 
     protected abstract void InstantiateProjectile();
     protected abstract void StartProjectile();
@@ -64,7 +67,7 @@ public abstract class Attack : MonoBehaviour
 
         if (ChargePrefab != null)
         {
-            Charge = Instantiate(ChargePrefab, this.transform.position, this.transform.rotation);
+            Charge = Instantiate(ChargePrefab, AttackSource.transform.position, AttackSource.transform.rotation);
             Charge.Stop();
         }
         InstantiateProjectile();
@@ -118,8 +121,8 @@ public abstract class Attack : MonoBehaviour
                 UpdateCharge(ref Charge);
                 if(Charge != null)
                 {
-                    Charge.transform.position = transform.position;
-                    Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - transform.position);
+                    Charge.transform.position = AttackSource.transform.position;
+                    Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - AttackSource.transform.position);
                 }
             } 
             else if (SimulationTime >= FireStartTime  && Charge != null && Charge.isPlaying)

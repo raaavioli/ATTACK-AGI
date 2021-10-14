@@ -20,14 +20,16 @@ public class LaserAttack : Attack
 
     protected override void StartProjectile()
     {
-        if (Type == AttackType.Weak)
+        if (Mode == CharacterMode.Defensive)
         {
+            // Blue-ish
             Mpb.SetColor("_CoreColor", new Color(0.19f, 0.764f, 0.80f));
             Mpb.SetColor("_OuterSwirlColor", new Color(0.024f, 0.37f, 0.46f));
             Mpb.SetColor("_InnerSwirlColor", new Color(0.30f, 0.21f, 0.90f));
         }
-        else if (Type == AttackType.Strong)
+        else if (Mode == CharacterMode.Offensive)
         {
+            // Red-ush
             Mpb.SetColor("_CoreColor", new Color(1f, 0.67f, 0.30f));
             Mpb.SetColor("_OuterSwirlColor", new Color(0.95f, 0.74f, 0.18f));
             Mpb.SetColor("_InnerSwirlColor", new Color(0.83f, 0.31f, 0f));
@@ -53,13 +55,13 @@ public class LaserAttack : Attack
 
     private void UpdateTransform (float Radius)
     {
-        Vector3 Direction = TargetPosition - transform.position;
+        Vector3 Direction = TargetPosition - AttackSource.transform.position;
         Vector3 Rotation = Quaternion.LookRotation(Direction).eulerAngles;
         Rotation.x = 90;
         Laser.transform.eulerAngles = Rotation;
         float Length = Direction.magnitude / 2.0f;
         Laser.transform.localScale = new Vector3(Radius, Length, Radius);
-        Laser.transform.position = gameObject.transform.position + Laser.transform.up * (Length + 0.5f);
+        Laser.transform.position = AttackSource.transform.position + Laser.transform.up * (Length + 0.5f);
     }
 
     private void OnDisable()

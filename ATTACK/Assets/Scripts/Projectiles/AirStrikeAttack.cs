@@ -14,9 +14,9 @@ public class AirStrikeAttack : Attack
     protected override void StartProjectile()
     {
         // Arbitrary distance backward from the attacker, should be off screen.
-        Vector3 StartPosition = gameObject.transform.position
-        - gameObject.transform.forward * 30
-        + gameObject.transform.up * 30;
+        Vector3 StartPosition = AttackSource.transform.position
+        - AttackSource.transform.forward * 30
+        + AttackSource.transform.up * 30;
         Plane.transform.position = StartPosition;
         this.Direction = ((TargetPosition + Vector3.down) - StartPosition).normalized;
         Plane.transform.rotation = Quaternion.LookRotation(Direction);

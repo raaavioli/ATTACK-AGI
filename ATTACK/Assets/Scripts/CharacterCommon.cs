@@ -13,24 +13,35 @@ public enum CharacterMode
 }
 public class CharacterCommon : MonoBehaviour
 {
+    public CharacterMode Mode = CharacterMode.Offensive;
+    public int health = 100;
 
     private GameManager gameManager;
-    private Team team;
     private Attack attack;
 
     private Animator animator;
 
-    public int health = 100;
+    private Team team;
     private HealthScript healthScript;
 
     void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        attack = GetComponentInChildren<Attack>();
+        attack = GetComponent<Attack>();
         Assert.IsNotNull(attack);
         string parentName = transform.parent.name;
         healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(((int)parentName[3] - '0') - 1).GetComponent<HealthScript>();
         animator = gameObject.GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        int position = gameManager.GetCharacterPosition(gameObject);
+        if (position != -1 && CardManager.HasCard(team, position))
+        {
+            Card c = CardManager.GetCard(team, position);
+            Mode = c.rotated ? CharacterMode.Defensive : CharacterMode.Offensive;
+        }
     }
 
     public void SetTeam(Team team)
@@ -47,12 +58,6 @@ public class CharacterCommon : MonoBehaviour
         if (attack == null)
             return false;
         return attack.CanAttack;
-    }
-
-    public void SetType (Attack.AttackType type)
-    {
-        if (attack != null)
-            attack.Type = type;
     }
 
     /**

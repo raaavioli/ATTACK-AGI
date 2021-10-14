@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 5093769255167875546}
   - component: {fileID: 9157073847811765270}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Swirl_hi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 4893679259485183179}
   - component: {fileID: 2142399702523530704}
   m_Layer: 0
-  m_Name: Plane (2)
+  m_Name: Swirl_lo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 5858219208927537595}
   - component: {fileID: 8884381773824323192}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: Swirl_mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,6 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e4b2e76b7fef6449893a8c80336868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnBulb: {fileID: 1233749250158083261}
 --- !u!82 &-7031771920617739257
 AudioSource:
   m_ObjectHideFlags: 0

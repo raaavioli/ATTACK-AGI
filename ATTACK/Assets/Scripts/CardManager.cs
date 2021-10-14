@@ -71,13 +71,14 @@ public class CardManager : MonoBehaviour
 
     private void UpdateCards()
     {
-        for (int i = 0; i < T1Cards.Length; i++)
+        string cardInfo = ServerHandler.mostRecentCardInfo;
+        if (cardInfo != null)
         {
-            bool cardFound = false;
-            string cardInfo = ServerHandler.mostRecentCardInfo;
-            if (cardInfo != null)
+            string[] cardStrings = cardInfo.Split(',');
+            for (int i = 0; i < MAX_CARDS_PER_TEAM; i++)
             {
-                string[] cardStrings = cardInfo.Split(',');
+                bool T1CardFound = false;
+                bool T2CardFound = false;
                 for (int j = 0; j < cardStrings.Length; j++)
                 {
                     string cardString = cardStrings[j];
@@ -85,18 +86,24 @@ public class CardManager : MonoBehaviour
                     int position = int.Parse(parts[1]);
                     if (position == i)
                     {
-                        cardFound = true;
                         Card card = new Card(position, int.Parse(parts[2]), bool.Parse(parts[3]));
                         if (int.Parse(parts[0]).AsTeam() == Team.One)
+                        {
+                            T1CardFound = true;
                             T1Cards[i] = card;
+                        }
                         else
+                        {
+                            T2CardFound = true;
                             T2Cards[i] = card;
+                        }
                     }
                 }
+                if (!T1CardFound)
+                    T1Cards[i] = Card.INVALID;
+                if (!T2CardFound)
+                    T2Cards[i] = Card.INVALID;
             }
-            if (!cardFound)
-                T1Cards[i] = Card.INVALID;
         }
     }
-
 }

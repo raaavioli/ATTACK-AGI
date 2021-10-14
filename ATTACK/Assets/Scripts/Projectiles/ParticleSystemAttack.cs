@@ -10,7 +10,7 @@ public class ParticleSystemAttack : Attack
     protected override void InstantiateProjectile()
     {
         ProjectileMPB = new MaterialPropertyBlock();
-        Projectile = Instantiate(ProjectilePrefab, transform.position + new Vector3(0, 0, 1), transform.rotation);
+        Projectile = Instantiate(ProjectilePrefab, AttackSource.transform.position + new Vector3(0, 0, 1), AttackSource.transform.rotation);
         Projectile.Stop();
     }
 
@@ -22,8 +22,8 @@ public class ParticleSystemAttack : Attack
 
     protected override void UpdateProjectile()
     {
-        Projectile.transform.position = gameObject.transform.position;
-        Projectile.transform.rotation = Quaternion.LookRotation(TargetPosition - transform.position);
+        Projectile.transform.position = AttackSource.transform.position;
+        Projectile.transform.rotation = Quaternion.LookRotation(TargetPosition - AttackSource.transform.position);
     }
 
     protected override void StopProjectile()

@@ -173,8 +173,8 @@ MonoBehaviour:
   FireSound: {fileID: 8300000, guid: 60be72661f96eb24e8db3b418b4d0b72, type: 3}
   FireStartTime: 1.55
   MaxFireTime: 0.75
-  timeToHit: 0.6
-  damage: 10
+  TimeToHit: 0.01
+  Damage: 10
   LaserMaterial: {fileID: 2100000, guid: 9932d72d08bbc984c939bfdaa89b3262, type: 2}
 --- !u!1 &5589603267448117598
 GameObject:

@@ -159,6 +159,19 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    /**
+     * @param character The character to find position of
+     * @returns the position of character in its Team, -1 if not found.
+     **/
+    public int GetCharacterPosition(GameObject character)
+    {
+        if (T1.Contains(character))
+            return T1.IndexOf(character);
+        else if (T2.Contains(character))
+            return T2.IndexOf(character);
+        return -1;
+    }
+
     public static Team GetTeamFromTag(string tag)
     {
         switch (tag)

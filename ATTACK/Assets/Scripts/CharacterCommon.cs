@@ -34,6 +34,16 @@ public class CharacterCommon : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
+    void Update()
+    {
+        int position = gameManager.GetCharacterPosition(gameObject);
+        if (position != -1 && CardManager.HasCard(team, position))
+        {
+            Card c = CardManager.GetCard(team, position);
+            Mode = c.rotated ? CharacterMode.Defensive : CharacterMode.Offensive;
+        }
+    }
+
     public void SetTeam(Team team)
     {
         this.team = team;

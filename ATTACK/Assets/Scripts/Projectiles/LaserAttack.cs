@@ -15,7 +15,6 @@ public class LaserAttack : Attack
         Mpb = new MaterialPropertyBlock();
         Laser = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Laser.GetComponent<Renderer>().material = LaserMaterial;
-        UpdateTransform(0f);
         Laser.SetActive(false);
     }
 

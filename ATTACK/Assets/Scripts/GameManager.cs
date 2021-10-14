@@ -146,16 +146,16 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public Vector3 GetRandomTarget(Team characterTeam)
+    public CharacterCommon GetRandomTarget(Team characterTeam)
     {
         if (characterTeam == Team.One && T2.Count > 0)
-            return T2[(int)UnityEngine.Random.Range(0, T2.Count)].transform.position;
+            return T2[(int)UnityEngine.Random.Range(0, T2.Count)].GetComponent<CharacterCommon>();
         else if (characterTeam == Team.Two && T1.Count > 0)
-            return T1[(int)UnityEngine.Random.Range(0, T1.Count)].transform.position;
+            return T1[(int)UnityEngine.Random.Range(0, T1.Count)].GetComponent<CharacterCommon>();
 
         Debug.LogError("Could not get random target, there are no targets in the opposing team");
         Assert.IsTrue(false);
-        return new Vector3(0, 0, 0);
+        return null;
     }
 
     public static Team GetTeamFromTag(string tag)

@@ -83,11 +83,14 @@ public class CardManager : MonoBehaviour
                 {
                     string cardString = cardStrings[j];
                     string[] parts = cardString.Split(':');
+                    if (parts.Length < 4)
+                        continue;
                     int position = int.Parse(parts[1]);
                     if (position == i)
                     {
-                        Card card = new Card(position, int.Parse(parts[2]), bool.Parse(parts[3]));
-                        if (int.Parse(parts[0]).AsTeam() == Team.One)
+                        Card card = new Card(position, int.Parse(parts[2]), int.Parse(parts[3]) > 0);
+                        int team = int.Parse(parts[0]) - 1;
+                        if (team.AsTeam() == Team.One)
                         {
                             T1CardFound = true;
                             T1Cards[i] = card;

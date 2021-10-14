@@ -9,34 +9,7 @@ using UnityEngine.Events;
 using static GameManager;
 
 public class ServerHandler : MonoBehaviour {
-    
-    public enum Suit {
-        SPADES,
-        CLUBS,
-        DIAMONDS,
-        HEARTS
-	}
-
-    public struct CardPosition {
-        public Team team;
-        public int position;
-        public Suit suit;
-        public int rank;
-
-        public CardPosition(Team team, int position, Suit suit, int rank) {
-            this.team = team;
-            this.position = position;
-            this.suit = suit;
-            this.rank = rank;
-		}
-
-        public override string ToString() {
-            return $"team: {team}, position: {position}, suit: {suit}, rank: {rank}";
-        }
-    }
-
-    public static CardPosition[] cardInformation { get; private set; }
-    public static UnityAction onCardDataReceived;
+    public static string mostRecentCardInfo { get; private set; }
 
     private byte[] data;
     private EndPoint senderRemote;
@@ -72,38 +45,9 @@ public class ServerHandler : MonoBehaviour {
             socket.ReceiveFrom(data, ref senderRemote);
             string cards = Encoding.ASCII.GetString(data);
             Debug.Log(cards);
-            cardInformation = ParseCards(cards);
-            if (onCardDataReceived != null) {
-                onCardDataReceived();
-            }
+            mostRecentCardInfo = cards;
         }
     }
-
-    private CardPosition[] ParseCards(string cards) {
-        List<CardPosition> positions = new List<CardPosition>();
-        string[] cardStrings = cards.Split(',');
-
-
-        for (int i = 0; i < cardStrings.Length - 1; ++i) {
-            string cardPosition = cardStrings[i];
-            string[] parts = cardPosition.Split(':');
-            Suit suit = Suit.SPADES;
-            switch (parts[2]) {
-                case "C":
-                    suit = Suit.CLUBS;
-                    break;
-                case "D":
-                    suit = Suit.DIAMONDS;
-                    break;
-                case "H":
-                    suit = Suit.HEARTS;
-                    break;
-			}
-            positions.Add(new CardPosition((Team) int.Parse(parts[0]) - 1, int.Parse(parts[1]), suit, int.Parse(parts[3])));
-		}
-
-        return positions.ToArray();
-	}
 
     private void OnDestroy() {
         socket.Close();

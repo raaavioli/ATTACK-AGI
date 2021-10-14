@@ -15,7 +15,6 @@ public class LaserAttack : Attack
         Mpb = new MaterialPropertyBlock();
         Laser = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Laser.GetComponent<Renderer>().material = LaserMaterial;
-        UpdateTransform(0f);
         Laser.SetActive(false);
     }
 
@@ -54,12 +53,12 @@ public class LaserAttack : Attack
 
     private void UpdateTransform (float Radius)
     {
-        float Length = (transform.position - TargetPosition).magnitude / 2.0f;
-        Vector3 Rotation = Laser.transform.rotation.eulerAngles;
+        Vector3 Direction = TargetPosition - transform.position;
+        Vector3 Rotation = Quaternion.LookRotation(Direction).eulerAngles;
         Rotation.x = 90;
-        Rotation.y = gameObject.transform.eulerAngles.y;
-        Laser.transform.localScale = new Vector3(Radius, Length, Radius);
         Laser.transform.eulerAngles = Rotation;
+        float Length = Direction.magnitude / 2.0f;
+        Laser.transform.localScale = new Vector3(Radius, Length, Radius);
         Laser.transform.position = gameObject.transform.position + Laser.transform.up * (Length + 0.5f);
     }
 

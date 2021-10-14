@@ -46,15 +46,15 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public GameObject Spawn(Character character, ServerHandler.Suit suit)
+    public GameObject Spawn(Character character, CharacterMode mode)
     {
-        if (suit == ServerHandler.Suit.SPADES)
+        if (mode == CharacterMode.Defensive)
         {
             Mpb.SetColor("_CoreColor", new Color(0.36f, 0.36f, 0.67f));
             Mpb.SetColor("_OuterSwirlColor", new Color(0.04f, 0.23f, 0.30f));
             Mpb.SetColor("_InnerSwirlColor", new Color(0f, 0.13f, 0.42f));
         }
-        else if (suit == ServerHandler.Suit.CLUBS)
+        else if (mode == CharacterMode.Offensive)
         {
             Mpb.SetColor("_CoreColor", new Color(0.44f, 0.19f, 0.21f));
             Mpb.SetColor("_OuterSwirlColor", new Color(0.67f, 0.25f, 0f));

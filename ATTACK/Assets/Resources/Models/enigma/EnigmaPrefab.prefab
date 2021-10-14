@@ -167,13 +167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347f6d67d4a93ff419e4e67ad973314b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   ChargePrefab: {fileID: 1942519772477316185, guid: fcfe389e040f3d54db86da55db63b3ab, type: 3}
   ChargeSound: {fileID: 8300000, guid: d14c052d51e45ab4497cb40fb3a72aac, type: 3}
   FireSound: {fileID: 8300000, guid: 60be72661f96eb24e8db3b418b4d0b72, type: 3}
   FireStartTime: 1.55
   MaxFireTime: 0.75
-  timeToHit: 0.6
-  damage: 10
+  TimeToHit: 0.01
+  Damage: 10
   LaserMaterial: {fileID: 2100000, guid: 9932d72d08bbc984c939bfdaa89b3262, type: 2}
 --- !u!1 &5589603267448117598
 GameObject:

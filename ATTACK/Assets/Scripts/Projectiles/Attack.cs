@@ -12,6 +12,7 @@ public abstract class Attack : MonoBehaviour
     public AttackType Type = AttackType.Weak;
 
     public ParticleSystem ChargePrefab;
+    private ParticleSystem Charge = null;
 
     public AudioClip ChargeSound;
     public AudioClip FireSound;
@@ -22,17 +23,17 @@ public abstract class Attack : MonoBehaviour
     public float FireStartTime = 1.0f;
     [Range(0.1f, 3.0f)]
     public float MaxFireTime = 0.5f;
+    public float TimeToHit = 1.0f;
+    protected float SimulationTime = 0;
 
-    private ParticleSystem Charge = null;
+    public int Damage;
     private bool Simulating = false;
     private bool Shooting = false;
-    protected float SimulationTime = 0;
-    protected Vector3 TargetPosition;
+    private bool TargetHit = false;
     Animator Animator;
 
-    private GameObject hiddenDamageCollider;
-    public float timeToHit = 1.0f;
-    public int damage;
+    private CharacterCommon Target;
+    protected Vector3 TargetPosition;
 
     public bool CanAttack => !Simulating;
 
@@ -69,20 +70,18 @@ public abstract class Attack : MonoBehaviour
         InstantiateProjectile();
     }
 
-    private void Start() {
-        hiddenDamageCollider = Resources.Load<GameObject>("Projectiles/HiddenDamageCollider");    
-    }
-
     public void Update()
     {
-        RunSimulation();
+        UpdateAttack();
     }
 
-    public bool StartSimulation(Vector3 TargetPosition)
+    public bool StartAttack(CharacterCommon Target)
     {
         if (!Simulating)
         {
-            this.TargetPosition = TargetPosition;
+            this.Target = Target;
+            this.TargetPosition = Target.transform.position;
+            TargetHit = false;
             // Start charging
             Simulating = true;
             if (Charge != null)
@@ -108,7 +107,7 @@ public abstract class Attack : MonoBehaviour
      * Runs the simulation and repositions particle systems.
      * Should only be run from Update
      */
-    private void RunSimulation()
+    private void UpdateAttack()
     {
         if (Simulating)
         {
@@ -133,14 +132,18 @@ public abstract class Attack : MonoBehaviour
                 Shooting = true;
                 StartProjectile();
 
-                fireDamageProjectile();
-
                 FireSource.time = 0;
                 FireSource.Play();
             }
             else if (Shooting && SimulationTime >= FireStartTime && SimulationTime < FireStartTime + MaxFireTime)
             {
                 UpdateProjectile();
+                if (SimulationTime - FireStartTime >= TimeToHit && !TargetHit)
+                {
+                    TargetHit = true;
+                    if (Target != null)
+                        Target.TakeDamage(Damage);
+                }
             }
             else if (Shooting && SimulationTime >= FireStartTime + MaxFireTime)
             {
@@ -153,18 +156,6 @@ public abstract class Attack : MonoBehaviour
                     Animator.SetTrigger("StartIdle");
             }
         }
-    }
-
-    private void fireDamageProjectile()
-    {
-        GameObject hiddenAttack = Instantiate(hiddenDamageCollider, gameObject.transform.position, Quaternion.identity);
-        hiddenAttack.transform.LookAt(TargetPosition);
-
-        HiddenDamageScript stats = hiddenAttack.GetComponent<HiddenDamageScript>();
-        stats.SetTeam(gameObject.GetComponentInParent<CharacterCommon>().GetTeam());
-        stats.timeToHit = timeToHit;
-        stats.distance = (TargetPosition - gameObject.transform.position).magnitude;
-        stats.damage = damage;
     }
 
     private void OnDisable()

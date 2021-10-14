@@ -7,12 +7,12 @@ import numpy as np
 import os
 
 file_path = os.path.dirname(__file__)
-club_img = cv2.imread(file_path + "\..\sur40screenshots\clubs.png", cv2.IMREAD_GRAYSCALE)
 
+CARD_AREAS = 5
 HEIGHT = 540
 WIDTH = 960
-RECT_HEIGHT = 90
-RECT_WIDTH = 120
+RECT_HEIGHT = HEIGHT / CARD_AREAS
+RECT_WIDTH = RECT_HEIGHT * 8.8 / 5.8 #dimension of playing card
 
 CARD_AREA_MIN = 5500
 CARD_AREA_MAX = 6000
@@ -52,7 +52,7 @@ def main():
             try:
                 img = np.frombuffer(data, dtype='uint8')
                 img = np.reshape(img, (540, 960))
-                result = analyzeImage(img)
+                result = analyzeImage(suitAreaToSquare(img))
                 print(result)
                 if result != "":
                     # Send the message to the Unity server.
@@ -73,6 +73,31 @@ def recvFull(connection, fullSize):
     
     return fullData
 
+# Takes an image and applies: 
+# sharpening -> median filter -> max filter -> min filter
+# @returns an image where all suit shapes are transformed into equally sized squares
+def suitAreaToSquare(image):
+    sharpen_kernel = np.array(
+        [[-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1],
+        [-1,-1,25,-1,-1],
+        [-1,-1,-1,-1,-1],
+        [-1,-1,-1,-1,-1]])
+    sharpen = cv2.filter2D(image, -1, sharpen_kernel)
+    median = cv2.medianBlur(sharpen, 9)
+    
+
+    size = (6, 6)
+    shape = cv2.MORPH_RECT
+    kernel = cv2.getStructuringElement(shape, size)
+    max_image = cv2.dilate(median, kernel)
+
+    size = (9, 9)
+    shape = cv2.MORPH_RECT
+    kernel = cv2.getStructuringElement(shape, size)
+    min_image = cv2.erode(max_image, kernel)
+
+    return min_image
 
 # Takes a full-size image of the SUR40 screen and returns the string that represents the positioning of the cards.
 # The returned string is formatted as follows: "{player}:{position}:{suit}:{rank},{player}:{position}:{suit}:{rank},..."
@@ -81,66 +106,52 @@ def recvFull(connection, fullSize):
 # suit is S for spades, C for clubs, D for diamonds and H for hearts,
 # rank is a number 1-13 where 1 is an ace and 13 is a king.
 def analyzeImage(image):
-    subImages = splitImage(image)
+    subImages = []
+    subImages.append(image[:, 0:int(RECT_WIDTH)])
+    subImages.append(image[:, int(WIDTH-RECT_WIDTH) : WIDTH])
 
     resultString = ""
     for i, subImage in enumerate(subImages):
-        player = 1
-        if i > 5: player = 2
-        position = (i % 6) + 1
-        resultString += analyzeSubImage(subImage, player, position)
-
-    cv2.waitKey(0)
+        player = i + 1
+        resultString += analyzeSubImage(subImage, player)
 
     return resultString
 
-# Splits a full-size image into 12 separate sub-images, one for each position.
-def splitImage(image):
-    subImages = []
-
-    for i in range(12):
-        xOffset = 0
-        if i > 5: xOffset = WIDTH - RECT_WIDTH
-        yOffset = (i % 6) * RECT_HEIGHT
-        x1 = xOffset
-        x2 = xOffset + RECT_WIDTH
-        y1 = yOffset
-        y2 = yOffset + RECT_HEIGHT
-        subImages.append(image[y1:y2, x1:x2])
-
-    return subImages
-
-# Analyzes a single sub-image for the given player and position and returns the string for that particular sub-image.
-# If nothing is found, an empty string is returned.
-def analyzeSubImage(subImage, player, position):
+# Analyzes one player's part of the image with up to "CARD_AREAS" number of cards.
+# for each card, a string is created containing player_id, position, suit, rank, angle.
+# If no card is found, an empty string is returned.
+def analyzeSubImage(subImage, player):
     _, thresh = cv2.threshold(subImage,100,255,cv2.THRESH_BINARY)
     contours, hier = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     index_sort = sorted(range(len(contours)), key=lambda i : cv2.contourArea(contours[i]),reverse=True)
 
     # If there are no contours or no card is found, do nothing.
-    if len(contours) == 0 or not (CARD_AREA_MIN <= cv2.contourArea(contours[0]) <= CARD_AREA_MAX):
+    if len(contours) == 0:
         return ""
 
-    # Count contours that are large enough but not too small to be a suit marker to find rank.
-    rank = 0
-    for contour in contours:
-        if SUIT_AREA_MIN <= cv2.contourArea(contour) <= SUIT_AREA_MAX: rank += 1
-    rank = max(1, min(rank, 6))
-
-    # Match template to find out if card is Clubs or Spades
-    img_contours = np.zeros(subImage.shape, dtype=np.uint8)
-    cv2.drawContours(img_contours, contours, -1, 255, 1)
-    result = cv2.matchTemplate(img_contours, club_img, cv2.TM_CCORR)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    resultString = ""
+    foundCards = 0
+    currentCardIndex = 0
+    while(foundCards < CARD_AREAS and currentCardIndex < len(contours) and isCardContour(contours[currentCardIndex])):
+        _, y, w, h = cv2.boundingRect(contours[currentCardIndex])
+        rotated = int(w < h)
+        position = int((y + h / 2) / RECT_HEIGHT)
+        rank = 0
+        suitMarkerIndex = currentCardIndex + 1
+        while(suitMarkerIndex < len(contours) and isSuitContour(contours[suitMarkerIndex])): 
+            rank+=1
+            suitMarkerIndex+=1
+        resultString += "%d:%d:%d:%d," % (player, position, suit, rank, rotated)
+        currentCardIndex = suitMarkerIndex
+        foundCards +=1
     
-    suit = "S"
-    location = max_loc
-    H, W = club_img.shape 
-    bottom_right = (location[0] + W, location[1] + H)
-    if (bottom_right[0] > (RECT_WIDTH / 2)):
-        suit = "C"
+    return resultString
 
-    return "%d:%d:%s:%d," % (player, position, suit, rank)
+def isCardContour(contour):
+    return (CARD_AREA_MIN <= cv2.contourArea(contour) <= CARD_AREA_MAX)
+
+def isSuitContour(contour):
+    return (SUIT_AREA_MIN <= cv2.contourArea(contour) <= SUIT_AREA_MAX)
 
 if __name__ == "__main__":
     main()

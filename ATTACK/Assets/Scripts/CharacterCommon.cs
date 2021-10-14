@@ -61,12 +61,12 @@ public class CharacterCommon : MonoBehaviour
      */
     public bool AttackRandom()
     {
-        Vector3 targetPoint = gameManager.GetRandomTarget(team);
-        Vector3 DirToTarget = (targetPoint - transform.position).normalized;
+        CharacterCommon target = gameManager.GetRandomTarget(team);
+        Vector3 DirToTarget = (target.transform.position - transform.position).normalized;
 
         transform.rotation = Quaternion.LookRotation(DirToTarget);
 
-        return attack.StartSimulation(targetPoint);
+        return attack.StartAttack(target);
     }
 
     public void TakeDamage(int amount)

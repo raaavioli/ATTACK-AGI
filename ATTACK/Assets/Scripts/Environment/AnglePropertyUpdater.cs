@@ -21,7 +21,10 @@ public class AnglePropertyUpdater : MonoBehaviour
     {
         float Ang01 = (AngleOffset + Time.time) / Period;
         Ang01 -= (int)Ang01;
-        Mpb.SetFloat("_Angle", Ang01);
-        GetComponent<Renderer>().SetPropertyBlock(Mpb);
+        if (Mpb != null)
+        {
+            Mpb.SetFloat("_Angle", Ang01);
+            GetComponent<Renderer>().SetPropertyBlock(Mpb);
+        }
     }
 }

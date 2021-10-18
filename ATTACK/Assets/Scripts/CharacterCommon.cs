@@ -18,6 +18,14 @@ public class CharacterCommon : MonoBehaviour
 
     private GameManager gameManager;
     private Attack attack;
+    public int maxTargets {
+        get
+        {
+            if (attack != null)
+                return attack.MaxTargets;
+            return 0;
+        }
+    }
 
     private Animator animator;
 
@@ -69,13 +77,19 @@ public class CharacterCommon : MonoBehaviour
      * Performs an attack and starts character's Attack animation
      * @returns true if an attack simulation was started, false otherwise
      */
-    public bool Attack(CharacterCommon target)
+    public bool Attack(List<CharacterCommon> targets)
     {
-        Vector3 DirToTarget = (target.transform.position - transform.position).normalized;
+        Vector3 DirToTarget = Vector3.zero;
+        if (targets.Count == 1)
+            DirToTarget = targets[0].transform.position;
+        else
+            foreach (CharacterCommon target in targets)
+                DirToTarget += target.transform.position;
+        DirToTarget -= transform.position;
 
-        transform.rotation = Quaternion.LookRotation(DirToTarget);
+        transform.rotation = Quaternion.LookRotation(DirToTarget.normalized);
 
-        return attack.StartAttack(new List<CharacterCommon> { target });
+        return attack.StartAttack(targets);
     }
 
     public void TakeDamage(int amount)

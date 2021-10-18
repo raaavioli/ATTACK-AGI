@@ -54,11 +54,12 @@ public abstract class Attack : MonoBehaviour
     protected abstract void UpdateProjectile();
     protected abstract void StopProjectile();
 
-    public virtual void Awake()
+    public void Awake()
     {
         Debug.Assert(SecondsPerAttack >= MaxFireTime + ChargeTime);
         // Ensure MaxTargets is set by subclass
         MaxTargets = GetMaxTargets();
+        Debug.Assert(MaxTargets > 0);
 
         Animator = gameObject.GetComponentInParent<Animator>();
         if (ChargeSource == null)
@@ -96,6 +97,9 @@ public abstract class Attack : MonoBehaviour
         if (Targets.Count > MaxTargets)
         {
             Debug.LogError("Attempting to attack " + Targets.Count + " targets while MaxTargets is " + MaxTargets);
+            return false;
+        } else if (Targets.Count == 0)
+        {
             return false;
         }
 

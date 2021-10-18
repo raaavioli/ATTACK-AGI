@@ -45,7 +45,7 @@ public class LaserAttack : Attack
     protected override void UpdateProjectile()
     {
         float MaxRadius = 0.7f;
-        float t = (SimulationTime - FireStartTime) / MaxFireTime;
+        float t = (SimulationTime - ChargeTime) / MaxFireTime;
         float tStart = Utils.Remap(0, 0.2f, 0, 1, t);
         float tEnd = Utils.Remap(0.2f, 1, 1, 0, t);
         t = tStart * tEnd;

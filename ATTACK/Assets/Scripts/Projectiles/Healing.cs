@@ -44,7 +44,7 @@ public class Healing : Attack
 
     protected override void UpdateProjectile()
     {
-        float time = (SimulationTime - FireStartTime) / MaxFireTime;
+        float time = (SimulationTime - ChargeTime) / MaxFireTime;
         if (time < 0)
             time = 0;
         if (time > 1)

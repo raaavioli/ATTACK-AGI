@@ -18,7 +18,7 @@ public class SquishyAttack : Attack
         float RadiusPeak = 0.5f;
         float SmoothStart = 0.2f;
         float SmoothPeak = 0.5f;
-        float t = Mathf.Sin(Mathf.PI * SimulationTime / FireStartTime);
+        float t = Mathf.Sin(Mathf.PI * SimulationTime / ChargeTime);
         if (t < 0) 
             t = 0;
         float Radius = RadiusStart * (1 - t) + RadiusPeak * t;
@@ -50,7 +50,7 @@ public class SquishyAttack : Attack
     {
         if (Bubble.activeSelf)
         {
-            float t = (SimulationTime - FireStartTime) / MaxFireTime;
+            float t = (SimulationTime - ChargeTime) / MaxFireTime;
             if (t < 0)
                 t = 0;
             Vector3 Position = (1 - t) * AttackSource.transform.position + t * TargetPositions[0];

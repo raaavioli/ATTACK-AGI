@@ -15,10 +15,13 @@ public abstract class Attack : MonoBehaviour
     private AudioSource FireSource;
 
     [Range(0.1f, 3.0f)]
-    public float FireStartTime = 1.0f;
+    [SerializeField]
+    protected float ChargeTime = 1.0f;
     [Range(0.1f, 3.0f)]
-    public float MaxFireTime = 0.5f;
-    public float TimeToHit = 1.0f;
+    [SerializeField]
+    protected float MaxFireTime = 0.5f;
+    [SerializeField]
+    protected float TimeToHit = 0.0f;
     protected float SimulationTime = 0;
 
     public int Damage;
@@ -134,7 +137,7 @@ public abstract class Attack : MonoBehaviour
         {
             SimulationTime += Time.deltaTime;
 
-            if (SimulationTime < FireStartTime)
+            if (SimulationTime < ChargeTime)
             {
                 UpdateCharge(ref Charge);
                 if(Charge != null)
@@ -147,12 +150,12 @@ public abstract class Attack : MonoBehaviour
                     Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - AttackSource.transform.position);
                 }
             } 
-            else if (SimulationTime >= FireStartTime  && Charge != null && Charge.isPlaying)
+            else if (SimulationTime >= ChargeTime && Charge != null && Charge.isPlaying)
             {
                 Charge.Stop();
             }
 
-            if (!Shooting && SimulationTime >= FireStartTime)
+            if (!Shooting && SimulationTime >= ChargeTime)
             {
                 Shooting = true;
                 StartProjectile();
@@ -160,20 +163,21 @@ public abstract class Attack : MonoBehaviour
                 FireSource.time = 0;
                 FireSource.Play();
             }
-            else if (Shooting && SimulationTime >= FireStartTime && SimulationTime < FireStartTime + MaxFireTime)
+            else if (Shooting && SimulationTime >= ChargeTime && SimulationTime < ChargeTime + MaxFireTime)
             {
                 UpdateProjectile();
                 for (int i = 0; i < TargetsHit.Count; i++)
                 {
-                    if (SimulationTime - FireStartTime >= TimeToHit && !TargetsHit[i])
+                    if (SimulationTime - ChargeTime >= TimeToHit && !TargetsHit[i])
                     {
                         TargetsHit[i] = true;
+                        Damage = 5;
                         if (Targets[i] != null)
                             Targets[i].TakeDamage(Damage);
                     }
                 }
             }
-            else if (Shooting && SimulationTime >= FireStartTime + MaxFireTime)
+            else if (Shooting && SimulationTime >= ChargeTime + MaxFireTime)
             {
                 // Simulation finished
                 Simulating = false;

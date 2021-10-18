@@ -48,7 +48,7 @@ public abstract class Attack : MonoBehaviour
     protected abstract void UpdateProjectile();
     protected abstract void StopProjectile();
 
-    public void Awake()
+    public virtual void Awake()
     {
         // Ensure MaxTargets is set by subclass
         MaxTargets = GetMaxTargets();

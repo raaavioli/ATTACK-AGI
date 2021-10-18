@@ -7,7 +7,7 @@ public class Healing : Attack
     [SerializeField]
     private GameObject HealingPrefab;
 
-    private GameObject HealingProjectile;
+    private List<GameObject> HealingProjectiles = new List<GameObject>();
 
     protected override int GetMaxTargets()
     {
@@ -20,18 +20,26 @@ public class Healing : Attack
 
     protected override void StartProjectile()
     {
-        HealingProjectile = Instantiate(HealingPrefab);
-        HealingProjectile.transform.position = TargetPositions[0];
-        foreach (ParticleSystem ps in HealingProjectile.GetComponentsInChildren<ParticleSystem>())
+        foreach (Vector3 pos in TargetPositions)
         {
-            ps.time = 0;
-            ps.Play();
+            GameObject HealingProjectile = Instantiate(HealingPrefab); 
+            HealingProjectiles.Add(HealingProjectile);
+            HealingProjectile.transform.position = pos;
+            foreach (ParticleSystem ps in HealingProjectile.GetComponentsInChildren<ParticleSystem>())
+            {
+                ps.time = 0;
+                ps.Play();
+            }
         }
     }
 
     protected override void StopProjectile()
     {
-        Destroy(HealingProjectile, 2.0f);
+        foreach (GameObject projectile in HealingProjectiles)
+        {
+            Destroy(projectile, 2.0f);
+        }
+        HealingProjectiles.Clear();
     }
 
     protected override void UpdateProjectile()
@@ -42,26 +50,31 @@ public class Healing : Attack
         if (time > 1)
             time = 1;
 
-
-        foreach (Transform t in HealingProjectile.GetComponentsInChildren<Transform>())
+        foreach (GameObject projectile in HealingProjectiles)
         {
-            if (t == HealingProjectile.transform || t.gameObject.GetComponent<ParticleSystem>() != null)
-                continue;
-            // For non particle systems
-            Vector3 scale = t.localScale;
-            float amplitude = 3.0f;
-            scale.y = amplitude * Mathf.Sin(time * Mathf.PI);
-            t.localScale = scale;
+            foreach (Transform t in projectile.GetComponentsInChildren<Transform>())
+            {
+                if (t == projectile.transform || t.gameObject.GetComponent<ParticleSystem>() != null)
+                    continue;
+                // For non particle systems
+                Vector3 scale = t.localScale;
+                float amplitude = 3.0f;
+                scale.y = amplitude * Mathf.Sin(time * Mathf.PI);
+                t.localScale = scale;
 
-            Vector3 position = t.localPosition;
-            position.y = scale.y;
-            t.localPosition = position;
+                Vector3 position = t.localPosition;
+                position.y = scale.y;
+                t.localPosition = position;
+            }
         }
     }
 
     private void OnDisable()
     {
-        if (HealingProjectile != null)
-            HealingProjectile.SetActive(false);
+        foreach (GameObject projectile in HealingProjectiles)
+        {
+            if (projectile != null)
+                    projectile.SetActive(false);
+        }
     }
 }

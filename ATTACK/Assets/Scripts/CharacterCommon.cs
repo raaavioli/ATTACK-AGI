@@ -82,6 +82,8 @@ public class CharacterCommon : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
+        if (health > maxHealth)
+            health = maxHealth;
 
         healthScript.SetHealth(health / maxHealth);
         // Some characters dont have an animator, so this is a hacky solution for now.

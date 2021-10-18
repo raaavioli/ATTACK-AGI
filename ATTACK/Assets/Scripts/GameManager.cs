@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
                 foreach (CharacterCommon def in defensiveOpponents)
                     Targets.Add(def);
                 count -= Targets.Count;
-                while (count > 0)
+                while (count > 0 && offensiveOpponents.Count > 0)
                 {
                     CharacterCommon offensive = offensiveOpponents[UnityEngine.Random.Range(0, offensiveOpponents.Count)];
                     Targets.Add(offensive);

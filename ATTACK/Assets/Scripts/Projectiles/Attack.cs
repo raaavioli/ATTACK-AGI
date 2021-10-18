@@ -175,7 +175,7 @@ public abstract class Attack : MonoBehaviour
                 UpdateProjectile();
                 for (int i = 0; i < TargetsHit.Count; i++)
                 {
-                    if (SimulationTime - ChargeTime >= TimeToHit && !TargetsHit[i])
+                    if (((SimulationTime - ChargeTime) >= TimeToHit) && !TargetsHit[i])
                     {
                         TargetsHit[i] = true;
                         if (Targets[i] != null)
@@ -185,6 +185,10 @@ public abstract class Attack : MonoBehaviour
             }
             else if (Shooting && AfterFire)
             {
+                // Deal damage to targets not yet hit
+                for (int i = 0; i < TargetsHit.Count; i++)
+                    if (Targets[i] != null && !TargetsHit[i])
+                        Targets[i].TakeDamage(Damage);
                 // Simulation finished
                 Shooting = false;
                 StopProjectile();

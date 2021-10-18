@@ -14,19 +14,22 @@ public enum CharacterMode
 public class CharacterCommon : MonoBehaviour
 {
     public CharacterMode Mode;
-    public int health = 100;
+    private Team team;
 
     private GameManager gameManager;
     private Attack attack;
 
     private Animator animator;
 
-    private Team team;
+    [SerializeField]
+    private float maxHealth = 100;
+    private float health;
     private HealthScript healthScript;
 
     void Awake()
     {
         Mode = CharacterMode.Offensive;
+        health = maxHealth;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
         Assert.IsNotNull(attack);
@@ -80,7 +83,7 @@ public class CharacterCommon : MonoBehaviour
     {
         health -= amount;
 
-        healthScript.SetHealth((float)health / 100f);
+        healthScript.SetHealth(health / maxHealth);
         // Some characters dont have an animator, so this is a hacky solution for now.
         if (animator != null) animator.SetTrigger("StartGetHit");
 

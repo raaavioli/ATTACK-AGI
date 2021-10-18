@@ -21,7 +21,7 @@ public class Healing : Attack
     protected override void StartProjectile()
     {
         HealingProjectile = Instantiate(HealingPrefab);
-        HealingProjectile.transform.position = AttackSource.transform.position;
+        HealingProjectile.transform.position = TargetPositions[0];
         foreach (ParticleSystem ps in HealingProjectile.GetComponentsInChildren<ParticleSystem>())
         {
             ps.time = 0;
@@ -57,5 +57,11 @@ public class Healing : Attack
             position.y = scale.y;
             t.localPosition = position;
         }
+    }
+
+    private void OnDisable()
+    {
+        if (HealingProjectile != null)
+            HealingProjectile.SetActive(false);
     }
 }

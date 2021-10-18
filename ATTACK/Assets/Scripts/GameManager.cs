@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     private int setupTime = 30;
     private const int TEAM_SIZE = CardManager.MAX_CARDS_PER_TEAM;
 
-    private List<GameObject> T1;
-    private List<GameObject> T2;
+    private GameObject[] T1;
+    private GameObject[] T2;
 
     private int spawnedCharacters = 0;
 
@@ -29,8 +29,8 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        T1 = new List<GameObject>();
-        T2 = new List<GameObject>();
+        T1 = new GameObject[TEAM_SIZE];
+        T2 = new GameObject[TEAM_SIZE];
 
         Canvas = GameObject.Find("Canvas");
         Canvas.GetComponent<CardUI>().roundWinnerText.SetActive(false);
@@ -60,58 +60,63 @@ public class GameManager : MonoBehaviour
             List<Character> characters = Character.Values();
             int position = (int)(spawnedCharacters / 2f);
             Team team = (spawnedCharacters % 2).AsTeam();
-            GameObject spawnPoint = team == Team.One ? spawnPointsT1[position] : spawnPointsT2[position];
-            CharacterMode mode = team == Team.One ? CharacterMode.Defensive : CharacterMode.Offensive;
-            SpawnCharacter(characters[position % characters.Count], mode, spawnPoint, team);
+
+            CharacterMode mode = position == 0 || position == TEAM_SIZE - 1 ? CharacterMode.Defensive : CharacterMode.Offensive;
+            SpawnCharacter(position, characters[position % characters.Count], mode, team);
             Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, position);
 
             spawnedCharacters++;
         }
     }
 
+    private static int CountAlive(GameObject[] team)
+    {
+        int count = 0;
+        foreach (GameObject o in team)
+            if (o != null)
+                count++;
+        return count;
+    }
+
     private void CombatPhaseUpdate()
     {
         CardUI cardUI = Canvas.GetComponent<CardUI>();
-        if (T1.Count == 0 && T2.Count == 0) {
+
+        int T1Alive = CountAlive(T1);
+        int T2Alive = CountAlive(T2);
+        if (T1Alive == 0 && T2Alive == 0) {
             cardUI.roundWinnerText.SetActive(true);
             cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
+            return;
         }
-        else if(T1.Count == 0)
+        else if(T1Alive == 0)
         {
             cardUI.roundWinnerText.SetActive(true);
             cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Right Player won this round!";
+            return;
         }
-        else if(T2.Count == 0)
+        else if(T2Alive == 0)
         {
             cardUI.roundWinnerText.SetActive(true);
             cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Left Player won this round!";
+            return;
         }
 
-        foreach (GameObject character in T1) // Start attacks
+        AttackOpponents(T1, T2);
+        AttackOpponents(T2, T1);
+    }
+
+    private void AttackOpponents(GameObject[] attackers, GameObject[] opponents)
+    {
+        foreach (GameObject character in attackers)
         {
-            if (character.activeSelf)
+            if (character != null && character.activeSelf)
             {
                 CharacterCommon cc = character.GetComponent<CharacterCommon>();
-                if (cc != null && cc.CanAttack() && T2.Count > 0)
-                {
-                    cc.AttackRandom();
-                }
+                if (cc != null && cc.CanAttack())
+                    cc.Attack(GetTarget(opponents));
             }
         }
-
-        foreach (GameObject character in T2) // Start attacks
-        {
-            if (character.activeSelf)
-            {
-                CharacterCommon cc = character.GetComponent<CharacterCommon>();
-                if (cc != null && cc.CanAttack() && T1.Count > 0)
-                {
-                    cc.AttackRandom();
-                }
-            }
-        }
-
-        // If one team is dead, end combat phase.
     }
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
@@ -151,16 +156,39 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public CharacterCommon GetRandomTarget(Team characterTeam)
+    /**
+     * Returns a target among the team "opponents".
+     * Select any defensive target randomly, and offensive targets 
+     * if no defensive targets are found.
+     */
+    private CharacterCommon GetTarget(GameObject[] targets)
     {
-        if (characterTeam == Team.One && T2.Count > 0)
-            return T2[(int)UnityEngine.Random.Range(0, T2.Count)].GetComponent<CharacterCommon>();
-        else if (characterTeam == Team.Two && T1.Count > 0)
-            return T1[(int)UnityEngine.Random.Range(0, T1.Count)].GetComponent<CharacterCommon>();
+        int opponentCount = CountAlive(targets);
+        if (opponentCount > 0)
+        {
+            List<CharacterCommon> defensiveOpponents = GetCharacters(targets, CharacterMode.Defensive);
+            int defensiveCount = defensiveOpponents.Count;
+            if (defensiveCount > 0)
+                return defensiveOpponents[UnityEngine.Random.Range(0, defensiveCount)];
+            List<CharacterCommon> oppensiveOpponents = GetCharacters(targets, CharacterMode.Offensive);
+            return oppensiveOpponents[UnityEngine.Random.Range(0, oppensiveOpponents.Count)];
+        }
 
-        Debug.LogError("Could not get random target, there are no targets in the opposing team");
-        Assert.IsTrue(false);
         return null;
+    }
+
+    private List<CharacterCommon> GetCharacters(GameObject[] characters, CharacterMode mode)
+    {
+        List<CharacterCommon> ccList = new List<CharacterCommon>();
+        foreach (GameObject c in characters)
+        {
+            if (c == null)
+                continue;
+            CharacterCommon cc = c.GetComponent<CharacterCommon>();
+            if (cc.Mode == mode)
+                ccList.Add(cc);
+        }
+        return ccList;
     }
 
     /**
@@ -169,10 +197,12 @@ public class GameManager : MonoBehaviour
      **/
     public int GetCharacterPosition(GameObject character)
     {
-        if (T1.Contains(character))
-            return T1.IndexOf(character);
-        else if (T2.Contains(character))
-            return T2.IndexOf(character);
+        for (int i = 0; i < T1.Length; i++)
+            if (T1[i] == character)
+                return i;
+        for (int i = 0; i < T2.Length; i++)
+            if (T2[i] == character)
+                return i;
         return -1;
     }
 
@@ -195,26 +225,34 @@ public class GameManager : MonoBehaviour
     public void KillCharacter(Team team, GameObject character)
     {
         if (team == Team.One)
-            T1.Remove(character);
-        else 
-            T2.Remove(character);
+        {
+            for (int i = 0; i < T1.Length; i++)
+                if (T1[i] == character)
+                    T1[i] = null;
+        } 
+        else if (team == Team.Two)
+        {
+            for (int i = 0; i < T1.Length; i++)
+                if (T1[i] == character)
+                    T1[i] = null;
+        }
         Destroy(character);
     }
 
 
 
-    private void SpawnCharacter(Character character, CharacterMode mode, GameObject spawn, Team team)
-    {     
-        GameObject c = spawn.GetComponent<Spawner>().Spawn(character, mode);
-        CharacterCommon cc = c.GetComponent<CharacterCommon>();
-
-        if (team == Team.One)
-            T1.Add(c);
-        else
-            T2.Add(c);
-
-        // THIS IS NECESSARY ONLY FOR THE INITIAL WAY OF SPAWNING FROM CARD INFORMATION, SINCE IT RELIES ON CHILD COUNT CHECKING
-        c.transform.parent = spawn.transform;
+    private void SpawnCharacter(int position, Character character, CharacterMode mode, Team team)
+    {
+        if (team == Team.One && T1[position] == null)
+        {
+            GameObject spawnPoint = spawnPointsT1[position];
+            T1[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
+        }
+        else if (team == Team.Two && T2[position] == null)
+        {
+            GameObject spawnPoint = spawnPointsT2[position];
+            T2[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
+        }
     }
 
     private void SpawnFromCards() 
@@ -230,7 +268,7 @@ public class GameManager : MonoBehaviour
                         CharacterMode.Defensive :
                         CharacterMode.Offensive;
 
-                    SpawnCharacter(character, mode, spawn, team);
+                    SpawnCharacter(i, character, mode, team);
 
                     Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, i);
                 }

@@ -73,7 +73,7 @@ public class CharacterCommon : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(DirToTarget);
 
-        return attack.StartAttack(target);
+        return attack.StartAttack(new List<CharacterCommon> { target });
     }
 
     public void TakeDamage(int amount)

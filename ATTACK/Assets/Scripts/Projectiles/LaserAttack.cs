@@ -10,6 +10,11 @@ public class LaserAttack : Attack
 
     private GameObject Laser;
     private MaterialPropertyBlock Mpb;
+
+    protected override int GetMaxTargets()
+    {
+        return 1;
+    }
     protected override void InstantiateProjectile()
     {
         Mpb = new MaterialPropertyBlock();
@@ -55,7 +60,7 @@ public class LaserAttack : Attack
 
     private void UpdateTransform (float Radius)
     {
-        Vector3 Direction = TargetPosition - AttackSource.transform.position;
+        Vector3 Direction = TargetPositions[0] - AttackSource.transform.position;
         Vector3 Rotation = Quaternion.LookRotation(Direction).eulerAngles;
         Rotation.x = 90;
         Laser.transform.eulerAngles = Rotation;

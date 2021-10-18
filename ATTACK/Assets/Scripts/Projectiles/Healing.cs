@@ -8,10 +8,14 @@ public class Healing : Attack
     private GameObject HealingPrefab;
 
     private GameObject HealingProjectile;
-    private MaterialPropertyBlock Mpb;
+
+    protected override int GetMaxTargets()
+    {
+        return 2;
+    }
+
     protected override void InstantiateProjectile()
     {
-        Mpb = new MaterialPropertyBlock();
     }
 
     protected override void StartProjectile()
@@ -53,9 +57,5 @@ public class Healing : Attack
             position.y = scale.y;
             t.localPosition = position;
         }
-        
-
-        //position.y = scale.y;
-        //HealingProjectile.transform.position = position;
     }
 }

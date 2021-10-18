@@ -24,11 +24,13 @@ public abstract class Attack : MonoBehaviour
     public int Damage;
     private bool Simulating = false;
     private bool Shooting = false;
-    private bool TargetHit = false;
     Animator Animator;
 
-    private CharacterCommon Target;
-    protected Vector3 TargetPosition;
+    public int MaxTargets { get; private set; }
+    private List<CharacterCommon> Targets = new List<CharacterCommon>();
+    private List<bool> TargetsHit = new List<bool>();
+    // Only give position info to subclasses, no need to expose whole CharacterCommon to subclass (as of now at least)
+    protected List<Vector3> TargetPositions = new List<Vector3>();
 
     public bool CanAttack => !Simulating;
 
@@ -40,6 +42,7 @@ public abstract class Attack : MonoBehaviour
         }
     }
 
+    protected abstract int GetMaxTargets();
     protected abstract void InstantiateProjectile();
     protected abstract void StartProjectile();
     protected abstract void UpdateProjectile();
@@ -47,6 +50,9 @@ public abstract class Attack : MonoBehaviour
 
     public void Awake()
     {
+        // Ensure MaxTargets is set by subclass
+        MaxTargets = GetMaxTargets();
+
         Animator = gameObject.GetComponentInParent<Animator>();
         if (ChargeSource == null)
         {
@@ -78,13 +84,25 @@ public abstract class Attack : MonoBehaviour
         UpdateAttack();
     }
 
-    public bool StartAttack(CharacterCommon Target)
+    public bool StartAttack(List<CharacterCommon> Targets)
     {
+        if (Targets.Count > MaxTargets)
+        {
+            Debug.LogError("Attempting to attack " + Targets.Count + " targets while MaxTargets is " + MaxTargets);
+            return false;
+        }
+
         if (!Simulating)
         {
-            this.Target = Target;
-            this.TargetPosition = Target.transform.position;
-            TargetHit = false;
+            this.Targets.Clear();
+            TargetPositions.Clear();
+            TargetsHit.Clear();
+            foreach (CharacterCommon c in Targets)
+            {
+                this.Targets.Add(c);
+                TargetPositions.Add(c.transform.position);
+                TargetsHit.Add(false);
+            }
             // Start charging
             Simulating = true;
             if (Charge != null)
@@ -122,6 +140,10 @@ public abstract class Attack : MonoBehaviour
                 if(Charge != null)
                 {
                     Charge.transform.position = AttackSource.transform.position;
+                    Vector3 TargetPosition = Vector3.zero;
+                    foreach (Vector3 v in TargetPositions)
+                        TargetPosition += v;
+                    TargetPosition /= TargetPositions.Count;
                     Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - AttackSource.transform.position);
                 }
             } 
@@ -141,11 +163,14 @@ public abstract class Attack : MonoBehaviour
             else if (Shooting && SimulationTime >= FireStartTime && SimulationTime < FireStartTime + MaxFireTime)
             {
                 UpdateProjectile();
-                if (SimulationTime - FireStartTime >= TimeToHit && !TargetHit)
+                for (int i = 0; i < TargetsHit.Count; i++)
                 {
-                    TargetHit = true;
-                    if (Target != null)
-                        Target.TakeDamage(Damage);
+                    if (SimulationTime - FireStartTime >= TimeToHit && !TargetsHit[i])
+                    {
+                        TargetsHit[i] = true;
+                        if (Targets[i] != null)
+                            Targets[i].TakeDamage(Damage);
+                    }
                 }
             }
             else if (Shooting && SimulationTime >= FireStartTime + MaxFireTime)

@@ -8,6 +8,10 @@ public class SquishyAttack : Attack
     GameObject Bubble;
     MaterialPropertyBlock Mpb;
 
+    protected override int GetMaxTargets()
+    {
+        return 1;
+    }
     protected override void UpdateCharge(ref ParticleSystem Charge)
     {
         float RadiusStart = 0.16f;
@@ -49,7 +53,7 @@ public class SquishyAttack : Attack
             float t = (SimulationTime - FireStartTime) / MaxFireTime;
             if (t < 0)
                 t = 0;
-            Vector3 Position = (1 - t) * AttackSource.transform.position + t * TargetPosition;
+            Vector3 Position = (1 - t) * AttackSource.transform.position + t * TargetPositions[0];
             float s = Mathf.Sin(t * 60 * Mathf.PI);
             float c = Mathf.Cos(t * 60 * Mathf.PI);
             Vector3 Swirl = 0.1f * new Vector3(s, c, s);

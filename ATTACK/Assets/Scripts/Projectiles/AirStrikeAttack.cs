@@ -4,6 +4,12 @@ public class AirStrikeAttack : Attack
 {
     private GameObject Plane;
     private Vector3 Direction;
+
+    protected override int GetMaxTargets()
+    {
+        return 1;
+    }
+
     protected override void InstantiateProjectile()
     {
         GameObject PlanePrefab = Resources.Load<GameObject>("Models/colonel/PlanePrefab");
@@ -18,7 +24,7 @@ public class AirStrikeAttack : Attack
         - AttackSource.transform.forward * 30
         + AttackSource.transform.up * 30;
         Plane.transform.position = StartPosition;
-        this.Direction = ((TargetPosition + Vector3.down) - StartPosition).normalized;
+        this.Direction = ((TargetPositions[0] + Vector3.down) - StartPosition).normalized;
         Plane.transform.rotation = Quaternion.LookRotation(Direction);
         Plane.SetActive(true);
     }
@@ -36,7 +42,7 @@ public class AirStrikeAttack : Attack
             if (t < 0)
                 t = 0;
             float MetersPerSecond = Time.deltaTime * 200f;
-            Vector3 NewDir = ((TargetPosition + Vector3.down) - Plane.transform.position);
+            Vector3 NewDir = ((TargetPositions[0] + Vector3.down) - Plane.transform.position);
             const float Dist = 3;
             float Magnitude = NewDir.magnitude;
             Vector3 currentDirection = Direction;

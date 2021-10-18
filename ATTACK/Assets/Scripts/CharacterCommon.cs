@@ -13,7 +13,7 @@ public enum CharacterMode
 }
 public class CharacterCommon : MonoBehaviour
 {
-    public CharacterMode Mode = CharacterMode.Offensive;
+    public CharacterMode Mode;
     public int health = 100;
 
     private GameManager gameManager;
@@ -26,9 +26,11 @@ public class CharacterCommon : MonoBehaviour
 
     void Awake()
     {
+        Mode = CharacterMode.Offensive;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
         Assert.IsNotNull(attack);
+
         string parentName = transform.parent.name;
         healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(((int)parentName[3] - '0') - 1).GetComponent<HealthScript>();
         animator = gameObject.GetComponent<Animator>();

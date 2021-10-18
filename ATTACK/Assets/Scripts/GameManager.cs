@@ -132,9 +132,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        int targetCount = cc.maxTargets;
-                        Debug.Log(targetCount);
-                        cc.Attack(GetTargets(opponents, targetCount));
+                        cc.Attack(GetTargets(opponents, cc.maxTargets));
                     }
             }
         }

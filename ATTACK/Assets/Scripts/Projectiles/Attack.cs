@@ -14,6 +14,9 @@ public abstract class Attack : MonoBehaviour
     private AudioSource ChargeSource;
     private AudioSource FireSource;
 
+    [Range(0.1f, 5.0f)]
+    [SerializeField]
+    protected float SecondsPerAttack = 1.5f;
     [Range(0.1f, 3.0f)]
     [SerializeField]
     protected float ChargeTime = 1.0f;
@@ -53,6 +56,7 @@ public abstract class Attack : MonoBehaviour
 
     public virtual void Awake()
     {
+        Debug.Assert(SecondsPerAttack >= MaxFireTime + ChargeTime);
         // Ensure MaxTargets is set by subclass
         MaxTargets = GetMaxTargets();
 
@@ -137,7 +141,10 @@ public abstract class Attack : MonoBehaviour
         {
             SimulationTime += Time.deltaTime;
 
-            if (SimulationTime < ChargeTime)
+            bool DuringCharge = SimulationTime < ChargeTime;
+            bool DuringFire = SimulationTime >= ChargeTime && SimulationTime < ChargeTime + MaxFireTime;
+            bool AfterFire = SimulationTime >= ChargeTime + MaxFireTime;
+            if (DuringCharge)
             {
                 UpdateCharge(ref Charge);
                 if(Charge != null)
@@ -150,12 +157,12 @@ public abstract class Attack : MonoBehaviour
                     Charge.transform.rotation = Quaternion.LookRotation(TargetPosition - AttackSource.transform.position);
                 }
             } 
-            else if (SimulationTime >= ChargeTime && Charge != null && Charge.isPlaying)
+            else if (!DuringCharge && Charge != null && Charge.isPlaying)
             {
                 Charge.Stop();
             }
 
-            if (!Shooting && SimulationTime >= ChargeTime)
+            if (!Shooting && DuringFire)
             {
                 Shooting = true;
                 StartProjectile();
@@ -163,7 +170,7 @@ public abstract class Attack : MonoBehaviour
                 FireSource.time = 0;
                 FireSource.Play();
             }
-            else if (Shooting && SimulationTime >= ChargeTime && SimulationTime < ChargeTime + MaxFireTime)
+            else if (Shooting && DuringFire)
             {
                 UpdateProjectile();
                 for (int i = 0; i < TargetsHit.Count; i++)
@@ -171,21 +178,22 @@ public abstract class Attack : MonoBehaviour
                     if (SimulationTime - ChargeTime >= TimeToHit && !TargetsHit[i])
                     {
                         TargetsHit[i] = true;
-                        Damage = 5;
                         if (Targets[i] != null)
                             Targets[i].TakeDamage(Damage);
                     }
                 }
             }
-            else if (Shooting && SimulationTime >= ChargeTime + MaxFireTime)
+            else if (Shooting && AfterFire)
             {
                 // Simulation finished
-                Simulating = false;
                 Shooting = false;
-                SimulationTime = 0;
                 StopProjectile();
                 if (Animator != null)
                     Animator.SetTrigger("StartIdle");
+            } else if (SimulationTime >= SecondsPerAttack && AfterFire)
+            {
+                SimulationTime = 0;
+                Simulating = false;
             }
         }
     }

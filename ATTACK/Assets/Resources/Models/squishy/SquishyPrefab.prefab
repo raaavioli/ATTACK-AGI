@@ -105,6 +105,7 @@ MonoBehaviour:
   MaxFireTime: 0.4
   TimeToHit: 0.4
   Damage: 10
+  BubblePrefab: {fileID: 7626507954086442540, guid: 30e8d728f67a3d04bab576c6aed8f161, type: 3}
 --- !u!114 &4559184412209367075
 MonoBehaviour:
   m_ObjectHideFlags: 0

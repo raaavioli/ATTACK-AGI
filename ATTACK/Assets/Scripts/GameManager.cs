@@ -61,8 +61,9 @@ public class GameManager : MonoBehaviour
             int position = (int)(spawnedCharacters / 2f);
             Team team = (spawnedCharacters % 2).AsTeam();
 
-            int character = characters.Count - 1 - (position % characters.Count);
-            CharacterMode mode = character == 0 ? CharacterMode.Offensive : CharacterMode.Defensive;
+            // Spawn 2, 3, 0, 1, 2
+            int character = (2 + position) % characters.Count;
+            CharacterMode mode = character == 1 || character == 3 ? CharacterMode.Defensive : CharacterMode.Offensive;
             SpawnCharacter(position, characters[character], mode, team);
             Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, position);
 

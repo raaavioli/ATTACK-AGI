@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class SquishyAttack : Attack
 {
-    GameObject Bubble;
+    public GameObject BubblePrefab;
+    List<GameObject> Bubbles = new List<GameObject>();
     MaterialPropertyBlock Mpb;
 
     protected override int GetMaxTargets()
     {
-        return 1;
+        return 3;
     }
     protected override void UpdateCharge(ref ParticleSystem Charge)
     {
@@ -34,36 +35,50 @@ public class SquishyAttack : Attack
 
     protected override void StartProjectile()
     {
-        GameObject BubblePrefab = Resources.Load<GameObject>("Projectiles/Bubble/BubblePrefab");
-        Bubble = Instantiate(BubblePrefab);
-        Bubble.transform.position = AttackSource.transform.position;
-        Bubble.SetActive(true);
+        for (int i = 0; i < TargetPositions.Count; i++)
+        {
+            GameObject bubble = Instantiate(BubblePrefab);
+            bubble.transform.position = AttackSource.transform.position;
+            bubble.SetActive(true);
+            Bubbles.Add(bubble);
+        }
     }
 
     protected override void StopProjectile()
     {
-        Bubble.GetComponent<MeshRenderer>().enabled = false;
-        Destroy(Bubble, 1.0f);
+        foreach (GameObject bubble in Bubbles)
+        {
+            bubble.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(bubble, 1.0f);
+        }
+        Bubbles.Clear();
     }
 
     protected override void UpdateProjectile()
     {
-        if (Bubble.activeSelf)
+        for (int i = 0; i < Bubbles.Count; i++)
         {
-            float t = (SimulationTime - ChargeTime) / MaxFireTime;
-            if (t < 0)
-                t = 0;
-            Vector3 Position = (1 - t) * AttackSource.transform.position + t * TargetPositions[0];
-            float s = Mathf.Sin(t * 60 * Mathf.PI);
-            float c = Mathf.Cos(t * 60 * Mathf.PI);
-            Vector3 Swirl = 0.1f * new Vector3(s, c, s);
-            Bubble.transform.position = Position + Swirl;
+            GameObject bubble = Bubbles[i];
+            if (bubble != null && bubble.activeSelf)
+            {
+                float t = (SimulationTime - ChargeTime) / MaxFireTime;
+                if (t < 0)
+                    t = 0;
+                Vector3 Position = (1 - t) * AttackSource.transform.position + t * TargetPositions[i];
+                float s = Mathf.Sin(t * 60 * Mathf.PI);
+                float c = Mathf.Cos(t * 60 * Mathf.PI);
+                Vector3 Swirl = 0.1f * new Vector3(s, c, s);
+                bubble.transform.position = Position + Swirl;
+            }
         }
     }
 
     private void OnDisable()
     {
-        if (Bubble != null)
-            Bubble.SetActive(false);
+        foreach (GameObject bubble in Bubbles)
+        {
+            if (bubble != null)
+                bubble.SetActive(false);
+        }
     }
 }

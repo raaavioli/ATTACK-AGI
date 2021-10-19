@@ -20,11 +20,15 @@ public class Healing : Attack
 
     protected override void StartProjectile()
     {
-        foreach (Vector3 pos in TargetPositions)
+        for (int i = 0; i < Targets.Count; i++)
         {
+            if (Targets[i] == null)
+                continue;
             GameObject HealingProjectile = Instantiate(HealingPrefab); 
             HealingProjectiles.Add(HealingProjectile);
-            HealingProjectile.transform.position = pos;
+            string parentName = Targets[i].transform.parent.name;
+            GameObject SpawnObject = GameObject.Find(parentName + "/RockPlatform");
+            HealingProjectile.transform.position = SpawnObject.transform.position + new Vector3(0, 1.5f, 0);
             foreach (ParticleSystem ps in HealingProjectile.GetComponentsInChildren<ParticleSystem>())
             {
                 ps.time = 0;

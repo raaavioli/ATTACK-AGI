@@ -33,9 +33,9 @@ public abstract class Attack : MonoBehaviour
     Animator Animator;
 
     public int MaxTargets { get; private set; }
-    private List<CharacterCommon> Targets = new List<CharacterCommon>();
+    protected List<CharacterCommon> Targets = new List<CharacterCommon>();
     private List<bool> TargetsHit = new List<bool>();
-    // Only give position info to subclasses, no need to expose whole CharacterCommon to subclass (as of now at least)
+    // Keep copies of target positions in case a character dies during attack
     protected List<Vector3> TargetPositions = new List<Vector3>();
 
     public bool CanAttack => !Simulating;

@@ -76,12 +76,12 @@ public class GameManager : MonoBehaviour
         else if(T1.Count == 0)
         {
             cardUI.roundWinnerText.SetActive(true);
-            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Right Player won this round!";
+            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Red Team won this round!";
         }
         else if(T2.Count == 0)
         {
             cardUI.roundWinnerText.SetActive(true);
-            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Left Player won this round!";
+            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Blue Team won this round!";
         }
 
         foreach (GameObject character in T1) // Start attacks

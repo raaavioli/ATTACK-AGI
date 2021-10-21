@@ -25,12 +25,15 @@ public class GameManager : MonoBehaviour
 
     private bool inCombatPhase = false;
 
+    GameObject Canvas;
+
     public void Start()
     {
         T1 = new GameObject[TEAM_SIZE];
         T2 = new GameObject[TEAM_SIZE];
 
-        GameObject.Find("Canvas").GetComponent<CardUI>().roundWinnerText.SetActive(false);
+        Canvas = GameObject.Find("Canvas");
+        Canvas.GetComponent<CardUI>().roundWinnerText.SetActive(false);
 
         StartCoroutine(SetupPhaseTimer(setupTime));
     }
@@ -57,9 +60,12 @@ public class GameManager : MonoBehaviour
             List<Character> characters = Character.Values();
             int position = (int)(spawnedCharacters / 2f);
             Team team = (spawnedCharacters % 2).AsTeam();
-            CharacterMode mode = position == 0 || position == TEAM_SIZE - 1 ? CharacterMode.Defensive : CharacterMode.Offensive;
-            SpawnCharacter(position, characters[position % characters.Count], mode, team);
-            GameObject.Find("Canvas").GetComponent<CardUI>().EnableHealthBar(true, team, position);
+
+            // Spawn 2, 3, 0, 1, 2
+            int character = (2 + position) % characters.Count;
+            CharacterMode mode = character == 1 || character == 3 ? CharacterMode.Defensive : CharacterMode.Offensive;
+            SpawnCharacter(position, characters[character], mode, team);
+            Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, position);
 
             spawnedCharacters++;
         }
@@ -76,11 +82,10 @@ public class GameManager : MonoBehaviour
 
     private void CombatPhaseUpdate()
     {
-        CardUI cardUI = GameObject.Find("Canvas").GetComponent<CardUI>();
+        CardUI cardUI = Canvas.GetComponent<CardUI>();
 
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
-
         if (T1Alive == 0 && T2Alive == 0) {
             cardUI.roundWinnerText.SetActive(true);
             cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
@@ -99,19 +104,36 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        AttackOpponents(T1, T2);
-        AttackOpponents(T2, T1);
+        PerformAttacks(T1, T2);
+        PerformAttacks(T2, T1);
     }
 
-    private void AttackOpponents(GameObject[] attackers, GameObject[] opponents)
+    private void PerformAttacks(GameObject[] attackers, GameObject[] opponents)
     {
         foreach (GameObject character in attackers)
         {
             if (character != null && character.activeSelf)
             {
                 CharacterCommon cc = character.GetComponent<CharacterCommon>();
+                bool isHealer = cc.GetComponent<Healing>() != null;
                 if (cc != null && cc.CanAttack())
-                    cc.Attack(GetTarget(opponents));
+                    if (isHealer)
+                    {
+                        // Currently, the only healer there is heals its immediate neighbors
+                        // If other healing spells are created, this will have to be changed. 
+                        // Maybe have some target priority Enum for the Attack to base decisions on. 
+                        int pos = GetCharacterPosition(cc.gameObject);
+                        List<CharacterCommon> Neighbors = new List<CharacterCommon>();
+                        if (pos > 0 && attackers[pos - 1] != null)
+                            Neighbors.Add(attackers[pos - 1].GetComponent<CharacterCommon>());
+                        if (pos < attackers.Length - 1 && attackers[pos + 1] != null)
+                            Neighbors.Add(attackers[pos + 1].GetComponent<CharacterCommon>());
+                        cc.Attack(Neighbors);
+                    }
+                    else
+                    {
+                        cc.Attack(GetTargets(opponents, cc.maxTargets));
+                    }
             }
         }
     }
@@ -121,7 +143,7 @@ public class GameManager : MonoBehaviour
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
         
-        CardUI cardUI = GameObject.Find("Canvas").GetComponent<CardUI>();
+        CardUI cardUI = Canvas.GetComponent<CardUI>();
         cardUI.setupTimer.SetActive(true);
         for (int i = 0; i < seconds; i++)
         {
@@ -139,7 +161,7 @@ public class GameManager : MonoBehaviour
 
     private void updateUITimer(int secondsLeft)
     {
-        CardUI cardUI = GameObject.Find("Canvas").GetComponent<CardUI>();
+        CardUI cardUI = Canvas.GetComponent<CardUI>();
         Text setupTimerText = cardUI.setupTimer.GetComponent<Text>();
         setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
@@ -158,20 +180,41 @@ public class GameManager : MonoBehaviour
      * Select any defensive target randomly, and offensive targets 
      * if no defensive targets are found.
      */
-    private CharacterCommon GetTarget(GameObject[] opponents)
+    private List<CharacterCommon> GetTargets(GameObject[] targets, int count)
     {
-        int opponentCount = CountAlive(opponents);
-        if (opponentCount > 0)
+        int opponentCount = CountAlive(targets);
+        List<CharacterCommon> Targets = new List<CharacterCommon>();
+        if (opponentCount > 0 && count > 0)
         {
-            List<CharacterCommon> defensiveOpponents = GetCharacters(opponents, CharacterMode.Defensive);
-            int defensiveCount = defensiveOpponents.Count;
-            if (defensiveCount > 0)
-                return defensiveOpponents[UnityEngine.Random.Range(0, defensiveCount)];
-            List<CharacterCommon> oppensiveOpponents = GetCharacters(opponents, CharacterMode.Offensive);
-            return oppensiveOpponents[UnityEngine.Random.Range(0, oppensiveOpponents.Count)];
+            List<CharacterCommon> defensiveOpponents = GetCharacters(targets, CharacterMode.Defensive);
+            List<CharacterCommon> offensiveOpponents = GetCharacters(targets, CharacterMode.Offensive);
+            if (count < defensiveOpponents.Count)
+            {
+                // Get some of the defensive opponents
+                while (count > 0)
+                {
+                    CharacterCommon defensive = defensiveOpponents[UnityEngine.Random.Range(0, defensiveOpponents.Count)];
+                    Targets.Add(defensive);
+                    defensiveOpponents.Remove(defensive);
+                    count--;
+                }
+            } else
+            {
+                // Get all defensive opponents and some offensive if possible
+                foreach (CharacterCommon def in defensiveOpponents)
+                    Targets.Add(def);
+                count -= Targets.Count;
+                while (count > 0 && offensiveOpponents.Count > 0)
+                {
+                    CharacterCommon offensive = offensiveOpponents[UnityEngine.Random.Range(0, offensiveOpponents.Count)];
+                    Targets.Add(offensive);
+                    offensiveOpponents.Remove(offensive);
+                    count--;
+                }
+            }
         }
 
-        return null;
+        return Targets;
     }
 
     private List<CharacterCommon> GetCharacters(GameObject[] characters, CharacterMode mode)
@@ -267,7 +310,7 @@ public class GameManager : MonoBehaviour
 
                     SpawnCharacter(i, character, mode, team);
 
-                    GameObject.Find("Canvas").GetComponent<CardUI>().EnableHealthBar(true, team, i);
+                    Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, i);
                 }
             }
         }

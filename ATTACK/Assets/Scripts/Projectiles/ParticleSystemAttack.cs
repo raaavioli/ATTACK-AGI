@@ -7,6 +7,11 @@ public class ParticleSystemAttack : Attack
     protected ParticleSystem Projectile;
     protected MaterialPropertyBlock ProjectileMPB;
 
+    protected override int GetMaxTargets()
+    {
+        return 1;
+    }
+
     protected override void InstantiateProjectile()
     {
         ProjectileMPB = new MaterialPropertyBlock();
@@ -23,7 +28,7 @@ public class ParticleSystemAttack : Attack
     protected override void UpdateProjectile()
     {
         Projectile.transform.position = AttackSource.transform.position;
-        Projectile.transform.rotation = Quaternion.LookRotation(TargetPosition - AttackSource.transform.position);
+        Projectile.transform.rotation = Quaternion.LookRotation(TargetPositions[0] - AttackSource.transform.position);
     }
 
     protected override void StopProjectile()

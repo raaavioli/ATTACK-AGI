@@ -13,22 +13,35 @@ public enum CharacterMode
 }
 public class CharacterCommon : MonoBehaviour
 {
-    public CharacterMode Mode = CharacterMode.Offensive;
-    public int health = 100;
+    public CharacterMode Mode;
+    private Team team;
 
     private GameManager gameManager;
     private Attack attack;
+    public int maxTargets {
+        get
+        {
+            if (attack != null)
+                return attack.MaxTargets;
+            return 0;
+        }
+    }
 
     private Animator animator;
 
-    private Team team;
+    [SerializeField]
+    private float maxHealth = 100;
+    private float health;
     private HealthScript healthScript;
 
     void Awake()
     {
+        Mode = CharacterMode.Offensive;
+        health = maxHealth;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
         Assert.IsNotNull(attack);
+
         string parentName = transform.parent.name;
         healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(((int)parentName[3] - '0') - 1).GetComponent<HealthScript>();
         animator = gameObject.GetComponent<Animator>();
@@ -64,20 +77,28 @@ public class CharacterCommon : MonoBehaviour
      * Performs an attack and starts character's Attack animation
      * @returns true if an attack simulation was started, false otherwise
      */
-    public bool Attack(CharacterCommon target)
+    public bool Attack(List<CharacterCommon> targets)
     {
-        Vector3 DirToTarget = (target.transform.position - transform.position).normalized;
+        Vector3 DirToTarget = Vector3.zero;
+        if (targets.Count == 1)
+            DirToTarget = targets[0].transform.position;
+        else
+            foreach (CharacterCommon target in targets)
+                DirToTarget += target.transform.position;
+        DirToTarget -= transform.position;
 
-        transform.rotation = Quaternion.LookRotation(DirToTarget);
+        transform.rotation = Quaternion.LookRotation(DirToTarget.normalized);
 
-        return attack.StartAttack(target);
+        return attack.StartAttack(targets);
     }
 
     public void TakeDamage(int amount)
     {
         health -= amount;
+        if (health > maxHealth)
+            health = maxHealth;
 
-        healthScript.SetHealth((float)health / 100f);
+        healthScript.SetHealth(health / maxHealth);
         // Some characters dont have an animator, so this is a hacky solution for now.
         if (animator != null) animator.SetTrigger("StartGetHit");
 

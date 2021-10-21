@@ -16,15 +16,8 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         Mpb = new MaterialPropertyBlock();
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            if (child.gameObject.name.Contains("SpawnBulb"))
-            {
-                MaxScale = child.transform.localScale;
-                child.transform.localScale = 0 * MaxScale;
-            }
-        }
+        MaxScale = SpawnBulb.transform.localScale;
+        SpawnBulb.transform.localScale = 0 * MaxScale;
     }
 
     void Update()
@@ -46,35 +39,43 @@ public class Spawner : MonoBehaviour
                 SpawnedCharacter.SetActive(true);
             SetSpawnBulbSize(t);
         }
+
+        foreach (GlowUpdater gu in GetComponentsInChildren<GlowUpdater>())
+        {
+            if (SpawnedCharacter != null)
+            {
+                CharacterMode mode = SpawnedCharacter.GetComponent<CharacterCommon>().Mode;
+                if (mode == CharacterMode.Offensive)
+                    gu._Color = Colors.FireOrange;
+                else if (mode == CharacterMode.Defensive)
+                    gu._Color = Colors.Cyan;
+            } else
+            {
+                gu._Color = gu.DefaultMaterialColor;
+            }
+        }
     }
 
     public GameObject Spawn(Character character, CharacterMode mode)
     {
         if (mode == CharacterMode.Defensive)
         {
-            Mpb.SetColor("_CoreColor", new Color(0.36f, 0.36f, 0.67f));
-            Mpb.SetColor("_OuterSwirlColor", new Color(0.04f, 0.23f, 0.30f));
-            Mpb.SetColor("_InnerSwirlColor", new Color(0f, 0.13f, 0.42f));
+            Mpb.SetColor("_CoreColor", Colors.LightPurple);
+            Mpb.SetColor("_OuterSwirlColor", Colors.DarkCyan);
+            Mpb.SetColor("_InnerSwirlColor", Colors.DarkBlue);
         }
         else if (mode == CharacterMode.Offensive)
         {
-            Mpb.SetColor("_CoreColor", new Color(0.44f, 0.19f, 0.21f));
-            Mpb.SetColor("_OuterSwirlColor", new Color(0.67f, 0.25f, 0f));
-            Mpb.SetColor("_InnerSwirlColor", new Color(0.88f, 0.19f, 0f));
+            Mpb.SetColor("_CoreColor", Colors.WineRed);
+            Mpb.SetColor("_OuterSwirlColor", Colors.DarkOrange);
+            Mpb.SetColor("_InnerSwirlColor", Colors.FireOrange);
         }
         else
         {
             Debug.LogError("Non implemented suit used for Spawner");
         }
-        
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            GameObject child = transform.GetChild(i).gameObject;
-            if (child.tag.Equals("SpawnBulb"))
-            {
-                child.GetComponent<Renderer>().SetPropertyBlock(Mpb);
-            }
-        }
+
+        SpawnBulb.GetComponent<Renderer>().SetPropertyBlock(Mpb);
 
         Team team = GameManager.GetTeamFromTag(tag);
         Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1);

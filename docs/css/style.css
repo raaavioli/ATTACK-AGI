@@ -30,7 +30,7 @@ ul li { margin: 0; padding: 0; }
 h1, h2, h3, h4, h5, h6 { color: #000; }
 h1 { font-size: 30px; font-weight: normal; margin: 0 0 20px 0; padding: 5px 0; color: #fff; }
 h2 { font-size: 24px; font-weight: normal; margin: 0 0 20px 0; padding: 10px 0 15px 0; color: #fff; }
-h3 { font-size: 20px; font-weight: normal; margin: 0 0 15px 0; padding: 0; padding: 0 0 10px 0; }
+h3 { font-size: 20px; font-weight: normal; margin: 0 0 15px 0; padding: 0; padding: 0 0 10px 0; color: #ccc }
 h4 { font-size: 18px; margin: 0 0 20px 0; padding: 0 0 10px 0; ; }
 h5 { font-size: 16px; margin: 0 0 10px 0; padding: 0; }
 h6 { font-size: 14px; margin: 0 0 5px 0; padding: 0; }
@@ -218,9 +218,21 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 	border-bottom: 1px dashed #363636;
 }
 
+.team_box {
+	clear: both;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	border-bottom: 1px dashed #363636;
+}
+
 .pb_last { margin: 0; padding: 0; border: none; }
 
 .post_box .header {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.team_box .header {
 	position: relative;
 	margin-bottom: 10px;
 }
@@ -237,9 +249,15 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 }
 .header .posted_date strong { display: block; margin-top: 5px; }
 
-.post_box img { width: 108px; height: 108px; border: 5px solid #fff; float: left; margin-right: 30px; }
-.post_box .pb_right { float: left; width: 814px; }
+.post_box img { width: 162px; height: 162px; border: 5px solid #fff; float: left; margin-right: 30px; }
+.post_box .pb_right { float: left; width: 760px; }
 .post_box .comment a { display: block; margin-top: 15px; background: url(../images/templatemo_comment.jpg) no-repeat bottom left; padding: 3px 0 0 25px; }
+
+.team_box img { width: 300px; height: 400px; float: left; margin-right: 30px; }
+.team_box .pb_right { float: left; width: 590px; }
+.team_box .comment a { display: block; margin-top: 15px; background: url(../images/templatemo_comment.jpg) no-repeat bottom left; padding: 3px 0 0 25px; }
+.links { display: block; float: right; }
+.links div a img {width: 32px; height: 32px; margin-right: 0px; margin-bottom: 5px; }
 
 #templatemo_sidebar {
 	float: right;

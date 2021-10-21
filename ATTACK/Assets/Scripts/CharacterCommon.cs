@@ -64,9 +64,8 @@ public class CharacterCommon : MonoBehaviour
      * Performs an attack and starts character's Attack animation
      * @returns true if an attack simulation was started, false otherwise
      */
-    public bool AttackRandom()
+    public bool Attack(CharacterCommon target)
     {
-        CharacterCommon target = gameManager.GetRandomTarget(team);
         Vector3 DirToTarget = (target.transform.position - transform.position).normalized;
 
         transform.rotation = Quaternion.LookRotation(DirToTarget);

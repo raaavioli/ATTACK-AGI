@@ -344,8 +344,9 @@ MonoBehaviour:
   ChargePrefab: {fileID: 0}
   ChargeSound: {fileID: 0}
   FireSound: {fileID: 8300000, guid: a71033bd7de1f1a47a443d716f76c87e, type: 3}
-  FireStartTime: 0.75
-  MaxFireTime: 1.58
+  SecondsPerAttack: 2
+  ChargeTime: 1
+  MaxFireTime: 0.35
   TimeToHit: 0.6
   Damage: 10
 --- !u!114 &7672568902818300787
@@ -361,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mode: 0
-  health: 100
+  maxHealth: 100
 --- !u!135 &-6392252858146831092
 SphereCollider:
   m_ObjectHideFlags: 0

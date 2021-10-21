@@ -79,7 +79,6 @@ Shader "Unlit/CompleteLaserShader"
                 float WavePatternY = sin(_Time.z * 3) * _CoreIntensity * sin(-_Time.z * _CoreSpeed + i.uv.y * 10 * TAU) * 0.5 + 0.5;
                 WavePatternY += sin(-_Time.z * _CoreSpeed + i.uv.y * 13 * TAU);
                 WavePatternY += Distortion;
-                //return WavePatternY;
                 float CylinderCapCull = (abs(i.model_normal.y) < 0.99);
                 return _CoreColor * WavePatternY * CylinderCapCull * EdgeTransparency(0.01, 0.9, i.unwrapped_uv.y);
             }

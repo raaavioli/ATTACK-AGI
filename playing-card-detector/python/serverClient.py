@@ -14,7 +14,7 @@ WIDTH = 960
 RECT_HEIGHT = HEIGHT / CARD_AREAS
 RECT_WIDTH = RECT_HEIGHT * 8.8 / 5.8 #dimension of playing card
 
-CARD_AREA_MIN = 5500
+CARD_AREA_MIN = 3500
 CARD_AREA_MAX = 6000
 SUIT_AREA_MIN = 50
 SUIT_AREA_MAX = 500
@@ -84,10 +84,10 @@ def suitAreaToSquare(image):
         [-1,-1,-1,-1,-1],
         [-1,-1,-1,-1,-1]])
     sharpen = cv2.filter2D(image, -1, sharpen_kernel)
-    median = cv2.medianBlur(sharpen, 9)
+    median = cv2.medianBlur(sharpen, 5)
     
 
-    size = (6, 6)
+    size = (4, 4)
     shape = cv2.MORPH_RECT
     kernel = cv2.getStructuringElement(shape, size)
     max_image = cv2.dilate(median, kernel)
@@ -132,16 +132,16 @@ def analyzeSubImage(subImage, player):
     resultString = ""
     foundCards = 0
     currentCardIndex = 0
-    while(foundCards < CARD_AREAS and currentCardIndex < len(contours) and isCardContour(contours[currentCardIndex])):
+    while((foundCards < CARD_AREAS) and (currentCardIndex < len(contours)) and (isCardContour(contours[currentCardIndex]))):
         _, y, w, h = cv2.boundingRect(contours[currentCardIndex])
         rotated = int(w < h)
-        position = int((y + h / 2) / RECT_HEIGHT)
+        position = int((y + h / 2.0) / float(RECT_HEIGHT))
         rank = 0
         suitMarkerIndex = currentCardIndex + 1
-        while(suitMarkerIndex < len(contours) and isSuitContour(contours[suitMarkerIndex])): 
+        while((suitMarkerIndex < len(contours)) and (isSuitContour(contours[suitMarkerIndex]))):
             rank+=1
             suitMarkerIndex+=1
-        resultString += "%d:%d:%d:%d," % (player, position, suit, rank, rotated)
+        resultString += "%d:%d:%d:%d," % (player, position, rank, rotated)
         currentCardIndex = suitMarkerIndex
         foundCards +=1
     

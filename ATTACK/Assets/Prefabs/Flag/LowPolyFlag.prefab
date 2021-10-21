@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2046225290660909116}
   - component: {fileID: 5103235801245595990}
   - component: {fileID: 8332203802075064903}
+  - component: {fileID: 5948887434027549725}
   m_Layer: 0
   m_Name: Pole
   m_TagString: Untagged
@@ -81,6 +82,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &5948887434027549725
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101263193723991194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.0005
+  m_Height: 1.5521301
+  m_Direction: 1
+  m_Center: {x: -0.021, y: 0.5183032, z: 0}
 --- !u!1 &3402872052595280486
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2626371225323802844}
-  - component: {fileID: 2591830156935991054}
   m_Layer: 0
   m_Name: LowPolyFlag
   m_TagString: Untagged
@@ -105,29 +119,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3402872052595280486}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -18, y: 1, z: -19.83}
+  m_LocalScale: {x: 3.5829, y: 3.5829, z: 3.5829}
   m_Children:
   - {fileID: 179098880385062130}
   - {fileID: 2046225290660909116}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!136 &2591830156935991054
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3402872052595280486}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.05
-  m_Height: 4.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.2, z: 0}
 --- !u!1 &5556919428339369720
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +205,7 @@ Cloth:
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 3.4028235e+38
     collisionSphereDistance: 3.4028235e+38
-  - maxDistance: 3.4028235e+38
+  - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
   - maxDistance: 0
     collisionSphereDistance: 3.4028235e+38
@@ -334,7 +334,7 @@ Cloth:
   - maxDistance: 3.4028235e+38
     collisionSphereDistance: 3.4028235e+38
   m_CapsuleColliders:
-  - {fileID: 2591830156935991054}
+  - {fileID: 5948887434027549725}
   m_SphereColliders: []
   m_SelfCollisionDistance: 0
   m_SelfCollisionStiffness: 0.2
@@ -363,7 +363,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 167706d80bff4a543a5cb2c97a742077, type: 2}
+  - {fileID: 2100000, guid: 065ae69489a22274ba65457952ef11c1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -393,6 +393,6 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.010390282, y: -0.013597497, z: 0.0108988015}
-    m_Extent: {x: 0.65268856, y: 0.022571862, z: 0.0025100214}
+    m_Center: {x: -0.2218715, y: 0.000023819506, z: -0.005355487}
+    m_Extent: {x: 0.23187149, y: 0.009707302, z: 0.015355488}
   m_DirtyAABB: 0

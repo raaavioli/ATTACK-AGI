@@ -69,7 +69,7 @@ Shader "Unlit/HealthBar"
 
                 // Color
                 float t = clamp(InverseLerp(lowHealth, 0, _Health), 0.0, 1.0) * sin(2 * 2 * PI * _Time.z / (1 + _Health * 5));
-                fixed3 red = (1 - t) * fixed3(1, 0, 0) + t * fixed3(0.4, 0.1, 0.1);
+                fixed3 red = (1 - t) * fixed3(1, 0, 0) + t * fixed3(0.2, 0.1, 0.1);
                 fixed3 green = fixed3(0.1, 0.5, 0.1);
                 float colorT = clamp(_Health * 1.2, 0.0, 1.0);
                 fixed3 color = ((1 - colorT) * red + colorT * green) * missingHealth;

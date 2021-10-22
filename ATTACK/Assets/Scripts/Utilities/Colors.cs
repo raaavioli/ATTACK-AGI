@@ -15,5 +15,7 @@ public static class Colors
     public static readonly Color FireOrange = new Color(0.88f, 0.19f, 0f);
     public static readonly Color BrightOrange = new Color(1, 0.51f, 0.033f);
 
+    public static readonly Color BrightGreen = new Color(0.4f, 1.0f, 0.0f);
+
     public static readonly Color Cyan = new Color(0.4f, 1, 1);
 }

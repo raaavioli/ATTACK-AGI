@@ -37,8 +37,8 @@ public class CardController : MonoBehaviour {
             foreach (Team team in System.Enum.GetValues(typeof(Team)))
             {
                 CardAnimator[] Animators = team == Team.One ? T1CardAnimators : T2CardAnimators;
-                bool hasCard = CardManager.HasCard(team, i);
-                bool isRotated = CardManager.IsRotated(team, i);
+                bool hasCard = (i % 3) != 0 || CardManager.HasCard(team, i);
+                bool isRotated = (i % 3) == 1 || CardManager.IsRotated(team, i);
                 Animators[i]._Rotating = !hasCard;
                 Animators[i]._Color = !hasCard ? Color.white : isRotated ? Colors.BrightBlue : Colors.BrightOrange;
             }

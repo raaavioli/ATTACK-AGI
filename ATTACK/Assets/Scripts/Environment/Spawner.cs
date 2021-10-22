@@ -48,10 +48,10 @@ public class Spawner : MonoBehaviour
                 if (mode == CharacterMode.Offensive)
                     gu._Color = Colors.FireOrange;
                 else if (mode == CharacterMode.Defensive)
-                    gu._Color = Colors.Cyan;
+                    gu._Color = Colors.DarkCyan;
             } else
             {
-                gu._Color = gu.DefaultMaterialColor;
+                gu._Color = Color.clear;
             }
         }
     }

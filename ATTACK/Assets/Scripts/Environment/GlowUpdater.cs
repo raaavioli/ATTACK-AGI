@@ -11,9 +11,8 @@ public class GlowUpdater : MonoBehaviour
 
     [Range(0.1f, 10)]
     [SerializeField]
-    private float Period;
+    private float Period = 1.0f;
 
-    public Color DefaultMaterialColor { get; private set; }
     public Color _Color;
 
     MaterialPropertyBlock Mpb;
@@ -21,9 +20,7 @@ public class GlowUpdater : MonoBehaviour
     void Start()
     {
         Mpb = new MaterialPropertyBlock();
-        DefaultMaterialColor = GetComponent<Renderer>().material.GetColor("_Color");
-        _Color = DefaultMaterialColor;
-        Period = 1;
+        _Color = GetComponent<Renderer>().material.GetColor("_Color");
         RandomOffset = Random.value;
     }
 

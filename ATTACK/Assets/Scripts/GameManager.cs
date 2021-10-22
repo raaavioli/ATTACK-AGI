@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         T2 = new GameObject[TEAM_SIZE];
 
         Canvas = GameObject.Find("Canvas");
-        Canvas.GetComponent<CardUI>().roundWinnerText.SetActive(false);
+        Canvas.GetComponent<CardController>().roundWinnerText.SetActive(false);
 
         StartCoroutine(SetupPhaseTimer(setupTime));
     }
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
             int character = (2 + position) % characters.Count;
             CharacterMode mode = character == 1 || character == 3 ? CharacterMode.Defensive : CharacterMode.Offensive;
             SpawnCharacter(position, characters[character], mode, team);
-            Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, position);
+            Canvas.GetComponent<CardController>().EnableHealthBar(true, team, position);
 
             spawnedCharacters++;
         }
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
     private void CombatPhaseUpdate()
     {
-        CardUI cardUI = Canvas.GetComponent<CardUI>();
+        CardController cardUI = Canvas.GetComponent<CardController>();
 
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
@@ -142,8 +142,8 @@ public class GameManager : MonoBehaviour
     {
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
-        
-        CardUI cardUI = Canvas.GetComponent<CardUI>();
+
+        CardController cardUI = Canvas.GetComponent<CardController>();
         cardUI.setupTimer.SetActive(true);
         for (int i = 0; i < seconds; i++)
         {
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
 
     private void updateUITimer(int secondsLeft)
     {
-        CardUI cardUI = Canvas.GetComponent<CardUI>();
+        CardController cardUI = Canvas.GetComponent<CardController>();
         Text setupTimerText = cardUI.setupTimer.GetComponent<Text>();
         setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
@@ -310,7 +310,7 @@ public class GameManager : MonoBehaviour
 
                     SpawnCharacter(i, character, mode, team);
 
-                    Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, i);
+                    Canvas.GetComponent<CardController>().EnableHealthBar(true, team, i);
                 }
             }
         }

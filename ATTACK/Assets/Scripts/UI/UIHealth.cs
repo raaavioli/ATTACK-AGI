@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthScript : MonoBehaviour {
+public class UIHealth : MonoBehaviour {
     private Material healthMaterial;
 
     void Start() {
-        Image image = transform.Find("HealthBar").GetComponent<Image>();
-        healthMaterial = Instantiate(transform.Find("HealthBar").GetComponent<Image>().material);
+        Image image = GetComponent<Image>();
+        healthMaterial = Instantiate(image.material);
         image.material = healthMaterial;
     }
 

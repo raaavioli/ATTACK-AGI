@@ -72,7 +72,7 @@ Shader "Unlit/HealthBar"
                 fixed3 red = (1 - t) * fixed3(1, 0, 0) + t * fixed3(0.2, 0.1, 0.1);
                 fixed3 green = fixed3(0.1, 0.5, 0.1);
                 float colorT = clamp(_Health * 1.2, 0.0, 1.0);
-                fixed3 color = ((1 - colorT) * red + colorT * green) * missingHealth;
+                fixed3 color = ((1 - colorT) * red + colorT * green) * missingHealth * (_Health > 0);
                 fixed3 borderColor = fixed3(0.2, 0.2, 0.2) * color;
 
                 return fixed4(lerp(color + 0.5 * highlight3, borderColor, borderMask), mask);

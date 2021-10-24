@@ -18,4 +18,8 @@ public static class Colors
     public static readonly Color BrightGreen = new Color(0.4f, 1.0f, 0.0f);
 
     public static readonly Color Cyan = new Color(0.4f, 1, 1);
+
+    public static readonly Color AttackColor = BrightOrange;
+    public static readonly Color DefenceColor = BrightBlue;
+    public static readonly Color SpeedColor = BrightGreen;
 }

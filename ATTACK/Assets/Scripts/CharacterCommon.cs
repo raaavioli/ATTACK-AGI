@@ -6,11 +6,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public enum CharacterMode
-{
-    Offensive,
-    Defensive
-}
 public class CharacterCommon : MonoBehaviour
 {
     public CharacterMode Mode;
@@ -18,6 +13,12 @@ public class CharacterCommon : MonoBehaviour
 
     private GameManager gameManager;
     private Attack attack;
+
+    private Animator animator;
+
+    [SerializeField]
+    private float maxHealth = 100;
+    private float health;
     public int maxTargets {
         get
         {
@@ -27,13 +28,6 @@ public class CharacterCommon : MonoBehaviour
         }
     }
 
-    private Animator animator;
-
-    [SerializeField]
-    private float maxHealth = 100;
-    private float health;
-    private HealthScript healthScript;
-
     void Awake()
     {
         Mode = CharacterMode.Offensive;
@@ -42,8 +36,6 @@ public class CharacterCommon : MonoBehaviour
         attack = GetComponent<Attack>();
         Assert.IsNotNull(attack);
 
-        string parentName = transform.parent.name;
-        healthScript = GameObject.Find("T" + parentName[1]).transform.GetChild(((int)parentName[3] - '0') - 1).GetComponent<HealthScript>();
         animator = gameObject.GetComponent<Animator>();
     }
 
@@ -74,6 +66,14 @@ public class CharacterCommon : MonoBehaviour
     }
 
     /**
+     * Returns health / maxHealth, which is a value between 0 and 1.
+     */
+    public float GetHealth()
+    {
+        return health / maxHealth;
+    }
+
+    /**
      * Performs an attack and starts character's Attack animation
      * @returns true if an attack simulation was started, false otherwise
      */
@@ -97,15 +97,15 @@ public class CharacterCommon : MonoBehaviour
         health -= amount;
         if (health > maxHealth)
             health = maxHealth;
-
-        healthScript.SetHealth(health / maxHealth);
+        if (health < 0f)
+            health = 0f;
         // Some characters dont have an animator, so this is a hacky solution for now.
         if (animator != null) animator.SetTrigger("StartGetHit");
-
-        if (health <= 0)
-        {
-            gameManager.KillCharacter(team, gameObject);
-            healthScript.transform.GetChild(0).gameObject.SetActive(false);
-        }
     }
+}
+
+public enum CharacterMode
+{
+    Offensive,
+    Defensive
 }

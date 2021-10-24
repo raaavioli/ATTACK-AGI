@@ -47,7 +47,7 @@ Shader "Unlit/StatRank"
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 stars = tex2D(_RankIcon, min(i.uv * fixed2(1, 1.7), fixed2(5, 1)));
-                stars = fixed4(stars.rgb * _Color.rgb, 1) * stars.a;
+                stars = fixed4(_Color.rgb, 1) * stars.a;
                 fixed starMask = clamp((i.uv.x < _Rank), 0.1, 1);
                 return stars * fixed4(starMask, starMask, starMask, 1);
             }

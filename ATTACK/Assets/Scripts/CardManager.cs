@@ -40,14 +40,13 @@ public class CardManager : MonoBehaviour
     [HideInInspector]
     public const int MAX_CARDS_PER_TEAM = 5;
 
-    private Card[] T1Cards;
-    private Card[] T2Cards;
+    private Card[][] teamCards;
+    private Card[][] teamSavedCardInfo;
 
-    private Card[] T1SavedCardInfo;
-    private Card[] T2SavedCardInfo;
-
-    private int[] T1Counters = new int[MAX_CARDS_PER_TEAM];
-    private int[] T2Counters = new int[MAX_CARDS_PER_TEAM];
+    private int[][] teamCounters = new int[][] {
+        new int[MAX_CARDS_PER_TEAM],
+        new int[MAX_CARDS_PER_TEAM]
+    };
 
     void Awake()
     {
@@ -56,18 +55,13 @@ public class CardManager : MonoBehaviour
         else
             Destroy(this);
 
-        T1Cards = new Card[MAX_CARDS_PER_TEAM];
-        T1SavedCardInfo = new Card[MAX_CARDS_PER_TEAM];
-        for (int i = 0; i < T1Cards.Length; i++) {
-            T1Cards[i] = Card.INVALID;
-            T1SavedCardInfo[i] = Card.INVALID;
-        }
-
-        T2Cards = new Card[MAX_CARDS_PER_TEAM];
-        T2SavedCardInfo = new Card[MAX_CARDS_PER_TEAM];
-        for (int i = 0; i < T2Cards.Length; i++) {
-            T2Cards[i] = Card.INVALID;
-            T2SavedCardInfo[i] = Card.INVALID;
+        for (int team = 0; team < 2; ++team) {
+            teamCards[team] = new Card[MAX_CARDS_PER_TEAM];
+            teamSavedCardInfo[team] = new Card[MAX_CARDS_PER_TEAM];
+            for (int i = 0; i < MAX_CARDS_PER_TEAM; ++i) {
+                teamCards[team][i] = Card.INVALID;
+                teamSavedCardInfo[team][i] = Card.INVALID;
+			}
         }
     }
 
@@ -80,17 +74,13 @@ public class CardManager : MonoBehaviour
     {
         if (index < 0 || index >= MAX_CARDS_PER_TEAM)
             return false;
-        else if (team == 0)
-            return !Equals(Instance.T1Cards[index], Card.INVALID);
         else
-            return !Equals(Instance.T2Cards[index], Card.INVALID);
+            return !Equals(Instance.teamCards[(int) team][index], Card.INVALID);
     }
 
     public static Card GetCard(Team team, int index)
     {
-        if (team == Team.One)
-            return Instance.T1Cards[index];
-        return Instance.T2Cards[index];
+        return Instance.teamCards[(int) team][index];
     }
 
     private void UpdateCards()
@@ -103,6 +93,9 @@ public class CardManager : MonoBehaviour
             {
                 bool T1CardValid = false;
                 bool T2CardValid = false;
+
+                bool[] teamCardValid = new bool[2];
+
                 for (int j = 0; j < cardStrings.Length; j++)
                 {
                     string cardString = cardStrings[j];
@@ -114,57 +107,32 @@ public class CardManager : MonoBehaviour
                     {
                         Card card = new Card(position, int.Parse(parts[2]), int.Parse(parts[3]) > 0);
                         int team = int.Parse(parts[0]) - 1;
-                        if (team.AsTeam() == Team.One)
-                        {
-                            if (T1SavedCardInfo[i] == Card.INVALID) {
-                                // if saved position info is INVALID, save new info to position and set position counter to MAX, set team card
-                                T1Counters[i] = MAX_BUFFERING;
-                                T1CardValid = true;
-                                T1Cards[i] = card;
-                            } else if (T1SavedCardInfo[i] == card) {
-                                // if saved position info MATCHES new info, increment position counter, clamped to MAX
-                                int T1Counter = T1Counters[i];
-                                T1Counters[i] = Mathf.Clamp(T1Counter + 1, 0, MAX_BUFFERING);
-                                T1CardValid = true;
-                            }
-                        }
-                        else
-                        {
-                            if (T2SavedCardInfo[i] == Card.INVALID) {
-                                // if saved position info is INVALID, save new info to position and set position counter to MAX, set team card
-                                T2Counters[i] = MAX_BUFFERING;
-                                T2CardValid = true;
-                                T2Cards[i] = card;
-                            } else if (T2SavedCardInfo[i] == card) {
-                                // if saved position info MATCHES new info, increment position counter, clamped to MAX
-                                int T2Counter = T2Counters[i];
-                                T2Counters[i] = Mathf.Clamp(T2Counter + 1, 0, MAX_BUFFERING);
-                                T2CardValid = true;
-                            }
+
+                        if (teamSavedCardInfo[team][i] == Card.INVALID) {
+                            // if saved position info is INVALID, save new info to position and set position counter to MAX, set team card
+                            teamCounters[team][i] = MAX_BUFFERING;
+                            teamCardValid[team] = true;
+                            teamCards[team][i] = card;
+                        } else if (teamSavedCardInfo[team][i] == card) {
+                            // if saved position info MATCHES new info, increment position counter, clamped to MAX
+                            int teamCounter = teamCounters[team][i];
+                            teamCounters[team][i] = Mathf.Clamp(teamCounter + 1, 0, MAX_BUFFERING);
+                            teamCardValid[team] = true;
                         }
                     }
                 }
-                if (!T1CardValid) {
-                    // if saved position info DOES NOT MATCH new info, decrement position counter
-                    T1Counters[i]--;
 
-                    if (T1Counters[i] == 0) {
-                        // if position counter is now 0, set saved position info to INVALID, set team card to INVALID
-                        T1Counters[i] = 0;
-                        T1Cards[i] = Card.INVALID;
-                        T1SavedCardInfo[i] = Card.INVALID;
-                    }
-                }
-                    
-                if (!T2CardValid) {
-                    // if saved position info DOES NOT MATCH new info, decrement position counter
-                    T2Counters[i]--;
+                for (int team = 0; team < 2; ++team) {
+                    if (!teamCardValid[team]) {
+                        // if saved position info DOES NOT MATCH new info, decrement position counter
+                        teamCounters[team][i]--;
 
-                    if (T2Counters[i] == 0) {
-                        // if position counter is now 0, set saved position info to INVALID, set team card to INVALID
-                        T2Counters[i] = 0;
-                        T2Cards[i] = Card.INVALID;
-                        T2SavedCardInfo[i] = Card.INVALID;
+                        if (teamCounters[team][i] == 0) {
+                            // if position counter is now 0, set saved position info to INVALID, set team card to INVALID
+                            teamCounters[team][i] = 0;
+                            teamCards[team][i] = Card.INVALID;
+                            teamSavedCardInfo[team][i] = Card.INVALID;
+                        }
                     }
                 }
             }

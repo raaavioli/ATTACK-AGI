@@ -2,7 +2,28 @@ fileFormatVersion: 2
 guid: f7d6e43035acfaf48b1c7c5e0cc6def1
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -3162691536366886197
+    second: ArmorArmature|ArmorArmatureAction.001
+  - first:
+      74: 3974222604997992844
+    second: ArmorArmature|ArmorArmatureAction.003
+  - first:
+      74: -2223540631448309952
+    second: ArmorArmature|PlaneArmatureAction
+  - first:
+      74: -1778016096878040286
+    second: ShieldArmature|ShieldArmatureAction.001
+  - first:
+      74: -8304783971166715577
+    second: ShieldArmature|SwordArmatureAction
+  - first:
+      74: 2073976203414515619
+    second: SwordArmature|ShieldArmatureAction.001
+  - first:
+      74: -6144551958098586792
+    second: Speen
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -35,7 +56,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Speen
+      takeName: SwordArmature|SwordArmatureAction
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []

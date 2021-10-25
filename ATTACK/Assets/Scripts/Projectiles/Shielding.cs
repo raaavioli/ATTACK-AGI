@@ -2,82 +2,96 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shielding : Attack {
-    [SerializeField]
-    private GameObject HealingPrefab;
+public class Shielding : Special {
 
-    private List<GameObject> HealingProjectiles = new List<GameObject>();
+	[SerializeField]
+	private GameObject shieldPrefab;
+	[SerializeField]
+	[Range(0.0f, 1.0f)]
+	private float shielding = 0.5f;
 
-    private Team team;
+	private const float SHIELD_OFFSET_FORWARD = 5f;
+	private const float SHIELD_OFFSET_UP = 2.0f;
 
-    private void Start() {
-        team = GetComponent<CharacterCommon>().GetTeam();
-    }
+	private GameObject shield;
 
-    protected override int GetMaxTargets() {
-        return 2;
-    }
+	private float lastDamageModifier;
+	private CharacterCommon lastCharacter;
+	private CharacterCommon ownCharacter;
 
-    protected override void InstantiateProjectile() {
-    }
+	private Vector3 currentVelocity;
+	private Vector3 currentTargetPosition;
 
-    protected override void StartProjectile() {
-        for (int i = 0; i < Targets.Count; i++) {
-            if (Targets[i] == null)
-                continue;
-            GameObject HealingProjectile = Instantiate(HealingPrefab);
-            HealingProjectiles.Add(HealingProjectile);
-            string parentName = Targets[i].transform.parent.name;
-            GameObject SpawnObject = GameObject.Find(parentName + "/RockPlatform");
-            HealingProjectile.transform.position = SpawnObject.transform.position + new Vector3(0, 1.5f, 0);
-            foreach (ParticleSystem ps in HealingProjectile.GetComponentsInChildren<ParticleSystem>()) {
-                ps.time = 0;
-                ps.Play();
-            }
-        }
-    }
+	private void Awake() {
+		ownCharacter = GetComponent<CharacterCommon>();
 
-    protected override void StopProjectile() {
-        foreach (GameObject projectile in HealingProjectiles) {
-            Destroy(projectile, 2.0f);
-        }
-        HealingProjectiles.Clear();
-    }
+		shield = Instantiate(shieldPrefab);
+		shield.transform.position = CalculateTargetPosition(transform);
+	}
 
-    protected override void UpdateProjectile() {
-        float time = (SimulationTime - ChargeTime) / MaxFireTime;
-        if (time < 0)
-            time = 0;
-        if (time > 1)
-            time = 1;
+	private void Update() {
+		// Smoothly move the shield to the target position.
+		shield.transform.position = Vector3.SmoothDamp(shield.transform.position, currentTargetPosition, ref currentVelocity, 0.1f);
+	}
 
-        foreach (GameObject projectile in HealingProjectiles) {
-            foreach (Transform t in projectile.GetComponentsInChildren<Transform>()) {
-                if (t == projectile.transform || t.gameObject.GetComponent<ParticleSystem>() != null)
-                    continue;
-                // For non particle systems
-                Vector3 scale = t.localScale;
-                float amplitude = 3.0f;
-                scale.y = amplitude * Mathf.Sin(time * Mathf.PI);
-                t.localScale = scale;
+	public override void Execute(GameObject[] targets) {
+		// Remove damage modifier from last targeted character.
+		if (lastCharacter != null) {
+			lastCharacter.damageModifier = lastDamageModifier;
+		}
 
-                Vector3 position = t.localPosition;
-                position.y = scale.y;
-                t.localPosition = position;
-            }
-        }
-    }
+		// Filter out null characters.
+		List<CharacterCommon> nonNullTargets = new List<CharacterCommon>();
+		foreach (GameObject obj in targets) {
+			if (obj != null) {
+				nonNullTargets.Add(obj.GetComponent<CharacterCommon>());
+			}
+		}
 
-    protected override void UpdateAttack() {
-        base.UpdateAttack();
-        Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1);
-        transform.localRotation = towardsMiddle;
-    }
+		// Filter out offensive characters.
+		List<CharacterCommon> defensiveTargets = new List<CharacterCommon>();
+		foreach (CharacterCommon obj in nonNullTargets) {
+			if (obj.Mode == CharacterMode.Defensive) {
+				defensiveTargets.Add(obj);
+			}
+		}
 
-    private void OnDisable() {
-        foreach (GameObject projectile in HealingProjectiles) {
-            if (projectile != null)
-                projectile.SetActive(false);
-        }
-    }
+		// Get team and set rotation, this does not have to be done every time, but the alternative is annoying to do.
+		Team team = ownCharacter.GetTeam();
+		shield.transform.eulerAngles = new Vector3(0.0f, team == 0 ? 90.0f : -90.0f, 0.0f);
+
+		// Get the target character if there are any non-null.
+		if (nonNullTargets.Count < 1) {
+			return;
+		}
+
+		// Prefer defensive characters.
+		CharacterCommon target;
+		if (defensiveTargets.Count > 0) {
+			target = defensiveTargets[Random.Range(0, defensiveTargets.Count - 1)];
+		} else {
+			target = nonNullTargets[Random.Range(0, nonNullTargets.Count - 1)];
+
+		}
+
+		// Set the new target position.
+		Transform targetTransform = target.transform;
+		currentTargetPosition = CalculateTargetPosition(targetTransform);
+
+		// Set the damage modifier and last target.
+		lastDamageModifier = target.damageModifier;
+		lastCharacter = target;
+		target.damageModifier = shielding;
+	}
+
+	private Vector3 CalculateTargetPosition(Transform targetTransform) {
+		return targetTransform.position + shield.transform.forward * SHIELD_OFFSET_FORWARD + shield.transform.up * SHIELD_OFFSET_UP;
+	}
+
+	private void OnDestroy() {
+		if (lastCharacter != null) {
+			lastCharacter.damageModifier = lastDamageModifier;
+		}
+		Destroy(shield);
+	}
 }

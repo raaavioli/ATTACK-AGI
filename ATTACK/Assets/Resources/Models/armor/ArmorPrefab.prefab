@@ -72,6 +72,8 @@ GameObject:
   - component: {fileID: 2980539556953864380}
   - component: {fileID: 6370322966394249364}
   - component: {fileID: 4851659582283852653}
+  - component: {fileID: 19862382696981893}
+  - component: {fileID: -5283104482450927966}
   m_Layer: 0
   m_Name: ArmorPrefab
   m_TagString: Untagged
@@ -141,6 +143,42 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &19862382696981893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2980539556953864371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474d985ce20d63c40838a73a4148850b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackSource: {fileID: 2980539556953864371}
+  ChargePrefab: {fileID: 0}
+  ChargeSound: {fileID: 0}
+  FireSound: {fileID: 0}
+  SecondsPerAttack: 4
+  ChargeTime: 1.5
+  MaxFireTime: 1
+  TimeToHit: 0
+  Damage: 10
+  SwordPrefab: {fileID: 6442542681566197683, guid: f5d306cec5f7c0e45a3401c6492ccb71, type: 3}
+--- !u!114 &-5283104482450927966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2980539556953864371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98509b11cefe60e418320967d0e08010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldPrefab: {fileID: 5770766390612453571, guid: 77b3d9bdbe2af964281fafaff9a9b696, type: 3}
+  shielding: 0.5
 --- !u!1 &3073890705829570629
 GameObject:
   m_ObjectHideFlags: 0

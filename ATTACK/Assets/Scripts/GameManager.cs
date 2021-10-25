@@ -136,9 +136,8 @@ public class GameManager : MonoBehaviour
             {
                 CharacterCommon cc = character.GetComponent<CharacterCommon>();
                 bool isHealer = cc.GetComponent<Healing>() != null;
-                if (cc != null && cc.CanAttack())
-                    if (isHealer)
-                    {
+                if (cc != null && cc.CanAttack()) {
+                    if (isHealer) {
                         // Currently, the only healer there is heals its immediate neighbors
                         // If other healing spells are created, this will have to be changed. 
                         // Maybe have some target priority Enum for the Attack to base decisions on. 
@@ -149,11 +148,15 @@ public class GameManager : MonoBehaviour
                         if (pos < attackers.Length - 1 && attackers[pos + 1] != null)
                             Neighbors.Add(attackers[pos + 1].GetComponent<CharacterCommon>());
                         cc.Attack(Neighbors);
-                    }
-                    else
-                    {
+                    } else {
                         cc.Attack(GetTargets(opponents, cc.maxTargets));
                     }
+
+                    if (cc.CanExecuteSpecial()) {
+                        cc.PerformSpecial(attackers);
+					}
+                }
+
             }
         }
     }

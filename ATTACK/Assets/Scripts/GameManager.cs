@@ -92,21 +92,11 @@ public class GameManager : MonoBehaviour
     {
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
-        if (T1Alive == 0 && T2Alive == 0) {
+        if (T1Alive == 0 || T2Alive == 0) {
             cardController.roundWinnerText.SetActive(true);
-            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
-            return;
-        }
-        else if(T1Alive == 0)
-        {
-            cardController.roundWinnerText.SetActive(true);
-            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Red Team won this round!";
-            return;
-        }
-        else if(T2Alive == 0)
-        {
-            cardController.roundWinnerText.SetActive(true);
-            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Blue Team won this round!";
+            string text = T1Alive == 0 && T2Alive == 0 ? "Round ends in a tie!" :
+                          T1Alive == 0 ? "Red Team won this round!" : "Blue Team won this round!";
+            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = text;
             return;
         }
 
@@ -373,13 +363,13 @@ public static class TeamExtension
 public class Character
 {
     public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab", 
-        new CharacterStats("Witch", 1, 2, 3));
+        new CharacterStats("Witch", 3, 2, 5));
     public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab",
-        new CharacterStats("Enigma", 2, 3, 4));
+        new CharacterStats("Enigma", 5, 1, 3));
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab",
-        new CharacterStats("Colonel", 4, 5, 1));
+        new CharacterStats("Colonel", 4, 4, 1));
     public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab",
-        new CharacterStats("Squishy", 5, 4, 3));
+        new CharacterStats("Squishy", 1, 4, 3));
 
 
     public static List<Character> Values()

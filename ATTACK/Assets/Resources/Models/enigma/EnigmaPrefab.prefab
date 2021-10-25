@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mode: 0
-  maxHealth: 100
+  maxHealth: 50
 --- !u!135 &142530886702872979
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   ChargeTime: 1.15
   MaxFireTime: 0.5
   TimeToHit: 0.01
-  Damage: 10
+  Damage: 30
   LaserMaterial: {fileID: 2100000, guid: 9932d72d08bbc984c939bfdaa89b3262, type: 2}
 --- !u!1 &6615920728115432811
 GameObject:

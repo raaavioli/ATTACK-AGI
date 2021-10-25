@@ -160,7 +160,6 @@ GameObject:
   - component: {fileID: 3842278449459598170}
   - component: {fileID: 446682311612437287}
   - component: {fileID: 8302219546856853417}
-  - component: {fileID: 5082200869727442582}
   - component: {fileID: 3685318071185072310}
   m_Layer: 0
   m_Name: WitchPrefab
@@ -231,28 +230,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5082200869727442582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4148917198139910838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818dddabeb836054a8c652acae7e908a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackSource: {fileID: 4148917198139910838}
-  ChargePrefab: {fileID: 0}
-  ChargeSound: {fileID: 0}
-  FireSound: {fileID: 0}
-  SecondsPerAttack: 2.5
-  ChargeTime: 1
-  MaxFireTime: 1.007
-  TimeToHit: 0
-  Damage: -10
-  HealingPrefab: {fileID: 1720224024081494272, guid: b5e0a5470c3834c44bd1423b38ce68a8, type: 3}
 --- !u!114 &3685318071185072310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +237,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4148917198139910838}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9ec2be6b363d483fa976312a87050f6, type: 3}
   m_Name: 

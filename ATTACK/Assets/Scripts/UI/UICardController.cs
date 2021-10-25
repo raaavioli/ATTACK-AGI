@@ -54,6 +54,5 @@ public class UICardController : MonoBehaviour {
                 Animators[i]._Color = !hasCard ? Color.white : isRotated ? Colors.DefenceColor : Colors.AttackColor;
             }
         }
-          
     }
 }

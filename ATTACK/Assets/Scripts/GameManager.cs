@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
             // Spawn 2, 3, 0, 1, 2
             int character = (2 + position) % characters.Count;
-            CharacterMode mode = character == 1 || character == 3 ? CharacterMode.Defensive : CharacterMode.Offensive;
+            CharacterMode mode = CharacterMode.Offensive;
             SpawnCharacter(position, characters[character], mode, team);
 
             spawnedCharacters++;

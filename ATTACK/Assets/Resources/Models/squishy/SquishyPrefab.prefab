@@ -100,11 +100,11 @@ MonoBehaviour:
   ChargePrefab: {fileID: 0}
   ChargeSound: {fileID: 0}
   FireSound: {fileID: 0}
-  SecondsPerAttack: 1.5
+  SecondsPerAttack: 3
   ChargeTime: 1
   MaxFireTime: 0.4
   TimeToHit: 0.4
-  Damage: 10
+  Damage: 5
   BubblePrefab: {fileID: 7626507954086442540, guid: 30e8d728f67a3d04bab576c6aed8f161, type: 3}
 --- !u!114 &4559184412209367075
 MonoBehaviour:
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mode: 0
-  maxHealth: 100
+  maxHealth: 110
 --- !u!135 &-6705443303823762064
 SphereCollider:
   m_ObjectHideFlags: 0

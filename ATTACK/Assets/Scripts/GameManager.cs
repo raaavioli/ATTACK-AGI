@@ -25,15 +25,15 @@ public class GameManager : MonoBehaviour
 
     private bool inCombatPhase = false;
 
-    GameObject Canvas;
+    UICardController cardController;
 
     public void Start()
     {
         T1 = new GameObject[TEAM_SIZE];
         T2 = new GameObject[TEAM_SIZE];
 
-        Canvas = GameObject.Find("Canvas");
-        Canvas.GetComponent<CardUI>().roundWinnerText.SetActive(false);
+        cardController = GameObject.Find("Canvas").GetComponent<UICardController>();
+        cardController.roundWinnerText.SetActive(false);
 
         StartCoroutine(SetupPhaseTimer(setupTime));
     }
@@ -53,8 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void SetupPhaseUpdate()
     {
-        // Just to test spawning, will soon be replaced by some event from the 
-        // SUR40 input server
+        // For debug purpose to be able to spawn by clicking when not running on SUR40
         if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2)
         {
             List<Character> characters = Character.Values();
@@ -65,9 +64,18 @@ public class GameManager : MonoBehaviour
             int character = (2 + position) % characters.Count;
             CharacterMode mode = character == 1 || character == 3 ? CharacterMode.Defensive : CharacterMode.Offensive;
             SpawnCharacter(position, characters[character], mode, team);
-            Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, position);
 
             spawnedCharacters++;
+        }
+
+        // Toggle visibility for all living characters
+        for (int i = 0; i < TEAM_SIZE; i++)
+        {
+            UIVisibility T1visible = T1[i] == null ? UIVisibility.None : UIVisibility.All; 
+            cardController.SetVisible(T1visible, Team.One, i);
+
+            UIVisibility T2visible = T2[i] == null ? UIVisibility.None : UIVisibility.All;
+            cardController.SetVisible(T2visible, Team.Two, i);
         }
     }
 
@@ -80,36 +88,48 @@ public class GameManager : MonoBehaviour
         return count;
     }
 
+    private static int CountHealers(GameObject[] team) {
+        int count = 0;
+        foreach(GameObject o in team) {
+            if (o != null) {
+                if (o.name.Contains("Doctor")) {
+                    count++;
+				}
+			}
+		}
+        return count;
+	}
+
     private void CombatPhaseUpdate()
     {
-        CardUI cardUI = Canvas.GetComponent<CardUI>();
-
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
-        if (T1Alive == 0 && T2Alive == 0) {
-            cardUI.roundWinnerText.SetActive(true);
-            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Round ends in a tie!";
-            return;
-        }
-        else if(T1Alive == 0)
-        {
-            cardUI.roundWinnerText.SetActive(true);
-            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Red Team won this round!";
-            return;
-        }
-        else if(T2Alive == 0)
-        {
-            cardUI.roundWinnerText.SetActive(true);
-            cardUI.roundWinnerText.GetComponentsInChildren<Text>()[0].text = "Blue Team won this round!";
+        if (T1Alive == 0 || T2Alive == 0) {
+            cardController.roundWinnerText.SetActive(true);
+            string text = T1Alive == 0 && T2Alive == 0 || OnlyHealersAlive(T1Alive, T2Alive) ? "Round ends in a tie!" :
+                          T1Alive == 0 ? "Red Team won this round!" : "Blue Team won this round!";
+            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = text;
             return;
         }
 
-        PerformAttacks(T1, T2);
-        PerformAttacks(T2, T1);
+        PerformAttacks(Team.One);
+        PerformAttacks(Team.Two);
+
+        CheckHealth(Team.One);
+        CheckHealth(Team.Two);
     }
 
-    private void PerformAttacks(GameObject[] attackers, GameObject[] opponents)
+    private bool OnlyHealersAlive(int T1Alive, int T2Alive) {
+        int T1Healers = CountHealers(T1);
+        int T2Healers = CountHealers(T2);
+
+        return T1Alive == T1Healers && T2Alive == T2Healers;
+	}
+
+    private void PerformAttacks(Team attacking)
     {
+        GameObject[] attackers = attacking == Team.One ? T1 : T2;
+        GameObject[] opponents = attacking == Team.One ? T2 : T1;
         foreach (GameObject character in attackers)
         {
             if (character != null && character.activeSelf)
@@ -138,13 +158,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void CheckHealth(Team team)
+    {
+        // Check and update health status and remove dead characters
+        GameObject[] characters = team == Team.One ? T1 : T2;
+        for (int i = 0; i < TEAM_SIZE; i++)
+        {
+
+            if (characters[i] == null)
+                continue;
+            float health = characters[i].GetComponent<CharacterCommon>().GetHealth();
+            if (health <= 0f)
+                KillCharacter(team, characters[i]);
+            cardController.SetHealth(health, team, i);
+
+        }
+    }
+
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
-        
-        CardUI cardUI = Canvas.GetComponent<CardUI>();
-        cardUI.setupTimer.SetActive(true);
+
+        cardController.setupTimer.SetActive(true);
         for (int i = 0; i < seconds; i++)
         {
             if (seconds - i == startSoundTime)
@@ -152,17 +188,24 @@ public class GameManager : MonoBehaviour
             updateUITimer(seconds - i);
             yield return new WaitForSeconds(1f);
         }
-        cardUI.setupTimer.SetActive(false);
+        cardController.setupTimer.SetActive(false);
         
         inCombatPhase = true;
         SpawnFromCards();
+        for (int i = 0; i < TEAM_SIZE; i++)
+        {
+            // Toggle combat visibility for all living characters
+            if (T1[i] != null)
+                cardController.SetVisible(UIVisibility.Reduced, Team.One, i);
+            if (T2[i] != null)
+                cardController.SetVisible(UIVisibility.Reduced, Team.Two, i);
+        }
         CameraHandler.instance.StartCombatCamera();
     }
 
     private void updateUITimer(int secondsLeft)
     {
-        CardUI cardUI = Canvas.GetComponent<CardUI>();
-        Text setupTimerText = cardUI.setupTimer.GetComponent<Text>();
+        Text setupTimerText = cardController.setupTimer.GetComponent<Text>();
         setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
         {
@@ -172,7 +215,6 @@ public class GameManager : MonoBehaviour
                 setupTimerText.color = Color.yellow;
             setupTimerText.fontSize += 16;
         } 
-        
     }
 
     /**
@@ -262,7 +304,7 @@ public class GameManager : MonoBehaviour
         return Team.One;
     }
     
-    public void KillCharacter(Team team, GameObject character)
+    private void KillCharacter(Team team, GameObject character)
     {
         if (team == Team.One)
         {
@@ -283,15 +325,14 @@ public class GameManager : MonoBehaviour
 
     private void SpawnCharacter(int position, Character character, CharacterMode mode, Team team)
     {
-        if (team == Team.One && T1[position] == null)
+        GameObject[] characters = team == Team.One ? T1 : T2;
+        GameObject[] spawnPoints = team == Team.One ? spawnPointsT1 : spawnPointsT2;
+        if (characters[position] == null)
         {
-            GameObject spawnPoint = spawnPointsT1[position];
-            T1[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
-        }
-        else if (team == Team.Two && T2[position] == null)
-        {
-            GameObject spawnPoint = spawnPointsT2[position];
-            T2[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
+            GameObject spawnPoint = spawnPoints[position];
+            characters[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
+            cardController.SetStats(character.Stats, team, position);
+            cardController.SetVisible(UIVisibility.All, team, position);
         }
     }
 
@@ -309,8 +350,6 @@ public class GameManager : MonoBehaviour
                         CharacterMode.Offensive;
 
                     SpawnCharacter(i, character, mode, team);
-
-                    Canvas.GetComponent<CardUI>().EnableHealthBar(true, team, i);
                 }
             }
         }
@@ -331,28 +370,73 @@ public static class TeamExtension
             return Team.One;
         return Team.Two;
     }
+
+    public static string ShortString(this Team team)
+    {
+        if (team == Team.One)
+            return "T1";
+        return "T2";
+    }
 }
 
 public class Character
 {
-    public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab");
-    public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab");
-    public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab");
-    public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab");
+    public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab", 
+        new CharacterStats("Witch", 3, 2, 5));
+    public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab",
+        new CharacterStats("Enigma", 5, 1, 3));
+    public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab",
+        new CharacterStats("Colonel", 4, 4, 1));
+    public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab",
+        new CharacterStats("Squishy", 1, 4, 3));
+    public static readonly Character DOCTOR = new Character("Models/doctor", "DoctorPrefab",
+        new CharacterStats("Doctor", 1, 2, 4));
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR };
     }
 
     private string ResourcePath;
     private string PrefabName;
-    Character(string resourcePath, string prefabName) => (ResourcePath, PrefabName) = (resourcePath, prefabName);
+    public CharacterStats Stats { get; private set; }
+    Character(string resourcePath, string prefabName, CharacterStats stats) => (ResourcePath, PrefabName, Stats) = (resourcePath, prefabName, stats);
 
     public GameObject GetModelPrefab ()
     {
         string path = ResourcePath + "/" + PrefabName;
         return Resources.Load<GameObject>(path);
     }
+}
+
+public class CharacterStats
+{
+    public CharacterStats(string name, int attack, int defence, int speed)
+    {
+        Name = name;
+        Attack = Mathf.Clamp(attack, 1, 5);
+        Defence = Mathf.Clamp(defence, 1, 5);
+        Speed = Mathf.Clamp(speed, 1, 5);
+    }
+
+    /**
+     * A character's displayed name
+     */
+    public string Name { get; private set; }
+
+    /**
+     * Value between 1 and 5 giving the relative strength of the character
+     */
+    public int Attack { get; private set; }
+
+    /**
+     * Value between 1 and 5 giving the relative tankiness of the character
+     */
+    public int Defence { get; private set; }
+
+    /**
+     * Value between 1 and 5 giving the relative attack speed of the character
+     */
+    public int Speed { get; private set; }
 }

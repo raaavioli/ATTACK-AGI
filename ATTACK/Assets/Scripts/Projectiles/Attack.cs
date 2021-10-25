@@ -139,7 +139,7 @@ public abstract class Attack : MonoBehaviour
      * Runs the simulation and repositions particle systems.
      * Should only be run from Update
      */
-    private void UpdateAttack()
+    protected virtual void UpdateAttack()
     {
         if (Simulating)
         {

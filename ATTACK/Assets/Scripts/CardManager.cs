@@ -69,6 +69,13 @@ public class CardManager : MonoBehaviour
         return Instance.T2Cards[index];
     }
 
+    public static bool IsRotated(Team team, int index)
+    {
+        if (team == Team.One)
+            return Instance.T1Cards[index].rotated;
+        return Instance.T2Cards[index].rotated;
+    }
+
     private void UpdateCards()
     {
         string cardInfo = ServerHandler.mostRecentCardInfo;

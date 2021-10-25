@@ -74,9 +74,9 @@ Shader "Unlit/GlowingCircle"
                 circle = min(t, t2);
                 alpha *= circle;
 
-                float3 color = lerp(_Color.rgb, float3(1, 1, 1), alpha * alpha);
+                float3 color = lerp(_Color.rgb, float3(0.6, 0.6, 0.6), alpha * alpha);
 
-                return _Exposure * float4(color * alpha, alpha);
+                return _Color.a * _Exposure * float4(color * alpha, 1);
             }
             ENDCG
         }

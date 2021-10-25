@@ -62,7 +62,7 @@ public class LaserAttack : Attack
     {
         Vector3 Direction = TargetPositions[0] - AttackSource.transform.position;
         Vector3 Rotation = Quaternion.LookRotation(Direction).eulerAngles;
-        Rotation.x = 90;
+        Rotation.x += 90f;
         Laser.transform.eulerAngles = Rotation;
         float Length = Direction.magnitude / 2.0f;
         Laser.transform.localScale = new Vector3(Radius, Length, Radius);

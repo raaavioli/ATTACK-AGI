@@ -9,7 +9,13 @@ public class Healing : Attack
 
     private List<GameObject> HealingProjectiles = new List<GameObject>();
 
-    protected override int GetMaxTargets()
+    private Team team;
+
+	private void Start() {
+        team = GetComponent<CharacterCommon>().GetTeam();
+	}
+
+	protected override int GetMaxTargets()
     {
         return 2;
     }
@@ -71,6 +77,12 @@ public class Healing : Attack
                 t.localPosition = position;
             }
         }
+    }
+
+    protected override void UpdateAttack() {
+        base.UpdateAttack();
+        Quaternion towardsMiddle = new Quaternion(0, (int)team * 180, 0, 1);
+        transform.localRotation = towardsMiddle;
     }
 
     private void OnDisable()

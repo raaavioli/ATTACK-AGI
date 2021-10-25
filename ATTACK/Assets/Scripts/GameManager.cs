@@ -88,13 +88,25 @@ public class GameManager : MonoBehaviour
         return count;
     }
 
+    private static int CountHealers(GameObject[] team) {
+        int count = 0;
+        foreach(GameObject o in team) {
+            if (o != null) {
+                if (o.name.Contains("Doctor")) {
+                    count++;
+				}
+			}
+		}
+        return count;
+	}
+
     private void CombatPhaseUpdate()
     {
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
         if (T1Alive == 0 || T2Alive == 0) {
             cardController.roundWinnerText.SetActive(true);
-            string text = T1Alive == 0 && T2Alive == 0 ? "Round ends in a tie!" :
+            string text = T1Alive == 0 && T2Alive == 0 || OnlyHealersAlive(T1Alive, T2Alive) ? "Round ends in a tie!" :
                           T1Alive == 0 ? "Red Team won this round!" : "Blue Team won this round!";
             cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = text;
             return;
@@ -106,6 +118,13 @@ public class GameManager : MonoBehaviour
         CheckHealth(Team.One);
         CheckHealth(Team.Two);
     }
+
+    private bool OnlyHealersAlive(int T1Alive, int T2Alive) {
+        int T1Healers = CountHealers(T1);
+        int T2Healers = CountHealers(T2);
+
+        return T1Alive == T1Healers && T2Alive == T2Healers;
+	}
 
     private void PerformAttacks(Team attacking)
     {
@@ -370,11 +389,13 @@ public class Character
         new CharacterStats("Colonel", 4, 4, 1));
     public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab",
         new CharacterStats("Squishy", 1, 4, 3));
+    public static readonly Character DOCTOR = new Character("Models/doctor", "DoctorPrefab",
+        new CharacterStats("Doctor", 1, 2, 4));
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR };
     }
 
     private string ResourcePath;

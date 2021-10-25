@@ -460,13 +460,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818dddabeb836054a8c652acae7e908a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackSource: {fileID: 8778041220199402774}
+  AttackSource: {fileID: 4148917198139910838, guid: 840f611f8ceb6ab42953b2433d69867d, type: 3}
   ChargePrefab: {fileID: 0}
   ChargeSound: {fileID: 0}
   FireSound: {fileID: 0}
-  SecondsPerAttack: 1.5
+  SecondsPerAttack: 2.5
   ChargeTime: 1
-  MaxFireTime: 0.5
+  MaxFireTime: 1.007
   TimeToHit: 0
-  Damage: 0
-  HealingPrefab: {fileID: 0}
+  Damage: -10
+  HealingPrefab: {fileID: 1720224024081494272, guid: b5e0a5470c3834c44bd1423b38ce68a8, type: 3}

@@ -53,8 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void SetupPhaseUpdate()
     {
-        // Just to test spawning, will soon be replaced by some event from the 
-        // SUR40 input server
+        // For debug purpose to be able to spawn by clicking when not running on SUR40
         if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2)
         {
             List<Character> characters = Character.Values();
@@ -67,6 +66,16 @@ public class GameManager : MonoBehaviour
             SpawnCharacter(position, characters[character], mode, team);
 
             spawnedCharacters++;
+        }
+
+        // Toggle visibility for all living characters
+        for (int i = 0; i < TEAM_SIZE; i++)
+        {
+            UIVisibility T1visible = T1[i] == null ? UIVisibility.None : UIVisibility.All; 
+            cardController.SetVisible(T1visible, Team.One, i);
+
+            UIVisibility T2visible = T2[i] == null ? UIVisibility.None : UIVisibility.All;
+            cardController.SetVisible(T2visible, Team.Two, i);
         }
     }
 
@@ -174,6 +183,14 @@ public class GameManager : MonoBehaviour
         
         inCombatPhase = true;
         SpawnFromCards();
+        for (int i = 0; i < TEAM_SIZE; i++)
+        {
+            // Toggle combat visibility for all living characters
+            if (T1[i] != null)
+                cardController.SetVisible(UIVisibility.Reduced, Team.One, i);
+            if (T2[i] != null)
+                cardController.SetVisible(UIVisibility.Reduced, Team.Two, i);
+        }
         CameraHandler.instance.StartCombatCamera();
     }
 
@@ -305,8 +322,9 @@ public class GameManager : MonoBehaviour
         {
             GameObject spawnPoint = spawnPoints[position];
             characters[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
+            cardController.SetStats(character.Stats, team, position);
+            cardController.SetVisible(UIVisibility.All, team, position);
         }
-        cardController.SetStats(character.Stats, team, position);
     }
 
     private void SpawnFromCards() 

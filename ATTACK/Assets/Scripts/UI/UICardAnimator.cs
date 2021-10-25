@@ -15,7 +15,9 @@ public class UICardAnimator : MonoBehaviour
 
     private Color DefaultMaterialColor;
     public Color _Color;
-    public bool _Rotating;  
+    public bool _Rotating;
+
+    private UIVisibility visibility;
 
     Material material;
     Material attackRankMaterial;
@@ -39,6 +41,10 @@ public class UICardAnimator : MonoBehaviour
         speedRankMaterial = Instantiate(statsUI.Find("Speed").GetComponentInChildren<Image>().material);
         speedRankMaterial.SetColor("_Color", Colors.SpeedColor);
         statsUI.Find("Speed").GetComponentInChildren<Image>().material = speedRankMaterial;
+
+        // Default hide all stats, from All to None, at start.
+        visibility = UIVisibility.All;
+        SetVisible(UIVisibility.None);
     }
 
     void Update()
@@ -48,6 +54,51 @@ public class UICardAnimator : MonoBehaviour
         material.SetFloat("_Angle", Ang01);
         material.SetColor("_Color", _Color);
         material.SetFloat("_Rotating", _Rotating ? 1.0f : 0.0f);
+    }
+
+    public void SetVisible(UIVisibility visibility)
+    {
+        if (this.visibility == visibility)
+            return;
+
+        this.visibility = visibility;
+        switch (visibility)
+        {
+            case UIVisibility.All:
+            {
+                SetVisible(true, true, 210f, 180f);
+                break;
+            };
+            case UIVisibility.Reduced:
+            {
+                SetVisible(true, false, 160f, 75f);
+                break;
+            };
+            case UIVisibility.None:
+            {
+                SetVisible(false, false, 0, 0);
+                break;
+            };
+            default:
+            {
+                Debug.LogError("Unknown UIVisibility type: " + visibility);
+                break;
+            }
+        }
+    }
+
+    private void SetVisible(bool statsUI, bool substatsUI, float x, float width)
+    {
+        GameObject stats = transform.Find("Stats").gameObject;
+        stats.SetActive(statsUI);
+        if (!statsUI) // Early return if parent object is not active
+            return;
+        stats.transform.Find("Attack").gameObject.SetActive(substatsUI);
+        stats.transform.Find("Defence").gameObject.SetActive(substatsUI);
+        stats.transform.Find("Speed").gameObject.SetActive(substatsUI);
+        RectTransform rectTransform = stats.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector3(Mathf.Sign(rectTransform.anchoredPosition.x) * x, 0f, 0f);
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, width);
     }
 
     public void SetHealth(float Health)
@@ -65,4 +116,11 @@ public class UICardAnimator : MonoBehaviour
         speedRankMaterial.SetInt("_Rank", stats.Speed);
     }
 
+}
+
+public enum UIVisibility
+{
+    All,
+    Reduced,
+    None
 }

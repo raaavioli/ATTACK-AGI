@@ -35,6 +35,12 @@ public class UICardController : MonoBehaviour {
         animators[index].SetHealth(health);
     }
 
+    public void SetVisible(UIVisibility visibility, Team team, int position)
+    {
+        UICardAnimator[] animators = team == Team.One ? T1CardAnimators : T2CardAnimators;
+        animators[position].SetVisible(visibility);
+    }
+
     void Update()
     {
         for (int i = 0; i < CardManager.MAX_CARDS_PER_TEAM; ++i)

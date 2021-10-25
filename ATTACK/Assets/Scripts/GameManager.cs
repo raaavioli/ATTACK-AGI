@@ -391,11 +391,13 @@ public class Character
         new CharacterStats("Squishy", 1, 4, 3));
     public static readonly Character DOCTOR = new Character("Models/doctor", "DoctorPrefab",
         new CharacterStats("Doctor", 1, 2, 4));
+    public static readonly Character ARMOR = new Character("Models/armor", "ArmorPrefab",
+        new CharacterStats("Armor", 1, 5, 3));
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR, ARMOR };
     }
 
     private string ResourcePath;

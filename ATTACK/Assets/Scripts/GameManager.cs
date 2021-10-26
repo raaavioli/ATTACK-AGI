@@ -23,32 +23,74 @@ public class GameManager : MonoBehaviour
 
     private int spawnedCharacters = 0;
 
+    private bool inMainMenu = true;
+    private bool inMenu = false;
     private bool inCombatPhase = false;
+
+    private bool rightPlayerReady = false;
+    private bool leftPlayerReady = false;
 
     UICardController cardController;
 
     public void Start()
     {
-        T1 = new GameObject[TEAM_SIZE];
-        T2 = new GameObject[TEAM_SIZE];
-
         cardController = GameObject.Find("Canvas").GetComponent<UICardController>();
         cardController.roundWinnerText.SetActive(false);
-
-        StartCoroutine(SetupPhaseTimer(setupTime));
     }
 
     public void Update()
     {
-        if (inCombatPhase) {
-            CombatPhaseUpdate();
-        } else {
-            SetupPhaseUpdate();
+        if (!inMainMenu && !inMenu)
+        {
+            if (inCombatPhase)
+            {
+                CombatPhaseUpdate();
+            }
+            else
+            {
+                SetupPhaseUpdate();
+            }
+            // Restarts scene on r press.
+            if (Input.GetKeyDown("r")) ExitToMainMenu();
         }
-        // Restarts scene on r press.
-        if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+    }
+
+    public void PlayGame()
+    {
+        inMainMenu = false;
+
+        T1 = new GameObject[TEAM_SIZE];
+        T2 = new GameObject[TEAM_SIZE];
+
+        StartCoroutine(SetupPhaseTimer(setupTime));
+    }
+
+    public void PauseGame()
+    {
+        inMenu = true;
+    }
+
+    public void ResumeGame()
+    {
+        inMenu = false;
+    }
+
+    public void PlayerReady(bool rightPlayer, bool ready)
+    {
+        if (rightPlayer) rightPlayerReady = ready;
+        else leftPlayerReady = ready;
+    }
+
+    public bool ResetReadyButtons()
+    {
+        return !(!inCombatPhase && !inMainMenu);
+    }
+
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void SetupPhaseUpdate()
@@ -183,13 +225,20 @@ public class GameManager : MonoBehaviour
         cardController.setupTimer.SetActive(true);
         for (int i = 0; i < seconds; i++)
         {
-            if (seconds - i == startSoundTime)
+            if (rightPlayerReady && leftPlayerReady)
+                break;
+            if (seconds - i <= startSoundTime && !inMenu)
                 GetComponent<AudioSource>().Play();
-            updateUITimer(seconds - i);
+            if (inMenu) 
+                i--;
+            else
+                updateUITimer(seconds - i);
+            
             yield return new WaitForSeconds(1f);
         }
         cardController.setupTimer.SetActive(false);
-        
+
+        GetComponents<AudioSource>()[2].Play();
         inCombatPhase = true;
         SpawnFromCards();
         for (int i = 0; i < TEAM_SIZE; i++)
@@ -209,7 +258,7 @@ public class GameManager : MonoBehaviour
         setupTimerText.text = ""+secondsLeft;
         if(secondsLeft < 4)
         {
-            if(secondsLeft == 1)
+            if(secondsLeft < 1)
                 setupTimerText.color = Color.red;
             else
                 setupTimerText.color = Color.yellow;

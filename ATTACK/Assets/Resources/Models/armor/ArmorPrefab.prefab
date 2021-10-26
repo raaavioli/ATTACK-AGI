@@ -161,8 +161,8 @@ MonoBehaviour:
   FireSound: {fileID: 0}
   SecondsPerAttack: 4
   ChargeTime: 1.5
-  MaxFireTime: 1
-  TimeToHit: 0
+  MaxFireTime: 0.6
+  TimeToHit: 0.4
   Damage: 10
   SwordPrefab: {fileID: 6442542681566197683, guid: f5d306cec5f7c0e45a3401c6492ccb71, type: 3}
 --- !u!114 &-5283104482450927966

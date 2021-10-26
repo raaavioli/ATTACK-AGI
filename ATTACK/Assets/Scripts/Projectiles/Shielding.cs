@@ -11,11 +11,11 @@ public class Shielding : Special {
 	private float shielding = 0.5f;
 
 	private const float SHIELD_OFFSET_FORWARD = 5f;
+	private const float SHIELD_OFFSET_FORWARD_EPSILON = 1.5f;
 	private const float SHIELD_OFFSET_UP = 2.0f;
 
 	private GameObject shield;
 
-	private float lastDamageModifier;
 	private CharacterCommon lastCharacter;
 	private CharacterCommon ownCharacter;
 
@@ -37,7 +37,7 @@ public class Shielding : Special {
 	public override void Execute(GameObject[] targets) {
 		// Remove damage modifier from last targeted character.
 		if (lastCharacter != null) {
-			lastCharacter.damageModifier = lastDamageModifier;
+			lastCharacter.damageModifier /= shielding;
 		}
 
 		// Filter out null characters.
@@ -79,18 +79,18 @@ public class Shielding : Special {
 		currentTargetPosition = CalculateTargetPosition(targetTransform);
 
 		// Set the damage modifier and last target.
-		lastDamageModifier = target.damageModifier;
 		lastCharacter = target;
-		target.damageModifier = shielding;
+		target.damageModifier *= shielding;
 	}
 
 	private Vector3 CalculateTargetPosition(Transform targetTransform) {
-		return targetTransform.position + shield.transform.forward * SHIELD_OFFSET_FORWARD + shield.transform.up * SHIELD_OFFSET_UP;
+		float forwardOffset = Random.Range(SHIELD_OFFSET_FORWARD - SHIELD_OFFSET_FORWARD_EPSILON, SHIELD_OFFSET_FORWARD + SHIELD_OFFSET_FORWARD_EPSILON);
+		return targetTransform.position + shield.transform.forward * forwardOffset + shield.transform.up * SHIELD_OFFSET_UP;
 	}
 
 	private void OnDestroy() {
 		if (lastCharacter != null) {
-			lastCharacter.damageModifier = lastDamageModifier;
+			lastCharacter.damageModifier /= shielding;
 		}
 		Destroy(shield);
 	}

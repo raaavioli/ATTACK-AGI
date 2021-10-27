@@ -13,12 +13,16 @@ public class CharacterCommon : MonoBehaviour
 
     private GameManager gameManager;
     private Attack attack;
+    private Special special;
 
     private Animator animator;
 
     [SerializeField]
     private float maxHealth = 100;
     private float health;
+    
+    public float damageModifier { get; set; } = 1.0f;
+    
     public int maxTargets {
         get
         {
@@ -35,6 +39,7 @@ public class CharacterCommon : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
         Assert.IsNotNull(attack);
+        special = GetComponent<Special>();
 
         animator = gameObject.GetComponent<Animator>();
     }
@@ -58,12 +63,20 @@ public class CharacterCommon : MonoBehaviour
     {
         return this.team;
     }
+
     public bool CanAttack()
     {
         if (attack == null)
             return false;
         return attack.CanAttack;
     }
+
+    public bool CanExecuteSpecial() {
+        if (special == null) {
+            return false;
+		}
+        return special.canExecute;
+	}
 
     /**
      * Returns health / maxHealth, which is a value between 0 and 1.
@@ -92,9 +105,13 @@ public class CharacterCommon : MonoBehaviour
         return attack.StartAttack(targets);
     }
 
+    public void PerformSpecial(GameObject[] targets) {
+        special.Execute(targets);
+	}
+
     public void TakeDamage(int amount)
     {
-        health -= amount;
+        health -= amount * damageModifier;
         if (health > maxHealth)
             health = maxHealth;
         if (health < 0f)

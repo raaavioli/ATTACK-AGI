@@ -136,9 +136,8 @@ public class GameManager : MonoBehaviour
             {
                 CharacterCommon cc = character.GetComponent<CharacterCommon>();
                 bool isHealer = cc.GetComponent<Healing>() != null;
-                if (cc != null && cc.CanAttack())
-                    if (isHealer)
-                    {
+                if (cc != null && cc.CanAttack()) {
+                    if (isHealer) {
                         // Currently, the only healer there is heals its immediate neighbors
                         // If other healing spells are created, this will have to be changed. 
                         // Maybe have some target priority Enum for the Attack to base decisions on. 
@@ -149,11 +148,15 @@ public class GameManager : MonoBehaviour
                         if (pos < attackers.Length - 1 && attackers[pos + 1] != null)
                             Neighbors.Add(attackers[pos + 1].GetComponent<CharacterCommon>());
                         cc.Attack(Neighbors);
-                    }
-                    else
-                    {
+                    } else {
                         cc.Attack(GetTargets(opponents, cc.maxTargets));
                     }
+
+                    if (cc.CanExecuteSpecial()) {
+                        cc.PerformSpecial(attackers);
+					}
+                }
+
             }
         }
     }
@@ -388,14 +391,16 @@ public class Character
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab",
         new CharacterStats("Colonel", 4, 4, 1));
     public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab",
-        new CharacterStats("Squishy", 1, 4, 3));
+        new CharacterStats("Squishy", 4, 4, 3));
     public static readonly Character DOCTOR = new Character("Models/doctor", "DoctorPrefab",
         new CharacterStats("Doctor", 1, 2, 4));
+    public static readonly Character ARMOR = new Character("Models/armor", "ArmorPrefab",
+        new CharacterStats("Armor", 1, 5, 2));
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR, ARMOR };
     }
 
     private string ResourcePath;

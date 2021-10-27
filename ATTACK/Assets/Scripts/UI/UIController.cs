@@ -20,6 +20,11 @@ public class UIController : MonoBehaviour {
     [SerializeField]
     private Text roundWinner;
 
+    private void Start()
+    {
+        ShowRoundWinnerText(false, "");
+    }
+
     void Update()
     {
         for (int i = 0; i < CardManager.MAX_CARDS_PER_TEAM; ++i)
@@ -69,19 +74,17 @@ public class UIController : MonoBehaviour {
         transform.Find("ScoreHUD").gameObject.SetActive(show);
     }
 
-    public void SetRoundWinnerText(string roundWinnerText)
+    public void ShowRoundWinnerText(bool show, string roundWinnerText)
     {
         roundWinner.text = roundWinnerText;
+        roundWinner.transform.parent.gameObject.SetActive(show);
     }
 
     public void SetTimer(int secondsLeft)
     {
         setupTimer.text = secondsLeft.ToString();
         float colorShiftTime = 5.0f;
-        if (secondsLeft < colorShiftTime)
-            setupTimer.color = Color.Lerp(Color.red, Color.white, secondsLeft / (colorShiftTime - 1));
-        if (secondsLeft == 0)
-            setupTimer.text = "";
+        setupTimer.color = Color.Lerp(Color.red, Color.white, secondsLeft / (colorShiftTime - 1));
     }
 
     public void SetRound(int round)

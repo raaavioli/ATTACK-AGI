@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     private int round = 0;
     private int t1Score = 0;
     private int t2Score = 0;
-    private bool inCombatPhase = false;
+    private GameState state = GameState.RoundEnd;
 
     UIController UIController;
 
@@ -41,15 +41,18 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (inCombatPhase) {
+        if (state == GameState.Combat) {
             CombatPhaseUpdate();
-        } else {
+        } else if (state == GameState.Setup) {
             SetupPhaseUpdate();
+        } else if (state == GameState.RoundEnd)
+        {
+            if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
         }
+
         // Restarts scene on r press.
         if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-        if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
@@ -115,11 +118,11 @@ public class GameManager : MonoBehaviour
             else if (T2Alive > T1Alive)
                 t2Score++;
 
-            UIController.SetRoundWinnerText(text);
             UIController.SetScore(t1Score, t2Score);
+            UIController.ShowRoundWinnerText(true, text);
             UIController.ShowScoreBoard(true);
 
-            inCombatPhase = false;
+            state = GameState.RoundEnd;
             return;
         }
 
@@ -190,8 +193,22 @@ public class GameManager : MonoBehaviour
     {
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
+        // Set state and setup UI
+        state = GameState.Setup;
         UIController.SetRound(++this.round);
+        UIController.ShowRoundWinnerText(false, "");
         UIController.ShowScoreBoard(true);
+
+        // Clear old board state
+        foreach (GameObject character in T1)
+            if (character != null)
+                KillCharacter(Team.One, character);
+        foreach (GameObject character in T2)
+            if (character != null)
+                KillCharacter(Team.Two, character);
+        spawnedCharacters = 0;
+
+        // Start count down
         for (int i = 0; i < seconds; i++)
         {
             if (seconds - i == startSoundTime)
@@ -202,11 +219,12 @@ public class GameManager : MonoBehaviour
         UIController.SetTimer(setupTime);
         UIController.ShowScoreBoard(false);
 
-        inCombatPhase = true;
+        // Prepare for combat
+        state = GameState.Combat;
         SpawnFromCards();
         for (int i = 0; i < TEAM_SIZE; i++)
         {
-            // Toggle combat visibility for all living characters
+            // Toggle combat visibility for all living character cards
             if (T1[i] != null)
                 UIController.SetStatsVisible(UIVisibility.Reduced, Team.One, i);
             if (T2[i] != null)
@@ -330,6 +348,7 @@ public class GameManager : MonoBehaviour
             GameObject spawnPoint = spawnPoints[position];
             characters[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
             UIController.SetStats(character.Stats, team, position);
+            UIController.SetHealth(1f, team, position);
             UIController.SetStatsVisible(UIVisibility.All, team, position);
         }
     }
@@ -352,6 +371,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+}
+
+public enum GameState {
+    Setup,
+    Combat,
+    RoundEnd,
 }
 
 public enum Team : int

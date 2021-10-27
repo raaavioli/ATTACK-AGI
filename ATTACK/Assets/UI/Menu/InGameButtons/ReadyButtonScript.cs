@@ -7,38 +7,14 @@ public class ReadyButtonScript : MonoBehaviour
 {
     Text text;
     Image image;
-    public bool rightPlayer;
     bool activated;
-    public GameManager gameManager;
-    Color previousTextColor;
-    Color previousImageColor;
-
-    private void SwitchColor()
-    {
-        Color temp = previousTextColor;
-        previousTextColor = text.color;
-        text.color = temp;
-        temp = previousImageColor;
-        previousImageColor = image.color;
-        image.color = temp;
-    }
 
     // Start is called before the first frame update
     void Start()
     {
         text = gameObject.GetComponentInChildren<Text>();
         image = gameObject.GetComponentInChildren<Image>();
-        previousTextColor = Color.black;
-        previousImageColor = Color.white;
         activated = false;
-    }
-
-    void Update()
-    {
-        if(activated && gameManager.ResetReadyButtons())
-        {
-            Deactivate();
-        }
     }
 
     public void OnClick()
@@ -53,17 +29,19 @@ public class ReadyButtonScript : MonoBehaviour
         }
     }
 
+    public bool IsActive() { return activated; }
+
     void Activate()
     {
         activated = true;
-        gameManager.PlayerReady(rightPlayer, true);
-        SwitchColor();
+        text.color = Color.black;
+        image.color = Color.white;
     }
 
-    void Deactivate()
+    public void Deactivate()
     {
         activated = false;
-        gameManager.PlayerReady(rightPlayer, false);
-        SwitchColor();
+        text.color = Color.white;
+        image.color = new Color(0.4392157f, 0.2588235f, 0.07843138f);
     }
 }

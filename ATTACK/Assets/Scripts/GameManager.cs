@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT1;
     [SerializeField]
     private GameObject[] spawnPointsT2;
+    [SerializeField]
+    private GameObject[] readyButtons;
 
     [SerializeField]
     [Range(1, 30)]
@@ -30,9 +32,6 @@ public class GameManager : MonoBehaviour
     private int t2Score = 0;
     private GameState state = GameState.MainMenu;
     private GameState prevState;
-
-    private bool rightPlayerReady = false;
-    private bool leftPlayerReady = false;
 
     UIController UIController;
 
@@ -53,10 +52,6 @@ public class GameManager : MonoBehaviour
         else if (state == GameState.Setup) {
             SetupPhaseUpdate();
         }
-        else if (state == GameState.RoundOver)
-        {
-            if (Input.GetKeyDown("s")) PlayGame();
-        }
 
         // Restarts scene on r press.
         if (Input.GetKeyDown("r")) ExitToMainMenu();
@@ -66,7 +61,15 @@ public class GameManager : MonoBehaviour
     }
 
     //The following public methods are accessed by the Menu Game Object in the UI.
-    public void PlayGame()
+    public void ContinueAfterBattlePhase()
+    {
+        if (state == GameState.RoundOver)
+            StartSetup();
+        else
+            ExitToMainMenu();
+    }
+
+    public void StartSetup()
     {
         state = GameState.Setup;
 
@@ -82,17 +85,6 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         state = prevState;
-    }
-
-    public void PlayerReady(bool rightPlayer, bool ready)
-    {
-        if (rightPlayer) rightPlayerReady = ready;
-        else leftPlayerReady = ready;
-    }
-
-    public bool ResetReadyButtons()
-    {
-        return state != GameState.Setup && state != GameState.GameMenu;
     }
 
     public void ExitToMainMenu()
@@ -267,7 +259,7 @@ public class GameManager : MonoBehaviour
         // Start count down
         for (int i = 0; i < seconds; i++)
         {
-            if (rightPlayerReady && leftPlayerReady)
+            if (readyButtons[0].GetComponent<ReadyButtonScript>().IsActive() && readyButtons[1].GetComponent<ReadyButtonScript>().IsActive())
                 break;
             if (seconds - i <= startSoundTime && state != GameState.GameMenu)
                 GetComponent<AudioSource>().Play();
@@ -281,6 +273,7 @@ public class GameManager : MonoBehaviour
 
         GetComponents<AudioSource>()[2].Play();
         state = GameState.Combat;
+        DeactivateReadyButtons();
         UIController.SetTimer(setupTime);
         UIController.ShowScoreBoard(false);
 
@@ -433,6 +426,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void DeactivateReadyButtons()
+    {
+        readyButtons[0].GetComponent<ReadyButtonScript>().Deactivate();
+        readyButtons[1].GetComponent<ReadyButtonScript>().Deactivate();
     }
 }
 

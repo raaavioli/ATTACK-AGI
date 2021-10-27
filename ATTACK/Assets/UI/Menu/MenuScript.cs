@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+    [SerializeField]
     GameObject mainMenu;
+    [SerializeField]
     GameObject instructions;
+    [SerializeField]
     GameObject inGameMenu;
+    [SerializeField]
     GameObject inGameButtons;
+    [SerializeField]
+    GameObject continueButton;
+    [SerializeField]
+    GameManager gameManager;
     Color previousBackgroundColor;
-    public GameManager gameManager;
     GameState state;
 
     private void FadeBackgroundSwitch()
@@ -22,13 +29,10 @@ public class MenuScript : MonoBehaviour
 
     public void Start()
     {
-        mainMenu = transform.GetChild(0).gameObject;
-        instructions = transform.GetChild(1).gameObject;
-        inGameMenu = transform.GetChild(2).gameObject;
-        inGameButtons = transform.GetChild(3).gameObject;
         instructions.SetActive(false);
         inGameMenu.SetActive(false);
         inGameButtons.SetActive(false);
+        continueButton.SetActive(false);
         previousBackgroundColor = new Color(0, 0, 0, 0);
         state = gameManager.GetGameState();
     }
@@ -46,9 +50,16 @@ public class MenuScript : MonoBehaviour
                     else if (state == GameState.GameMenu)
                         HideInGameMenu();
                     ShowInGameButtons();
+                    HideContinueButton();
                     break;
                 case GameState.Combat:
                     HideInGameButtons();
+                    break;
+                case GameState.RoundOver:
+                    ShowContinueButton();
+                    break;
+                case GameState.GameOver:
+                    ShowContinueButton();
                     break;
                 case GameState.MainMenu:
                     break;
@@ -105,5 +116,15 @@ public class MenuScript : MonoBehaviour
     public void HideInGameButtons()
     {
         inGameButtons.SetActive(false);
+    }
+
+    public void ShowContinueButton()
+    {
+        continueButton.SetActive(true);
+    }
+
+    public void HideContinueButton()
+    {
+        continueButton.SetActive(false);
     }
 }

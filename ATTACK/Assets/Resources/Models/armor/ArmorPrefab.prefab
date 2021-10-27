@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mode: 0
-  maxHealth: 100
+  maxHealth: 150
 --- !u!135 &4851659582283852653
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   ChargeTime: 1.5
   MaxFireTime: 0.6
   TimeToHit: 0.4
-  Damage: 10
+  Damage: 5
   SwordPrefab: {fileID: 6442542681566197683, guid: f5d306cec5f7c0e45a3401c6492ccb71, type: 3}
 --- !u!114 &-5283104482450927966
 MonoBehaviour:

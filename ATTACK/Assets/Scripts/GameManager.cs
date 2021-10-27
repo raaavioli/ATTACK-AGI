@@ -391,11 +391,11 @@ public class Character
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab",
         new CharacterStats("Colonel", 4, 4, 1));
     public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab",
-        new CharacterStats("Squishy", 1, 4, 3));
+        new CharacterStats("Squishy", 4, 4, 3));
     public static readonly Character DOCTOR = new Character("Models/doctor", "DoctorPrefab",
         new CharacterStats("Doctor", 1, 2, 4));
     public static readonly Character ARMOR = new Character("Models/armor", "ArmorPrefab",
-        new CharacterStats("Armor", 1, 5, 3));
+        new CharacterStats("Armor", 1, 5, 2));
 
 
     public static List<Character> Values()

@@ -203,6 +203,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
+        CameraHandler.instance.StartSetupCameras();
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
         // Set state and setup UI

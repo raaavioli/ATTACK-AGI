@@ -23,30 +23,40 @@ public class GameManager : MonoBehaviour
 
     private int spawnedCharacters = 0;
 
-    private bool inCombatPhase = false;
+    private int round = 0;
+    private const int MAX_ROUNDS = 5;
+    private int t1Score = 0;
+    private int t2Score = 0;
+    private GameState state = GameState.RoundOver;
 
-    UICardController cardController;
+    UIController UIController;
 
     public void Start()
     {
         T1 = new GameObject[TEAM_SIZE];
         T2 = new GameObject[TEAM_SIZE];
 
-        cardController = GameObject.Find("Canvas").GetComponent<UICardController>();
-        cardController.roundWinnerText.SetActive(false);
-
-        StartCoroutine(SetupPhaseTimer(setupTime));
+        UIController = GameObject.Find("Canvas").GetComponent<UIController>();
+        UIController.SetTotalRounds(MAX_ROUNDS);
     }
+
 
     public void Update()
     {
-        if (inCombatPhase) {
+        if (state == GameState.Combat) {
             CombatPhaseUpdate();
-        } else {
+        } 
+        else if (state == GameState.Setup) {
             SetupPhaseUpdate();
+        } 
+        else if (state == GameState.RoundOver)
+        {
+            if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
         }
+
         // Restarts scene on r press.
         if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
@@ -71,11 +81,11 @@ public class GameManager : MonoBehaviour
         // Toggle visibility for all living characters
         for (int i = 0; i < TEAM_SIZE; i++)
         {
-            UIVisibility T1visible = T1[i] == null ? UIVisibility.None : UIVisibility.All; 
-            cardController.SetVisible(T1visible, Team.One, i);
+            UIVisibility T1visible = T1[i] == null ? UIVisibility.None : UIVisibility.All;
+            UIController.SetStatsVisible(T1visible, Team.One, i);
 
             UIVisibility T2visible = T2[i] == null ? UIVisibility.None : UIVisibility.All;
-            cardController.SetVisible(T2visible, Team.Two, i);
+            UIController.SetStatsVisible(T2visible, Team.Two, i);
         }
     }
 
@@ -105,10 +115,26 @@ public class GameManager : MonoBehaviour
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
         if (T1Alive == 0 || T2Alive == 0) {
-            cardController.roundWinnerText.SetActive(true);
+            state = GameState.RoundOver;
             string text = T1Alive == 0 && T2Alive == 0 || OnlyHealersAlive(T1Alive, T2Alive) ? "Round ends in a tie!" :
                           T1Alive == 0 ? "Red Team won this round!" : "Blue Team won this round!";
-            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = text;
+
+            if (T1Alive > T2Alive)
+                t1Score++;
+            else if (T2Alive > T1Alive)
+                t2Score++;
+
+            if (round == MAX_ROUNDS)
+            {
+                state = GameState.GameOver;
+                text = t1Score > t2Score ? "Blue Team won the game!" :
+                    t2Score > t1Score ? "Red Team won the game!" : "Game ends in a tie!";
+            }
+
+            UIController.SetScore(t1Score, t2Score);
+            UIController.ShowRoundWinnerText(true, text);
+            UIController.ShowScoreBoard(true);
+
             return;
         }
 
@@ -136,9 +162,8 @@ public class GameManager : MonoBehaviour
             {
                 CharacterCommon cc = character.GetComponent<CharacterCommon>();
                 bool isHealer = cc.GetComponent<Healing>() != null;
-                if (cc != null && cc.CanAttack())
-                    if (isHealer)
-                    {
+                if (cc != null && cc.CanAttack()) {
+                    if (isHealer) {
                         // Currently, the only healer there is heals its immediate neighbors
                         // If other healing spells are created, this will have to be changed. 
                         // Maybe have some target priority Enum for the Attack to base decisions on. 
@@ -149,11 +174,15 @@ public class GameManager : MonoBehaviour
                         if (pos < attackers.Length - 1 && attackers[pos + 1] != null)
                             Neighbors.Add(attackers[pos + 1].GetComponent<CharacterCommon>());
                         cc.Attack(Neighbors);
-                    }
-                    else
-                    {
+                    } else {
                         cc.Attack(GetTargets(opponents, cc.maxTargets));
                     }
+
+                    if (cc.CanExecuteSpecial()) {
+                        cc.PerformSpecial(attackers);
+					}
+                }
+
             }
         }
     }
@@ -170,51 +199,54 @@ public class GameManager : MonoBehaviour
             float health = characters[i].GetComponent<CharacterCommon>().GetHealth();
             if (health <= 0f)
                 KillCharacter(team, characters[i]);
-            cardController.SetHealth(health, team, i);
+            UIController.SetHealth(health, team, i);
 
         }
     }
 
     private IEnumerator SetupPhaseTimer(int seconds) // Timer for when setup ends.
     {
+        CameraHandler.instance.StartSetupCameras();
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
+        // Set state and setup UI
+        state = GameState.Setup;
+        UIController.SetRound(++this.round);
+        UIController.ShowRoundWinnerText(false, "");
+        UIController.ShowScoreBoard(true);
 
-        cardController.setupTimer.SetActive(true);
+        // Clear old board state
+        foreach (GameObject character in T1)
+            if (character != null)
+                KillCharacter(Team.One, character);
+        foreach (GameObject character in T2)
+            if (character != null)
+                KillCharacter(Team.Two, character);
+        spawnedCharacters = 0;
+
+        // Start count down
         for (int i = 0; i < seconds; i++)
         {
             if (seconds - i == startSoundTime)
                 GetComponent<AudioSource>().Play();
-            updateUITimer(seconds - i);
+            UIController.SetTimer(seconds - i);
             yield return new WaitForSeconds(1f);
         }
-        cardController.setupTimer.SetActive(false);
-        
-        inCombatPhase = true;
+        UIController.SetTimer(setupTime);
+        UIController.ShowScoreBoard(false);
+
+        // Prepare for combat
+        state = GameState.Combat;
         SpawnFromCards();
         for (int i = 0; i < TEAM_SIZE; i++)
         {
-            // Toggle combat visibility for all living characters
+            // Toggle combat visibility for all living character cards
             if (T1[i] != null)
-                cardController.SetVisible(UIVisibility.Reduced, Team.One, i);
+                UIController.SetStatsVisible(UIVisibility.Reduced, Team.One, i);
             if (T2[i] != null)
-                cardController.SetVisible(UIVisibility.Reduced, Team.Two, i);
+                UIController.SetStatsVisible(UIVisibility.Reduced, Team.Two, i);
         }
         CameraHandler.instance.StartCombatCamera();
-    }
-
-    private void updateUITimer(int secondsLeft)
-    {
-        Text setupTimerText = cardController.setupTimer.GetComponent<Text>();
-        setupTimerText.text = ""+secondsLeft;
-        if(secondsLeft < 4)
-        {
-            if(secondsLeft == 1)
-                setupTimerText.color = Color.red;
-            else
-                setupTimerText.color = Color.yellow;
-            setupTimerText.fontSize += 16;
-        } 
     }
 
     /**
@@ -331,8 +363,9 @@ public class GameManager : MonoBehaviour
         {
             GameObject spawnPoint = spawnPoints[position];
             characters[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
-            cardController.SetStats(character.Stats, team, position);
-            cardController.SetVisible(UIVisibility.All, team, position);
+            UIController.SetStats(character.Stats, team, position);
+            UIController.SetHealth(1f, team, position);
+            UIController.SetStatsVisible(UIVisibility.All, team, position);
         }
     }
 
@@ -354,6 +387,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+}
+
+public enum GameState {
+    Setup,
+    Combat,
+    RoundOver,
+    GameOver,
 }
 
 public enum Team : int
@@ -388,14 +428,16 @@ public class Character
     public static readonly Character COLONEL = new Character("Models/colonel", "ColonelPrefab",
         new CharacterStats("Colonel", 4, 4, 1));
     public static readonly Character SQUISHY = new Character("Models/squishy", "SquishyPrefab",
-        new CharacterStats("Squishy", 1, 4, 3));
+        new CharacterStats("Squishy", 4, 4, 3));
     public static readonly Character DOCTOR = new Character("Models/doctor", "DoctorPrefab",
         new CharacterStats("Doctor", 1, 2, 4));
+    public static readonly Character ARMOR = new Character("Models/armor", "ArmorPrefab",
+        new CharacterStats("Armor", 1, 5, 2));
 
 
     public static List<Character> Values()
     {
-        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR };
+        return new List<Character>() { WITCH, ENIGMA, COLONEL, SQUISHY, DOCTOR, ARMOR };
     }
 
     private string ResourcePath;

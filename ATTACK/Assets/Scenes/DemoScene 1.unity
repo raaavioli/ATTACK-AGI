@@ -18701,7 +18701,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 0556c00525746004f92196f3fa66a590, type: 3}
     - target: {fileID: 3721896506898489924, guid: e1ae136b91d2e17438b3be0d35ceb594, type: 3}
       propertyPath: setupTime
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3721896506898489924, guid: e1ae136b91d2e17438b3be0d35ceb594, type: 3}
       propertyPath: spawnPointsT1.Array.size

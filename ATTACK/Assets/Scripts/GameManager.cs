@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT1;
     [SerializeField]
     private GameObject[] spawnPointsT2;
-    
+
     [SerializeField]
     [Range(1, 30)]
     private int setupTime = 30;
@@ -23,36 +23,72 @@ public class GameManager : MonoBehaviour
 
     private int spawnedCharacters = 0;
 
-    private bool inMainMenu = true;
-    private bool inMenu = false;
-    private bool inCombatPhase = false;
+    <<<<<<< HEAD
+        private bool inMainMenu = true;
+        private bool inMenu = false;
+        private bool inCombatPhase = false;
 
-    private bool rightPlayerReady = false;
-    private bool leftPlayerReady = false;
+        private bool rightPlayerReady = false;
+        private bool leftPlayerReady = false;
 
-    UICardController cardController;
+        UICardController cardController;
 
-    public void Start()
-    {
-        cardController = GameObject.Find("Canvas").GetComponent<UICardController>();
-        cardController.roundWinnerText.SetActive(false);
+        public void Start()
+        {
+            cardController = GameObject.Find("Canvas").GetComponent<UICardController>();
+            cardController.roundWinnerText.SetActive(false);
+    =======
+        private int round = 0;
+        private const int MAX_ROUNDS = 5;
+        private int t1Score = 0;
+        private int t2Score = 0;
+        private GameState state = GameState.RoundOver;
+
+        UIController UIController;
+
+        public void Start()
+        {
+            T1 = new GameObject[TEAM_SIZE];
+            T2 = new GameObject[TEAM_SIZE];
+
+            UIController = GameObject.Find("Canvas").GetComponent<UIController>();
+            UIController.SetTotalRounds(MAX_ROUNDS);
+    >>>>>>> game_rounds
     }
+
 
     public void Update()
     {
-        if (!inMainMenu && !inMenu)
-        {
-            if (inCombatPhase)
-            {
-                CombatPhaseUpdate();
-            }
-            else
-            {
-                SetupPhaseUpdate();
-            }
-            // Restarts scene on r press.
-            if (Input.GetKeyDown("r")) ExitToMainMenu();
-        }
+      <<<<<<< HEAD
+              if (!inMainMenu && !inMenu)
+              {
+                  if (inCombatPhase)
+                  {
+                      CombatPhaseUpdate();
+                  }
+                  else
+                  {
+                      SetupPhaseUpdate();
+                  }
+                  // Restarts scene on r press.
+                  if (Input.GetKeyDown("r")) ExitToMainMenu();
+              }
+      =======
+              if (state == GameState.Combat) {
+                  CombatPhaseUpdate();
+              }
+              else if (state == GameState.Setup) {
+                  SetupPhaseUpdate();
+              }
+              else if (state == GameState.RoundOver)
+              {
+                  if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
+              }
+
+              // Restarts scene on r press.
+              if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+      >>>>>>> game_rounds
+
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
@@ -105,7 +141,7 @@ public class GameManager : MonoBehaviour
 
             // Spawn 2, 3, 0, 1, 2
             int character = (2 + position) % characters.Count;
-            CharacterMode mode = character == 1 || character == 3 ? CharacterMode.Defensive : CharacterMode.Offensive;
+            CharacterMode mode = CharacterMode.Offensive;
             SpawnCharacter(position, characters[character], mode, team);
 
             spawnedCharacters++;
@@ -114,11 +150,11 @@ public class GameManager : MonoBehaviour
         // Toggle visibility for all living characters
         for (int i = 0; i < TEAM_SIZE; i++)
         {
-            UIVisibility T1visible = T1[i] == null ? UIVisibility.None : UIVisibility.All; 
-            cardController.SetVisible(T1visible, Team.One, i);
+            UIVisibility T1visible = T1[i] == null ? UIVisibility.None : UIVisibility.All;
+            UIController.SetStatsVisible(T1visible, Team.One, i);
 
             UIVisibility T2visible = T2[i] == null ? UIVisibility.None : UIVisibility.All;
-            cardController.SetVisible(T2visible, Team.Two, i);
+            UIController.SetStatsVisible(T2visible, Team.Two, i);
         }
     }
 
@@ -148,10 +184,26 @@ public class GameManager : MonoBehaviour
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
         if (T1Alive == 0 || T2Alive == 0) {
-            cardController.roundWinnerText.SetActive(true);
+            state = GameState.RoundOver;
             string text = T1Alive == 0 && T2Alive == 0 || OnlyHealersAlive(T1Alive, T2Alive) ? "Round ends in a tie!" :
                           T1Alive == 0 ? "Red Team won this round!" : "Blue Team won this round!";
-            cardController.roundWinnerText.GetComponentsInChildren<Text>()[0].text = text;
+
+            if (T1Alive > T2Alive)
+                t1Score++;
+            else if (T2Alive > T1Alive)
+                t2Score++;
+
+            if (round == MAX_ROUNDS)
+            {
+                state = GameState.GameOver;
+                text = t1Score > t2Score ? "Blue Team won the game!" :
+                    t2Score > t1Score ? "Red Team won the game!" : "Game ends in a tie!";
+            }
+
+            UIController.SetScore(t1Score, t2Score);
+            UIController.ShowRoundWinnerText(true, text);
+            UIController.ShowScoreBoard(true);
+
             return;
         }
 
@@ -183,8 +235,8 @@ public class GameManager : MonoBehaviour
                     if (isHealer)
                     {
                         // Currently, the only healer there is heals its immediate neighbors
-                        // If other healing spells are created, this will have to be changed. 
-                        // Maybe have some target priority Enum for the Attack to base decisions on. 
+                        // If other healing spells are created, this will have to be changed.
+                        // Maybe have some target priority Enum for the Attack to base decisions on.
                         int pos = GetCharacterPosition(cc.gameObject);
                         List<CharacterCommon> Neighbors = new List<CharacterCommon>();
                         if (pos > 0 && attackers[pos - 1] != null)
@@ -213,7 +265,7 @@ public class GameManager : MonoBehaviour
             float health = characters[i].GetComponent<CharacterCommon>().GetHealth();
             if (health <= 0f)
                 KillCharacter(team, characters[i]);
-            cardController.SetHealth(health, team, i);
+            UIController.SetHealth(health, team, i);
 
         }
     }
@@ -222,54 +274,83 @@ public class GameManager : MonoBehaviour
     {
         const float startSoundTime = 3.0f;
         Assert.IsTrue(seconds > startSoundTime);
+        // Set state and setup UI
+        state = GameState.Setup;
+        UIController.SetRound(++this.round);
+        UIController.ShowRoundWinnerText(false, "");
+        UIController.ShowScoreBoard(true);
 
-        cardController.setupTimer.SetActive(true);
+        // Clear old board state
+        foreach (GameObject character in T1)
+            if (character != null)
+                KillCharacter(Team.One, character);
+        foreach (GameObject character in T2)
+            if (character != null)
+                KillCharacter(Team.Two, character);
+        spawnedCharacters = 0;
+
+        // Start count down
         for (int i = 0; i < seconds; i++)
         {
             if (rightPlayerReady && leftPlayerReady)
                 break;
             if (seconds - i <= startSoundTime && !inMenu)
                 GetComponent<AudioSource>().Play();
-            if (inMenu) 
-                i--;
-            else
-                updateUITimer(seconds - i);
-            
-            yield return new WaitForSeconds(1f);
-        }
-        cardController.setupTimer.SetActive(false);
+                <<<<<<< HEAD
+                            if (inMenu)
+                                i--;
+                            else
+                                updateUITimer(seconds - i);
 
-        GetComponents<AudioSource>()[2].Play();
-        inCombatPhase = true;
+                            yield return new WaitForSeconds(1f);
+                        }
+                        cardController.setupTimer.SetActive(false);
+
+                        GetComponents<AudioSource>()[2].Play();
+                        inCombatPhase = true;
+                =======
+                            UIController.SetTimer(seconds - i);
+                            yield return new WaitForSeconds(1f);
+                        }
+                        UIController.SetTimer(setupTime);
+                        UIController.ShowScoreBoard(false);
+
+                        // Prepare for combat
+                        state = GameState.Combat;
+                >>>>>>> game_rounds
         SpawnFromCards();
         for (int i = 0; i < TEAM_SIZE; i++)
         {
-            // Toggle combat visibility for all living characters
+            // Toggle combat visibility for all living character cards
             if (T1[i] != null)
-                cardController.SetVisible(UIVisibility.Reduced, Team.One, i);
+                UIController.SetStatsVisible(UIVisibility.Reduced, Team.One, i);
             if (T2[i] != null)
-                cardController.SetVisible(UIVisibility.Reduced, Team.Two, i);
+                UIController.SetStatsVisible(UIVisibility.Reduced, Team.Two, i);
         }
         CameraHandler.instance.StartCombatCamera();
     }
 
-    private void updateUITimer(int secondsLeft)
-    {
-        Text setupTimerText = cardController.setupTimer.GetComponent<Text>();
-        setupTimerText.text = ""+secondsLeft;
-        if(secondsLeft < 4)
+    <<<<<<< HEAD
+        private void updateUITimer(int secondsLeft)
         {
-            if(secondsLeft < 1)
-                setupTimerText.color = Color.red;
-            else
-                setupTimerText.color = Color.yellow;
-            setupTimerText.fontSize += 16;
-        } 
-    }
+            Text setupTimerText = cardController.setupTimer.GetComponent<Text>();
+            setupTimerText.text = ""+secondsLeft;
+            if(secondsLeft < 4)
+            {
+                if(secondsLeft < 1)
+                    setupTimerText.color = Color.red;
+                else
+                    setupTimerText.color = Color.yellow;
+                setupTimerText.fontSize += 16;
+            }
+        }
+
+    =======
+    >>>>>>> game_rounds
 
     /**
      * Returns a target among the team "opponents".
-     * Select any defensive target randomly, and offensive targets 
+     * Select any defensive target randomly, and offensive targets
      * if no defensive targets are found.
      */
     private List<CharacterCommon> GetTargets(GameObject[] targets, int count)
@@ -353,7 +434,7 @@ public class GameManager : MonoBehaviour
         }
         return Team.One;
     }
-    
+
     private void KillCharacter(Team team, GameObject character)
     {
         if (team == Team.One)
@@ -361,7 +442,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < T1.Length; i++)
                 if (T1[i] == character)
                     T1[i] = null;
-        } 
+        }
         else if (team == Team.Two)
         {
             for (int i = 0; i < T1.Length; i++)
@@ -381,12 +462,13 @@ public class GameManager : MonoBehaviour
         {
             GameObject spawnPoint = spawnPoints[position];
             characters[position] = spawnPoint.GetComponent<Spawner>().Spawn(character, mode);
-            cardController.SetStats(character.Stats, team, position);
-            cardController.SetVisible(UIVisibility.All, team, position);
+            UIController.SetStats(character.Stats, team, position);
+            UIController.SetHealth(1f, team, position);
+            UIController.SetStatsVisible(UIVisibility.All, team, position);
         }
     }
 
-    private void SpawnFromCards() 
+    private void SpawnFromCards()
     {
         foreach (Team team in Enum.GetValues(typeof(Team)))
         {
@@ -404,6 +486,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+}
+
+public enum GameState {
+    Setup,
+    Combat,
+    RoundOver,
+    GameOver,
 }
 
 public enum Team : int
@@ -431,7 +520,7 @@ public static class TeamExtension
 
 public class Character
 {
-    public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab", 
+    public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab",
         new CharacterStats("Witch", 3, 2, 5));
     public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab",
         new CharacterStats("Enigma", 5, 1, 3));

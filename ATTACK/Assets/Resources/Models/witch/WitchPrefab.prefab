@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mode: 0
-  maxHealth: 100
+  maxHealth: 70
 --- !u!135 &8302219546856853417
 SphereCollider:
   m_ObjectHideFlags: 0

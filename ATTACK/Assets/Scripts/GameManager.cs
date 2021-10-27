@@ -24,9 +24,10 @@ public class GameManager : MonoBehaviour
     private int spawnedCharacters = 0;
 
     private int round = 0;
+    private const int MAX_ROUNDS = 5;
     private int t1Score = 0;
     private int t2Score = 0;
-    private GameState state = GameState.RoundEnd;
+    private GameState state = GameState.RoundOver;
 
     UIController UIController;
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
         T2 = new GameObject[TEAM_SIZE];
 
         UIController = GameObject.Find("Canvas").GetComponent<UIController>();
+        UIController.SetTotalRounds(MAX_ROUNDS);
     }
 
 
@@ -43,9 +45,11 @@ public class GameManager : MonoBehaviour
     {
         if (state == GameState.Combat) {
             CombatPhaseUpdate();
-        } else if (state == GameState.Setup) {
+        } 
+        else if (state == GameState.Setup) {
             SetupPhaseUpdate();
-        } else if (state == GameState.RoundEnd)
+        } 
+        else if (state == GameState.RoundOver)
         {
             if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
         }
@@ -111,18 +115,26 @@ public class GameManager : MonoBehaviour
         int T1Alive = CountAlive(T1);
         int T2Alive = CountAlive(T2);
         if (T1Alive == 0 || T2Alive == 0) {
+            state = GameState.RoundOver;
             string text = T1Alive == 0 && T2Alive == 0 || OnlyHealersAlive(T1Alive, T2Alive) ? "Round ends in a tie!" :
                           T1Alive == 0 ? "Red Team won this round!" : "Blue Team won this round!";
+
             if (T1Alive > T2Alive)
                 t1Score++;
             else if (T2Alive > T1Alive)
                 t2Score++;
 
+            if (round == MAX_ROUNDS)
+            {
+                state = GameState.GameOver;
+                text = t1Score > t2Score ? "Blue Team won the game!" :
+                    t2Score > t1Score ? "Red Team won the game!" : "Game ends in a tie!";
+            }
+
             UIController.SetScore(t1Score, t2Score);
             UIController.ShowRoundWinnerText(true, text);
             UIController.ShowScoreBoard(true);
 
-            state = GameState.RoundEnd;
             return;
         }
 
@@ -376,7 +388,8 @@ public class GameManager : MonoBehaviour
 public enum GameState {
     Setup,
     Combat,
-    RoundEnd,
+    RoundOver,
+    GameOver,
 }
 
 public enum Team : int

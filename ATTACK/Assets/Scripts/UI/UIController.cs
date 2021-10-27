@@ -18,6 +18,8 @@ public class UIController : MonoBehaviour {
     [SerializeField]
     private Text roundCounter;
     [SerializeField]
+    private Text totalRounds;
+    [SerializeField]
     private Text roundWinner;
 
     private void Start()
@@ -78,6 +80,11 @@ public class UIController : MonoBehaviour {
     {
         roundWinner.text = roundWinnerText;
         roundWinner.transform.parent.gameObject.SetActive(show);
+    }
+
+    public void SetTotalRounds(int rounds)
+    {
+        totalRounds.text = rounds.ToString();
     }
 
     public void SetTimer(int secondsLeft)

@@ -1141,7 +1141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 5
+  m_Text: 
 --- !u!222 &217261100
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10283,6 +10283,7 @@ MonoBehaviour:
   t1Score: {fileID: 368105947}
   t2Score: {fileID: 885544015}
   roundCounter: {fileID: 1378384533}
+  totalRounds: {fileID: 217261099}
   roundWinner: {fileID: 2143995372}
 --- !u!1001 &1192534112
 PrefabInstance:

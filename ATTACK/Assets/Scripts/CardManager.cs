@@ -25,7 +25,11 @@ public struct Card
 
     public static bool operator !=(Card lhs, Card rhs) => !(lhs == rhs);
 
-    public override string ToString()
+	public override int GetHashCode() {
+		return base.GetHashCode();
+	}
+
+	public override string ToString()
     {
         return $"position: {position}, rank: {rank}, rotated: {rotated}";
     }
@@ -40,8 +44,8 @@ public class CardManager : MonoBehaviour
     [HideInInspector]
     public const int MAX_CARDS_PER_TEAM = 5;
 
-    private Card[][] teamCards;
-    private Card[][] teamSavedCardInfo;
+    private Card[][] teamCards = new Card[2][];
+    private Card[][] teamSavedCardInfo = new Card[2][];
 
     private int[][] teamCounters = new int[][] {
         new int[MAX_CARDS_PER_TEAM],
@@ -75,7 +79,7 @@ public class CardManager : MonoBehaviour
         if (index < 0 || index >= MAX_CARDS_PER_TEAM)
             return false;
         else
-            return !Equals(Instance.teamCards[(int) team][index], Card.INVALID);
+            return Instance.teamCards[(int) team][index] != Card.INVALID;
     }
 
     public static Card GetCard(Team team, int index)
@@ -85,9 +89,7 @@ public class CardManager : MonoBehaviour
 
     public static bool IsRotated(Team team, int index)
     {
-        if (team == Team.One)
-            return Instance.T1Cards[index].rotated;
-        return Instance.T2Cards[index].rotated;
+        return Instance.teamCards[(int) team][index].rotated;
     }
 
     private void UpdateCards()
@@ -98,9 +100,6 @@ public class CardManager : MonoBehaviour
             string[] cardStrings = cardInfo.Split(',');
             for (int i = 0; i < MAX_CARDS_PER_TEAM; i++)
             {
-                bool T1CardValid = false;
-                bool T2CardValid = false;
-
                 bool[] teamCardValid = new bool[2];
 
                 for (int j = 0; j < cardStrings.Length; j++)

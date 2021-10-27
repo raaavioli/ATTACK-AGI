@@ -78,6 +78,9 @@ public class GameManager : MonoBehaviour
             spawnedCharacters++;
         }
 
+        // Spawn from cards during the setup phase.
+        SpawnFromCards();
+
         // Toggle visibility for all living characters
         for (int i = 0; i < TEAM_SIZE; i++)
         {
@@ -237,7 +240,6 @@ public class GameManager : MonoBehaviour
 
         // Prepare for combat
         state = GameState.Combat;
-        SpawnFromCards();
         for (int i = 0; i < TEAM_SIZE; i++)
         {
             // Toggle combat visibility for all living character cards
@@ -346,10 +348,12 @@ public class GameManager : MonoBehaviour
         } 
         else if (team == Team.Two)
         {
-            for (int i = 0; i < T1.Length; i++)
-                if (T1[i] == character)
-                    T1[i] = null;
+            for (int i = 0; i < T2.Length; i++)
+                if (T2[i] == character)
+                    T2[i] = null;
         }
+
+        spawnedCharacters--;
         Destroy(character);
     }
 
@@ -378,7 +382,14 @@ public class GameManager : MonoBehaviour
                     Card card = CardManager.GetCard(team, i);
                     GameObject spawn = team == Team.One ? spawnPointsT1[card.position] : spawnPointsT2[card.position];
                     Character character = Character.Values()[card.rank % Character.Values().Count];
-                    CharacterMode mode = card.rotated ?
+
+					// Clear position if it is already taken.
+					GameObject potentialCharacter = team == Team.One ? T1[i] : T2[i];
+					if (potentialCharacter != null && potentialCharacter.GetComponent<CharacterCommon>().character != character) {
+						KillCharacter(team, potentialCharacter);
+					}
+
+					CharacterMode mode = card.rotated ?
                         CharacterMode.Defensive :
                         CharacterMode.Offensive;
 

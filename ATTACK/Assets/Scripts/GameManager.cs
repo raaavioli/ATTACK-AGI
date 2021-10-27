@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
 
+    //The following public methods are accessed by the Menu Game Object in the UI.
     public void PlayGame()
     {
         inMainMenu = false;

@@ -23,71 +23,43 @@ public class GameManager : MonoBehaviour
 
     private int spawnedCharacters = 0;
 
-    <<<<<<< HEAD
-        private bool inMainMenu = true;
-        private bool inMenu = false;
-        private bool inCombatPhase = false;
+    
+    private int round = 0;
+    private const int MAX_ROUNDS = 5;
+    private int t1Score = 0;
+    private int t2Score = 0;
+    private GameState state = GameState.MainMenu;
+    private GameState prevState;
 
-        private bool rightPlayerReady = false;
-        private bool leftPlayerReady = false;
+    private bool rightPlayerReady = false;
+    private bool leftPlayerReady = false;
 
-        UICardController cardController;
+    UIController UIController;
 
-        public void Start()
-        {
-            cardController = GameObject.Find("Canvas").GetComponent<UICardController>();
-            cardController.roundWinnerText.SetActive(false);
-    =======
-        private int round = 0;
-        private const int MAX_ROUNDS = 5;
-        private int t1Score = 0;
-        private int t2Score = 0;
-        private GameState state = GameState.RoundOver;
-
-        UIController UIController;
-
-        public void Start()
-        {
-            T1 = new GameObject[TEAM_SIZE];
-            T2 = new GameObject[TEAM_SIZE];
-
-            UIController = GameObject.Find("Canvas").GetComponent<UIController>();
-            UIController.SetTotalRounds(MAX_ROUNDS);
-    >>>>>>> game_rounds
+    public void Start()
+    {
+        UIController = GameObject.Find("Canvas").GetComponent<UIController>();
+        UIController.SetTotalRounds(MAX_ROUNDS);
+        T1 = new GameObject[TEAM_SIZE];
+        T2 = new GameObject[TEAM_SIZE];
     }
 
 
     public void Update()
     {
-      <<<<<<< HEAD
-              if (!inMainMenu && !inMenu)
-              {
-                  if (inCombatPhase)
-                  {
-                      CombatPhaseUpdate();
-                  }
-                  else
-                  {
-                      SetupPhaseUpdate();
-                  }
-                  // Restarts scene on r press.
-                  if (Input.GetKeyDown("r")) ExitToMainMenu();
-              }
-      =======
-              if (state == GameState.Combat) {
-                  CombatPhaseUpdate();
-              }
-              else if (state == GameState.Setup) {
-                  SetupPhaseUpdate();
-              }
-              else if (state == GameState.RoundOver)
-              {
-                  if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
-              }
+        if (state == GameState.Combat) {
+            CombatPhaseUpdate();
+        }
+        else if (state == GameState.Setup) {
+            SetupPhaseUpdate();
+        }
+        else if (state == GameState.RoundOver)
+        {
+            if (Input.GetKeyDown("s")) PlayGame();
+        }
 
-              // Restarts scene on r press.
-              if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-      >>>>>>> game_rounds
+        // Restarts scene on r press.
+        if (Input.GetKeyDown("r")) ExitToMainMenu();
 
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
@@ -96,22 +68,20 @@ public class GameManager : MonoBehaviour
     //The following public methods are accessed by the Menu Game Object in the UI.
     public void PlayGame()
     {
-        inMainMenu = false;
-
-        T1 = new GameObject[TEAM_SIZE];
-        T2 = new GameObject[TEAM_SIZE];
+        state = GameState.Setup;
 
         StartCoroutine(SetupPhaseTimer(setupTime));
     }
 
     public void PauseGame()
     {
-        inMenu = true;
+        prevState = state;
+        state = GameState.GameMenu;
     }
 
     public void ResumeGame()
     {
-        inMenu = false;
+        state = prevState;
     }
 
     public void PlayerReady(bool rightPlayer, bool ready)
@@ -122,12 +92,17 @@ public class GameManager : MonoBehaviour
 
     public bool ResetReadyButtons()
     {
-        return !(!inCombatPhase && !inMainMenu);
+        return state != GameState.Setup && state != GameState.GameMenu;
     }
 
     public void ExitToMainMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public GameState GetGameState()
+    {
+        return state;
     }
 
     private void SetupPhaseUpdate()
@@ -294,30 +269,21 @@ public class GameManager : MonoBehaviour
         {
             if (rightPlayerReady && leftPlayerReady)
                 break;
-            if (seconds - i <= startSoundTime && !inMenu)
+            if (seconds - i <= startSoundTime && state != GameState.GameMenu)
                 GetComponent<AudioSource>().Play();
-                <<<<<<< HEAD
-                            if (inMenu)
-                                i--;
-                            else
-                                updateUITimer(seconds - i);
+            if (state == GameState.GameMenu)
+                i--;
+            else
+                UIController.SetTimer(seconds - i);
 
-                            yield return new WaitForSeconds(1f);
-                        }
-                        cardController.setupTimer.SetActive(false);
+            yield return new WaitForSeconds(1f);
+        }
 
-                        GetComponents<AudioSource>()[2].Play();
-                        inCombatPhase = true;
-                =======
-                            UIController.SetTimer(seconds - i);
-                            yield return new WaitForSeconds(1f);
-                        }
-                        UIController.SetTimer(setupTime);
-                        UIController.ShowScoreBoard(false);
+        GetComponents<AudioSource>()[2].Play();
+        state = GameState.Combat;
+        UIController.SetTimer(setupTime);
+        UIController.ShowScoreBoard(false);
 
-                        // Prepare for combat
-                        state = GameState.Combat;
-                >>>>>>> game_rounds
         SpawnFromCards();
         for (int i = 0; i < TEAM_SIZE; i++)
         {
@@ -329,24 +295,6 @@ public class GameManager : MonoBehaviour
         }
         CameraHandler.instance.StartCombatCamera();
     }
-
-    <<<<<<< HEAD
-        private void updateUITimer(int secondsLeft)
-        {
-            Text setupTimerText = cardController.setupTimer.GetComponent<Text>();
-            setupTimerText.text = ""+secondsLeft;
-            if(secondsLeft < 4)
-            {
-                if(secondsLeft < 1)
-                    setupTimerText.color = Color.red;
-                else
-                    setupTimerText.color = Color.yellow;
-                setupTimerText.fontSize += 16;
-            }
-        }
-
-    =======
-    >>>>>>> game_rounds
 
     /**
      * Returns a target among the team "opponents".
@@ -493,6 +441,8 @@ public enum GameState {
     Combat,
     RoundOver,
     GameOver,
+    MainMenu,
+    GameMenu
 }
 
 public enum Team : int

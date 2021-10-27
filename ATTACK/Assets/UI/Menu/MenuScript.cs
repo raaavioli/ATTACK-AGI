@@ -10,6 +10,8 @@ public class MenuScript : MonoBehaviour
     GameObject inGameMenu;
     GameObject inGameButtons;
     Color previousBackgroundColor;
+    public GameManager gameManager;
+    GameState state;
 
     private void FadeBackgroundSwitch()
     {
@@ -28,6 +30,37 @@ public class MenuScript : MonoBehaviour
         inGameMenu.SetActive(false);
         inGameButtons.SetActive(false);
         previousBackgroundColor = new Color(0, 0, 0, 0);
+        state = gameManager.GetGameState();
+    }
+
+    public void Update()
+    {
+        GameState newState = gameManager.GetGameState();
+        if (newState != state)
+        {
+            switch (newState)
+            {
+                case GameState.Setup:
+                    if (state == GameState.MainMenu)
+                        HideMainMenu();
+                    else if (state == GameState.GameMenu)
+                        HideInGameMenu();
+                    ShowInGameButtons();
+                    break;
+                case GameState.Combat:
+                    HideInGameButtons();
+                    break;
+                case GameState.MainMenu:
+                    break;
+                case GameState.GameMenu:
+                    ShowInGameMenu();
+                    HideInGameButtons();
+                    break;
+                default:
+                    break;
+            }
+            state = newState;
+        }
     }
 
     public void HideMainMenu()

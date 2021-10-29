@@ -19,11 +19,16 @@ CARD_AREA_MAX = 6000
 SUIT_AREA_MIN = 50
 SUIT_AREA_MAX = 500
 
+printing = False
+
 def signal_handler(sig, frame):
     print('interrupted, shutting down server.')
     sys.exit(0)
 
 def main():
+    if "-v" in sys.argv:
+        printing = True
+
     signal.signal(signal.SIGINT, signal_handler)
 
     # Create a TCP/IP socket.
@@ -47,13 +52,17 @@ def main():
     while True:
         data = recvFull(connection, 518400)
         if data:
-            print("get data")
+            if printing:
+                print("get data")
 
             try:
                 img = np.frombuffer(data, dtype='uint8')
                 img = np.reshape(img, (540, 960))
                 result = analyzeImage(suitAreaToSquare(img))
-                print(result)
+                
+                if printing:
+                    print(result)
+                
                 if result != "":
                     # Send the message to the Unity server.
                     bytesToSend = result.encode("ascii")

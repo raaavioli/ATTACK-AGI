@@ -19,13 +19,14 @@ CARD_AREA_MAX = 6000
 SUIT_AREA_MIN = 50
 SUIT_AREA_MAX = 500
 
-printing = False
+
 
 def signal_handler(sig, frame):
     print('interrupted, shutting down server.')
     sys.exit(0)
 
 def main():
+    printing = False
     if "-v" in sys.argv:
         printing = True
 

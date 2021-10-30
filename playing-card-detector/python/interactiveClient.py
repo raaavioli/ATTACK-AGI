@@ -106,13 +106,18 @@ def processSend(tokens, cards, udpSocket):
     except ValueError:
         return False
 
-    bytesToSend = concatenateCards(cards).encode("ascii")
+    result = concatenateCards(cards)
+
+    if result == "":
+        result = "empty"
+
+    bytesToSend = result.encode("ascii")
+
     try:
         for _ in range(repetitions):
             udpSocket.sendto(bytesToSend, ("127.0.0.1", 50002))
             print("sent data")
             time.sleep(0.1)
-
     except socket.error:
         return False
     

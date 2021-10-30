@@ -92,57 +92,69 @@ public class CardManager : MonoBehaviour
         return Instance.teamCards[(int) team][index].rotated;
     }
 
-    private void UpdateCards()
-    {
+    private void UpdateCards() {
+        // If there is no new info, do not update cards.
+        if (!ServerHandler.updatedCardInfo) {
+            return;
+		}
+
         string cardInfo = ServerHandler.mostRecentCardInfo;
-        if (cardInfo != null)
-        {
-            string[] cardStrings = cardInfo.Split(',');
-            for (int i = 0; i < MAX_CARDS_PER_TEAM; i++)
-            {
-                bool[] teamCardValid = new bool[2];
+        Card[][] cardsFromCardInfo = new Card[][] {
+            new Card[MAX_CARDS_PER_TEAM],
+            new Card[MAX_CARDS_PER_TEAM]
+        };
 
-                for (int j = 0; j < cardStrings.Length; j++)
-                {
-                    string cardString = cardStrings[j];
-                    string[] parts = cardString.Split(':');
-                    if (parts.Length < 4)
-                        continue;
-                    int position = int.Parse(parts[1]);
-                    if (position == i)
-                    {
-                        Card card = new Card(position, int.Parse(parts[2]), int.Parse(parts[3]) > 0);
-                        int team = int.Parse(parts[0]) - 1;
-
-                        if (teamSavedCardInfo[team][i] == Card.INVALID) {
-                            // if saved position info is INVALID, save new info to position and set position counter to MAX, set team card
-                            teamCounters[team][i] = MAX_BUFFERING;
-                            teamCardValid[team] = true;
-                            teamCards[team][i] = card;
-                        } else if (teamSavedCardInfo[team][i] == card) {
-                            // if saved position info MATCHES new info, increment position counter, clamped to MAX
-                            int teamCounter = teamCounters[team][i];
-                            teamCounters[team][i] = Mathf.Clamp(teamCounter + 1, 0, MAX_BUFFERING);
-                            teamCardValid[team] = true;
-                        }
-                    }
-                }
-
-                for (int team = 0; team < 2; ++team) {
-                    if (!teamCardValid[team]) {
-                        // if saved position info DOES NOT MATCH new info, decrement position counter
-                        teamCounters[team][i]--;
-
-                        if (teamCounters[team][i] == 0) {
-                            // if position counter is now 0, set saved position info to INVALID, set team card to INVALID
-                            teamCounters[team][i] = 0;
-                            teamCards[team][i] = Card.INVALID;
-                            teamSavedCardInfo[team][i] = Card.INVALID;
-                        }
-                    }
-                }
+        // Set all found cards to INVALID.
+        for (int team = 0; team < 2; ++team) {
+            for (int position = 0; position < MAX_CARDS_PER_TEAM; ++position) {
+                cardsFromCardInfo[team][position] = Card.INVALID;
             }
         }
+
+        // Parse the cards from the card info.
+        if (cardInfo != null) {
+            string[] cardStrings = cardInfo.Split(',');
+
+            foreach (string cardString in cardStrings) {
+                string[] parts = cardString.Split(':');
+                if (parts.Length != 4) {
+                    continue;
+                }
+
+                int team = int.Parse(parts[0]);
+                int position = int.Parse(parts[1]);
+                cardsFromCardInfo[team - 1][position - 1] = new Card(position, int.Parse(parts[2]), int.Parse(parts[3]) > 0);
+            }
+        }
+
+        // Compare the parsed server card info to the saved info, and maybe update cards.
+        for (int team = 0; team < 2; ++team) {
+            for (int position = 0; position < MAX_CARDS_PER_TEAM; ++position) {
+                Card currentCard = cardsFromCardInfo[team][position];
+
+                // Otherwise, compare the found card to the saved card.
+                if (teamSavedCardInfo[team][position] == Card.INVALID) {
+                    // if saved position info is INVALID, save new info to position and set position counter to MAX, set team card
+                    teamSavedCardInfo[team][position] = currentCard;
+                    teamCounters[team][position] = MAX_BUFFERING;
+                    teamCards[team][position] = currentCard;
+                } else if (teamSavedCardInfo[team][position] == currentCard) {
+                    // if saved position info MATCHES new info, increment position counter, clamped to MAX
+                    int teamCounter = teamCounters[team][position];
+                    teamCounters[team][position] = Mathf.Clamp(teamCounter + 1, 0, MAX_BUFFERING);
+                } else {
+                    // if saved position info DOES NOT MATCH new info, decrement position counter
+                    teamCounters[team][position]--;
+                }
+
+                if (teamCounters[team][position] <= 0) {
+                    // if position counter is now 0, set saved position info to INVALID, set team card to INVALID
+                    teamCounters[team][position] = 0;
+                    teamCards[team][position] = Card.INVALID;
+                    teamSavedCardInfo[team][position] = Card.INVALID;
+                }
+            }
+		}
     }
 
     /* Scheme for jitter protection:

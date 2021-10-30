@@ -68,12 +68,13 @@ def main():
                 
                 if printing:
                     print(result)
-                
-                if result != "":
-                    # Send the message to the Unity server.
-                    bytesToSend = result.encode("ascii")
-                    UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 50002))
 
+                if result == "":
+                    result = "empty"
+                
+                # Send the message to the Unity server.
+                bytesToSend = result.encode("ascii")
+                UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 50002))
             except:
                 print("something went wrong, nothing was processed or sent")
 

@@ -5,6 +5,7 @@ import signal
 import cv2
 import numpy as np
 import os
+from interactiveClient import startInteractiveClient
 
 file_path = os.path.dirname(__file__)
 
@@ -26,11 +27,15 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def main():
+    signal.signal(signal.SIGINT, signal_handler)
+
     printing = False
     if "-v" in sys.argv:
         printing = True
 
-    signal.signal(signal.SIGINT, signal_handler)
+    if "-i" in sys.argv:
+        startInteractiveClient()
+        return
 
     # Create a TCP/IP socket.
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

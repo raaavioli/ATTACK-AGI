@@ -253,7 +253,7 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 .post_box .pb_right { float: left; width: 760px; }
 .post_box .comment a { display: block; margin-top: 15px; background: url(../images/templatemo_comment.jpg) no-repeat bottom left; padding: 3px 0 0 25px; }
 
-.team_box img { width: 300px; height: 400px; float: left; margin-right: 30px; }
+.team_box img { width: 150px; height: 200px; float: left; margin-right: 30px; }
 .team_box .pb_right { float: left; width: 590px; }
 .team_box .comment a { display: block; margin-top: 15px; background: url(../images/templatemo_comment.jpg) no-repeat bottom left; padding: 3px 0 0 25px; }
 .links { display: block; float: right; }

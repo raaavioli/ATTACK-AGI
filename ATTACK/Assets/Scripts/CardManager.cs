@@ -39,7 +39,7 @@ public class CardManager : MonoBehaviour
     private static CardManager Instance;
 
     [SerializeField]
-    private const int MAX_BUFFERING = 5;
+    private const int MAX_BUFFERING = 10;
 
     [HideInInspector]
     public const int MAX_CARDS_PER_TEAM = 5;
@@ -123,7 +123,10 @@ public class CardManager : MonoBehaviour
 
                 int team = int.Parse(parts[0]);
                 int position = int.Parse(parts[1]);
-                cardsFromCardInfo[team - 1][position - 1] = new Card(position, int.Parse(parts[2]), int.Parse(parts[3]) > 0);
+                cardsFromCardInfo
+                    [team - 1]
+                    [position] = 
+                    new Card(position, int.Parse(parts[2]), int.Parse(parts[3]) > 0);
             }
         }
 
@@ -142,6 +145,8 @@ public class CardManager : MonoBehaviour
                     // if saved position info MATCHES new info, increment position counter, clamped to MAX
                     int teamCounter = teamCounters[team][position];
                     teamCounters[team][position] = Mathf.Clamp(teamCounter + 1, 0, MAX_BUFFERING);
+                    teamSavedCardInfo[team][position] = currentCard;
+                    teamCards[team][position] = currentCard;
                 } else {
                     // if saved position info DOES NOT MATCH new info, decrement position counter
                     teamCounters[team][position]--;

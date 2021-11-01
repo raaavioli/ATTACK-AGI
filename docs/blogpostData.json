@@ -72,6 +72,11 @@ blogData =
         text: "The UI was altered so that the areas for card placement now are shaded to be semi-transparent and has a glow when no card is placed. Cards can also be rotated either vertically or horizontally, which changes the color of the border around the card placement area to reflect whether a character is in an offensive or a defensive state. UI was also added to describe the character stats to the players. The players now get to know the character names, health, attack, defense and speed characteristics. Attack, Defense and Speed reflects how strong offensively, strong defensively and fast a character is."
       },
       {
+        title: "Shield effect for defensive mode",
+        images: ["images/combinedShield.png", "images/shieldModel.png", "images/hexPattern.png", "shieldShaderTest.png"],
+        text: "First i played around with my shader in Unity. For the most part, this shader allows us to set a color over the texture itself, and also the color and intensity of a fresnel effect. Then i created a model for a shield in Blender as well as a texture that is a hexagonal pattern in GIMP. I then unwrapped the UV-coordinates of the Blender model and moved the faces around so that the pattern looked good enough on the model. I then imported the model into Unity, applied the shader, and set the texture to the one i had created. Finally i set all the values of the shader inside the Unity editor to get the right look, this included the color and intesity of the effects. Lastly i added the shield into the game itself, so that the shield is spawned in front of a character when they are in defensive mode."
+      },
+      {
         title: "Menus Constructed",
         images: [""],
         text: ""

@@ -53,8 +53,7 @@ public class GameManager : MonoBehaviour
             SetupPhaseUpdate();
         }
 
-        // Restarts scene on r press.
-        if (Input.GetKeyDown("r")) ExitToMainMenu();
+        if (Input.GetKeyDown("r")) Cursor.visible = !Cursor.visible;
 
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();

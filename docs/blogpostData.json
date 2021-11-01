@@ -37,6 +37,11 @@ blogData =
         text: "Projectiles have been added for the three existing characters. To create the effects, a couple of custom shaders were written to get desired effects. The Witch shoots lightning primarily, but a bubble projectile was also created in case that is desired in the actual game. Enigma charges up and shoots a powerful laser. The laser is essentially a cylinder rendered through three shader passes, all adding individual layers to the resulting beam. The Colonel calls in a powerful air strike plane, which crashes into the target creating a cloud of fire smoke while the plane is ripped into pieces. The smoke effect is a particle system with a custom shader using a custom made smoke texture which is used to give the smoke/fire its shape and color."
       },
       {
+        title: "Game Design choices made",
+        images: ["images/gameloop.png"],
+        text: "At this point the project started to reach a somewhat playable state. The next step was to actually builöd a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement."
+      },
+      {
         title: "Card parsing works!",
         images: ["images/correctedDescriptiveImage.png", "images/cardspawn.gif"],
         text: "After a lot of wrestling to with the SUR40, we finally have a complete pipeline from gathering data from the SUR40, to parsing the cards from the image and interpreting the results in Unity to spawn characters. First, the image is gathered from the SUR40 by hijacking an old example program called RawImageVisualizer and the data is sent over TCP to a python server on the same machine. The python server then uses OpenCV to analyze the image. The two short edges of the screen are split into six rectangles each, as can be seen in the image, where we look for a card by trying to count the number of large enough contours, and that way deciding the rank. The suit is not considered, as that would be unnecessary for our purposes right now. The card information from each rectangle is encoded into a string and sent to Unity over UDP on the same machine. Unity then interprets the string and spawns characters accordingly, as can be seen in the gif."
@@ -65,11 +70,6 @@ blogData =
         title: "Card UI improvements and character stats",
         images: ["images/UI1.png", "images/UI2.png", "images/UI3.png"],
         text: "The UI was altered so that the areas for card placement now are shaded to be semi-transparent and has a glow when no card is placed. Cards can also be rotated either vertically or horizontally, which changes the color of the border around the card placement area to reflect whether a character is in an offensive or a defensive state. UI was also added to describe the character stats to the players. The players now get to know the character names, health, attack, defense and speed characteristics. Attack, Defense and Speed reflects how strong offensively, strong defensively and fast a character is."
-      },
-      {
-        title: "Game Design choices made",
-        images: ["images/gameloop.png"],
-        text: "At this point the project started to reach a somewhat playable state. The next step was to actually builöd a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement."
       },
       {
         title: "",

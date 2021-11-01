@@ -73,8 +73,8 @@ blogData =
       },
       {
         title: "Shield effect for defensive mode",
-        images: ["images/combinedShield.png", "images/shieldModel.png", "images/hexPattern.png", "shieldShaderTest.png"],
-        text: "First i played around with my shader in Unity. For the most part, this shader allows us to set a color over the texture itself, and also the color and intensity of a fresnel effect. Then i created a model for a shield in Blender as well as a texture that is a hexagonal pattern in GIMP. I then unwrapped the UV-coordinates of the Blender model and moved the faces around so that the pattern looked good enough on the model. I then imported the model into Unity, applied the shader, and set the texture to the one i had created. Finally i set all the values of the shader inside the Unity editor to get the right look, this included the color and intesity of the effects. Lastly i added the shield into the game itself, so that the shield is spawned in front of a character when they are in defensive mode."
+        images: ["images/combinedShield.png", "images/shieldModel.png", "images/hexPattern.png", "images/shieldShaderTest.png"],
+        text: "Playing around with shaders in Unity for this one. This shader features a fresnel effect with 'magical' colors for the appropriate effect. A model for a shield was created in Blender, as well as a texture that is a hexagonal pattern in GIMP. Unwrapping the UV-coordinates of the Blender model, and moving the faces around then made the pattern look good enough on the shield model. After having imported everything to Unity, tweaking the values of the shader inside the Unity editor made it look as intended, including the color and intesity of the effects. At this point, the finished prefab could then applied to the characters as they enter their defensive modes."
       },
       {
         title: "Menus Constructed",

@@ -39,7 +39,7 @@ blogData =
       {
         title: "Game Design choices made",
         images: ["images/gameloop.png"],
-        text: "At this point the project started to reach a somewhat playable state. The next step was to actually builöd a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement."
+        text: "At this point the project started to reach a somewhat playable state. The next step was to actually build a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement. The choice made was to have all characters on the board act simultaneously, and to split up a single game in several rounds, resulting in a scoreboard results that determines the winner after a certain amount of rounds."
       },
       {
         title: "Card parsing works!",

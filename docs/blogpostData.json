@@ -78,15 +78,3 @@ blogData =
       }
    ]
 }
-
-
-
-24-09
-
-Design
-
-Basic design such as gameloop and gameplay was determined and documented.
-
-images/gameloop.png
-
-At this point the project started to reach a somewhat playable state. The next step was to actually builöd a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement

@@ -35,6 +35,41 @@ blogData =
         title: "Projectiles added",
         images: ["images/AirStrike.png", "images/bubbles.png", "images/laser.png", "images/lightning.png"],
         text: "Projectiles have been added for the three existing characters. To create the effects, a couple of custom shaders were written to get desired effects. The Witch shoots lightning primarily, but a bubble projectile was also created in case that is desired in the actual game. Enigma charges up and shoots a powerful laser. The laser is essentially a cylinder rendered through three shader passes, all adding individual layers to the resulting beam. The Colonel calls in a powerful air strike plane, which crashes into the target creating a cloud of fire smoke while the plane is ripped into pieces. The smoke effect is a particle system with a custom shader using a custom made smoke texture which is used to give the smoke/fire its shape and color."
+      },
+      {
+        title: "Card parsing works!",
+        images: ["images/correctedDescriptiveImage.png", "images/cardspawn.gif"],
+        text: "After a lot of wrestling to with the SUR40, we finally have a complete pipeline from gathering data from the SUR40, to parsing the cards from the image and interpreting the results in Unity to spawn characters. First, the image is gathered from the SUR40 by hijacking an old example program called RawImageVisualizer and the data is sent over TCP to a python server on the same machine. The python server then uses OpenCV to analyze the image. The two short edges of the screen are split into six rectangles each, as can be seen in the image, where we look for a card by trying to count the number of large enough contours, and that way deciding the rank. The suit is not considered, as that would be unnecessary for our purposes right now. The card information from each rectangle is encoded into a string and sent to Unity over UDP on the same machine. Unity then interprets the string and spawns characters accordingly, as can be seen in the gif."
+      },
+      {
+        title: "Squishy character added",
+        images: ["images/squishy.png"],
+        text: "The new character squishy is a water character shooting bubbles. The character was not modelled in Blender as the other characters, but is created by sphere-tracing into a signed distance field only using mathematical formulas in shaders to describe the shapes and smooth blending of those in the character."
+      },
+      {
+        title: "Battlefield animated river and waterfall",
+        images: ["images/waterfall.gif"],
+        text: "In previous versions of the battlefield terrain, there has been water down the middle of the platform. We have thought from the start that it would look nice if there was some movement or animation to the water. When the new platform style was created, we got to work on making the water move. This was accomplished through a surface shader on the water, animating the UV coordinates that the various textures are sampled at. The speed of the water depends on how steep the slope of the water is. The waterfall was created using a custom particle sprite generated as a smoke ball in Blender, brought into Unity and made to act like water droplets cascading off the platform as the flow increases."
+      },
+      {
+        title: "General environment changes",
+        images: ["images/environmentupgrade.png", "images/flag.png", "images/skybox.png"],
+        text: "Throughout the project, the environment has been continuously improved. The model was changed to have more detail and depth, compared to the flat environment used initially. A skybox was added to make the background more interesting. There were also rock platforms added for the characters to spawn on, having swirling glowing light to enhance the feeling of the rocks magically hovering in the air. Each team was eventually given low-poly flags, where the fabric was simulated using Unity’s cloth simulation system."
+      },
+      {
+        title: "Armor and Doctor characters finished",
+        images: ["images/armor.gif", "images/doctor.gif"],
+        text: "We knew that we wanted to have at least six playable characters, so we sat down to discuss what characters were needed in addition to the Witch, Enigma, Squishy and the Colonel. We figured we wanted each character to have a special ability, so the Witch should be a balanced character, Enigma should be a glass cannon, Squishy should be able to deal damage to multiple opponents at once and the Colonel should also be special in some way. We felt that both a tanking character and a healing character were missing, so the Armor was created as a tank, with a lot of health and the ability to move a shield to allies, protecting them, and the Doctor was created to be able to heal allies that were next to them, being unable to cause damage to opponents."
+      },
+      {
+        title: "Card UI improvements and character stats",
+        images: ["images/UI1.png", "images/UI2.png", "images/UI3.png"],
+        text: "The UI was altered so that the areas for card placement now are shaded to be semi-transparent and has a glow when no card is placed. Cards can also be rotated either vertically or horizontally, which changes the color of the border around the card placement area to reflect whether a character is in an offensive or a defensive state. UI was also added to describe the character stats to the players. The players now get to know the character names, health, attack, defense and speed characteristics. Attack, Defense and Speed reflects how strong offensively, strong defensively and fast a character is."
+      },
+      {
+        title: "",
+        images: [""],
+        text: ""
       }
    ]
 }

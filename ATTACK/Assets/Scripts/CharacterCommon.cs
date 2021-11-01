@@ -39,7 +39,7 @@ public class CharacterCommon : MonoBehaviour
     void Awake()
     {
         Mode = CharacterMode.Offensive;
-        shieldAsset = Resources.Load<GameObject>("Assets/Resources/Models/shield/ShieldPrefab");
+        shieldAsset = Resources.Load<GameObject>("Models/shield/ShieldPrefab");
         health = maxHealth;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
@@ -55,7 +55,7 @@ public class CharacterCommon : MonoBehaviour
         if (position != -1 && CardManager.HasCard(team, position))
         {
             Card c = CardManager.GetCard(team, position);
-            setRotationFromCard(c);
+            setRotation(c.rotated);
         }
     }
 
@@ -125,27 +125,33 @@ public class CharacterCommon : MonoBehaviour
         if (animator != null) animator.SetTrigger("StartGetHit");
     }
 
-    private void setRotationFromCard(Card c)
+    private void setRotation(bool rotated)
     {
         if (Mode == CharacterMode.Offensive)
         {
             // If going into defensive mode
-            if (c.rotated)
+            if (rotated)
             {
-                spawnedShield = Instantiate(shieldAsset, transform.position + new Vector3(0, 0, 10), Quaternion.LookRotation(-transform.position));
+                spawnedShield = Instantiate(shieldAsset, transform.position, Quaternion.LookRotation(new Vector3(-transform.position.x, 0, 0)));
+                spawnedShield.transform.Translate(Vector3.forward * 6);
                 Mode = CharacterMode.Defensive;
             } 
         } 
         else 
         {
             // If going out of defensive mode
-            if (!c.rotated)
+            if (!rotated)
             {
                 Destroy(spawnedShield);
                 Mode = CharacterMode.Offensive;
             } 
         }
         return;
+    }
+
+    private void OnDestroy() {
+        if (spawnedShield != null)
+            Destroy(spawnedShield);
     }
 
 }

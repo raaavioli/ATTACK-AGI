@@ -67,9 +67,26 @@ blogData =
         text: "The UI was altered so that the areas for card placement now are shaded to be semi-transparent and has a glow when no card is placed. Cards can also be rotated either vertically or horizontally, which changes the color of the border around the card placement area to reflect whether a character is in an offensive or a defensive state. UI was also added to describe the character stats to the players. The players now get to know the character names, health, attack, defense and speed characteristics. Attack, Defense and Speed reflects how strong offensively, strong defensively and fast a character is."
       },
       {
+        title: "Game Design choices made",
+        images: ["images/gameloop.png"],
+        text: "At this point the project started to reach a somewhat playable state. The next step was to actually builöd a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement."
+      },
+      {
         title: "",
         images: [""],
         text: ""
       }
    ]
 }
+
+
+
+24-09
+
+Design
+
+Basic design such as gameloop and gameplay was determined and documented.
+
+images/gameloop.png
+
+At this point the project started to reach a somewhat playable state. The next step was to actually builöd a game out of it, and for that a basic game design was needed. A couple of group members documented a couple of different possible behaviours, and then the group collectively chose their favourite to implement

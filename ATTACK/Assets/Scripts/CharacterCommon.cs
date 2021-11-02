@@ -11,6 +11,8 @@ public class CharacterCommon : MonoBehaviour
     public CharacterMode Mode;
     private Team team;
 
+    public Character character { get; set; }
+
     private GameManager gameManager;
     private Attack attack;
     private Special special;

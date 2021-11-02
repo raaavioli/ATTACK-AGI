@@ -83,6 +83,7 @@ public class Spawner : MonoBehaviour
         SpawnedCharacter.transform.localRotation = towardsMiddle;
         SpawnedCharacter.GetComponent<CharacterCommon>().SetTeam(team);
         SpawnedCharacter.GetComponent<CharacterCommon>().Mode = mode;
+        SpawnedCharacter.GetComponent<CharacterCommon>().character = character;
         SpawnedCharacter.SetActive(false);
 
         GetComponent<AudioSource>().Play();

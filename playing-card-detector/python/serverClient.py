@@ -17,10 +17,8 @@ RECT_WIDTH = RECT_HEIGHT * 8.8 / 5.8 #dimension of playing card
 
 CARD_AREA_MIN = 3500
 CARD_AREA_MAX = 6000
-SUIT_AREA_MIN = 50
-SUIT_AREA_MAX = 500
-
-
+SUIT_AREA_MIN = 90
+SUIT_AREA_MAX = 300
 
 def signal_handler(sig, frame):
     print('interrupted, shutting down server.')
@@ -100,7 +98,7 @@ def suitAreaToSquare(image):
         [-1,-1,-1,-1,-1],
         [-1,-1,-1,-1,-1]])
     sharpen = cv2.filter2D(image, -1, sharpen_kernel)
-    median = cv2.medianBlur(sharpen, 5)
+    median = cv2.medianBlur(sharpen, 7)
     
     size = (4, 4)
     shape = cv2.MORPH_RECT
@@ -148,15 +146,20 @@ def analyzeSubImage(subImage, player):
     currentCardIndex = 0
     cardInfos = []
     seenPositions = []
-    while((foundCards < CARD_AREAS) and (currentCardIndex < len(contours)) and (isCardContour(contours[currentCardIndex]))):
+    while((foundCards < CARD_AREAS) and (currentCardIndex < len(contours))):
+        if not isCardContour(contours[currentCardIndex]):
+            currentCardIndex+=1
+            continue
         _, y, w, h = cv2.boundingRect(contours[currentCardIndex])
         rotated = int(w < h)
         position = int((y + h / 2.0) / float(RECT_HEIGHT))
         rank = 0
         suitMarkerIndex = currentCardIndex + 1
-        while((suitMarkerIndex < len(contours)) and (isSuitContour(contours[suitMarkerIndex]))):
-            rank+=1
+        while(suitMarkerIndex < len(contours) and not isCardContour(contours[suitMarkerIndex])):
+            if isSuitContour(contours[suitMarkerIndex]):
+                rank+=1
             suitMarkerIndex+=1
+
         if rank == 0:
             rank = 1
 

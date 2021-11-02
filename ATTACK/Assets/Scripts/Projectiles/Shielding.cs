@@ -68,9 +68,9 @@ public class Shielding : Special {
 		// Prefer defensive characters.
 		CharacterCommon target;
 		if (defensiveTargets.Count > 0) {
-			target = defensiveTargets[Random.Range(0, defensiveTargets.Count - 1)];
+			target = defensiveTargets[Random.Range(0, defensiveTargets.Count)];
 		} else {
-			target = nonNullTargets[Random.Range(0, nonNullTargets.Count - 1)];
+			target = nonNullTargets[Random.Range(0, nonNullTargets.Count)];
 
 		}
 

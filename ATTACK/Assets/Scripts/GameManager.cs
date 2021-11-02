@@ -113,6 +113,9 @@ public class GameManager : MonoBehaviour
             spawnedCharacters++;
         }
 
+        // Spawn from cards during the setup phase.
+        SpawnFromCards();
+
         // Toggle visibility for all living characters
         for (int i = 0; i < TEAM_SIZE; i++)
         {
@@ -280,7 +283,9 @@ public class GameManager : MonoBehaviour
         UIController.SetTimer(setupTime);
         UIController.ShowScoreBoard(false);
 
-        SpawnFromCards();
+        // Prepare for combat
+        state = GameState.Combat;
+
         for (int i = 0; i < TEAM_SIZE; i++)
         {
             // Toggle combat visibility for all living character cards
@@ -384,15 +389,25 @@ public class GameManager : MonoBehaviour
         if (team == Team.One)
         {
             for (int i = 0; i < T1.Length; i++)
-                if (T1[i] == character)
+                if (T1[i] == character) {
                     T1[i] = null;
+                    if (state == GameState.Setup) {
+                        UIController.SetStatsVisible(UIVisibility.None, team, i);
+                    }
+                }
         }
         else if (team == Team.Two)
         {
-            for (int i = 0; i < T1.Length; i++)
-                if (T1[i] == character)
-                    T1[i] = null;
+            for (int i = 0; i < T2.Length; i++)
+                if (T2[i] == character) {
+                    T2[i] = null;
+                    if (state == GameState.Setup) {
+                        UIController.SetStatsVisible(UIVisibility.None, team, i);
+                    }
+                }
         }
+
+        spawnedCharacters--;
         Destroy(character);
     }
 
@@ -417,15 +432,27 @@ public class GameManager : MonoBehaviour
         foreach (Team team in Enum.GetValues(typeof(Team)))
         {
             for(int i = 0; i < TEAM_SIZE; i++) {
+                GameObject potentialCurrentCharacter = team == Team.One ? T1[i] : T2[i];
+
                 if (CardManager.HasCard(team, i)) {
                     Card card = CardManager.GetCard(team, i);
                     GameObject spawn = team == Team.One ? spawnPointsT1[card.position] : spawnPointsT2[card.position];
                     Character character = Character.Values()[card.rank % Character.Values().Count];
+
+                    // Clear position if it is already taken.
+                    if (potentialCurrentCharacter != null && potentialCurrentCharacter.GetComponent<CharacterCommon>().character != character) {
+                        KillCharacter(team, potentialCurrentCharacter);
+                    }
+
                     CharacterMode mode = card.rotated ?
                         CharacterMode.Defensive :
                         CharacterMode.Offensive;
 
                     SpawnCharacter(i, character, mode, team);
+                } else {
+                    if (potentialCurrentCharacter != null) {
+                        KillCharacter(team, potentialCurrentCharacter);
+                    }
                 }
             }
         }

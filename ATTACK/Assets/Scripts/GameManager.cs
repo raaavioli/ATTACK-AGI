@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     private GameObject[] spawnPointsT1;
     [SerializeField]
     private GameObject[] spawnPointsT2;
-    
+    [SerializeField]
+    private GameObject[] readyButtons;
+
     [SerializeField]
     [Range(1, 30)]
     private int setupTime = 30;
@@ -23,21 +25,22 @@ public class GameManager : MonoBehaviour
 
     private int spawnedCharacters = 0;
 
+    
     private int round = 0;
     private const int MAX_ROUNDS = 5;
     private int t1Score = 0;
     private int t2Score = 0;
-    private GameState state = GameState.RoundOver;
+    private GameState state = GameState.MainMenu;
+    private GameState prevState;
 
     UIController UIController;
 
     public void Start()
     {
-        T1 = new GameObject[TEAM_SIZE];
-        T2 = new GameObject[TEAM_SIZE];
-
         UIController = GameObject.Find("Canvas").GetComponent<UIController>();
         UIController.SetTotalRounds(MAX_ROUNDS);
+        T1 = new GameObject[TEAM_SIZE];
+        T2 = new GameObject[TEAM_SIZE];
     }
 
 
@@ -45,20 +48,52 @@ public class GameManager : MonoBehaviour
     {
         if (state == GameState.Combat) {
             CombatPhaseUpdate();
-        } 
+        }
         else if (state == GameState.Setup) {
             SetupPhaseUpdate();
-        } 
-        else if (state == GameState.RoundOver)
-        {
-            if (Input.GetKeyDown("s")) StartCoroutine(SetupPhaseTimer(setupTime));
         }
 
-        // Restarts scene on r press.
-        if (Input.GetKeyDown("r")) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (Input.GetKeyDown("r")) Cursor.visible = !Cursor.visible;
 
 
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+    }
+
+    //The following public methods are accessed by the Menu Game Object in the UI.
+    public void ContinueAfterBattlePhase()
+    {
+        if (state == GameState.RoundOver)
+            StartSetup();
+        else
+            ExitToMainMenu();
+    }
+
+    public void StartSetup()
+    {
+        state = GameState.Setup;
+
+        StartCoroutine(SetupPhaseTimer(setupTime));
+    }
+
+    public void PauseGame()
+    {
+        prevState = state;
+        state = GameState.GameMenu;
+    }
+
+    public void ResumeGame()
+    {
+        state = prevState;
+    }
+
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public GameState GetGameState()
+    {
+        return state;
     }
 
     private void SetupPhaseUpdate()
@@ -77,6 +112,9 @@ public class GameManager : MonoBehaviour
 
             spawnedCharacters++;
         }
+
+        // Spawn from cards during the setup phase.
+        SpawnFromCards();
 
         // Toggle visibility for all living characters
         for (int i = 0; i < TEAM_SIZE; i++)
@@ -165,8 +203,8 @@ public class GameManager : MonoBehaviour
                 if (cc != null && cc.CanAttack()) {
                     if (isHealer) {
                         // Currently, the only healer there is heals its immediate neighbors
-                        // If other healing spells are created, this will have to be changed. 
-                        // Maybe have some target priority Enum for the Attack to base decisions on. 
+                        // If other healing spells are created, this will have to be changed.
+                        // Maybe have some target priority Enum for the Attack to base decisions on.
                         int pos = GetCharacterPosition(cc.gameObject);
                         List<CharacterCommon> Neighbors = new List<CharacterCommon>();
                         if (pos > 0 && attackers[pos - 1] != null)
@@ -227,17 +265,27 @@ public class GameManager : MonoBehaviour
         // Start count down
         for (int i = 0; i < seconds; i++)
         {
-            if (seconds - i == startSoundTime)
+            if (readyButtons[0].GetComponent<ReadyButtonScript>().IsActive() && readyButtons[1].GetComponent<ReadyButtonScript>().IsActive())
+                break;
+            if (seconds - i <= startSoundTime && state != GameState.GameMenu)
                 GetComponent<AudioSource>().Play();
-            UIController.SetTimer(seconds - i);
+            if (state == GameState.GameMenu)
+                i--;
+            else
+                UIController.SetTimer(seconds - i);
+
             yield return new WaitForSeconds(1f);
         }
+
+        GetComponents<AudioSource>()[2].Play();
+        state = GameState.Combat;
+        DeactivateReadyButtons();
         UIController.SetTimer(setupTime);
         UIController.ShowScoreBoard(false);
 
         // Prepare for combat
         state = GameState.Combat;
-        SpawnFromCards();
+
         for (int i = 0; i < TEAM_SIZE; i++)
         {
             // Toggle combat visibility for all living character cards
@@ -251,7 +299,7 @@ public class GameManager : MonoBehaviour
 
     /**
      * Returns a target among the team "opponents".
-     * Select any defensive target randomly, and offensive targets 
+     * Select any defensive target randomly, and offensive targets
      * if no defensive targets are found.
      */
     private List<CharacterCommon> GetTargets(GameObject[] targets, int count)
@@ -335,21 +383,31 @@ public class GameManager : MonoBehaviour
         }
         return Team.One;
     }
-    
+
     private void KillCharacter(Team team, GameObject character)
     {
         if (team == Team.One)
         {
             for (int i = 0; i < T1.Length; i++)
-                if (T1[i] == character)
+                if (T1[i] == character) {
                     T1[i] = null;
-        } 
+                    if (state == GameState.Setup) {
+                        UIController.SetStatsVisible(UIVisibility.None, team, i);
+                    }
+                }
+        }
         else if (team == Team.Two)
         {
-            for (int i = 0; i < T1.Length; i++)
-                if (T1[i] == character)
-                    T1[i] = null;
+            for (int i = 0; i < T2.Length; i++)
+                if (T2[i] == character) {
+                    T2[i] = null;
+                    if (state == GameState.Setup) {
+                        UIController.SetStatsVisible(UIVisibility.None, team, i);
+                    }
+                }
         }
+
+        spawnedCharacters--;
         Destroy(character);
     }
 
@@ -369,23 +427,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SpawnFromCards() 
+    private void SpawnFromCards()
     {
         foreach (Team team in Enum.GetValues(typeof(Team)))
         {
             for(int i = 0; i < TEAM_SIZE; i++) {
+                GameObject potentialCurrentCharacter = team == Team.One ? T1[i] : T2[i];
+
                 if (CardManager.HasCard(team, i)) {
                     Card card = CardManager.GetCard(team, i);
                     GameObject spawn = team == Team.One ? spawnPointsT1[card.position] : spawnPointsT2[card.position];
                     Character character = Character.Values()[card.rank % Character.Values().Count];
+
+                    // Clear position if it is already taken.
+                    if (potentialCurrentCharacter != null && potentialCurrentCharacter.GetComponent<CharacterCommon>().character != character) {
+                        KillCharacter(team, potentialCurrentCharacter);
+                    }
+
                     CharacterMode mode = card.rotated ?
                         CharacterMode.Defensive :
                         CharacterMode.Offensive;
 
                     SpawnCharacter(i, character, mode, team);
+                } else {
+                    if (potentialCurrentCharacter != null) {
+                        KillCharacter(team, potentialCurrentCharacter);
+                    }
                 }
             }
         }
+    }
+
+    private void DeactivateReadyButtons()
+    {
+        readyButtons[0].GetComponent<ReadyButtonScript>().Deactivate();
+        readyButtons[1].GetComponent<ReadyButtonScript>().Deactivate();
     }
 }
 
@@ -394,6 +470,8 @@ public enum GameState {
     Combat,
     RoundOver,
     GameOver,
+    MainMenu,
+    GameMenu
 }
 
 public enum Team : int
@@ -421,7 +499,7 @@ public static class TeamExtension
 
 public class Character
 {
-    public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab", 
+    public static readonly Character WITCH = new Character("Models/witch", "WitchPrefab",
         new CharacterStats("Witch", 3, 2, 5));
     public static readonly Character ENIGMA = new Character("Models/enigma", "EnigmaPrefab",
         new CharacterStats("Enigma", 5, 1, 3));

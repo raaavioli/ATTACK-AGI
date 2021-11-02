@@ -9,7 +9,19 @@ using UnityEngine.Events;
 using static GameManager;
 
 public class ServerHandler : MonoBehaviour {
-    public static string mostRecentCardInfo { get; private set; }
+    private static string _mostRecentCardInfo;
+    public static string mostRecentCardInfo {
+        get {
+            updatedCardInfo = false;
+            return _mostRecentCardInfo;
+		}    
+        private set {
+            updatedCardInfo = true;
+            _mostRecentCardInfo = value;
+		}
+    }
+
+    public static bool updatedCardInfo { get; private set; }
 
     private byte[] data;
     private EndPoint senderRemote;
@@ -42,9 +54,14 @@ public class ServerHandler : MonoBehaviour {
 
     void Update() {
         if (socket.Available > 0) {
+            data = new byte[128];
             socket.ReceiveFrom(data, ref senderRemote);
             string cards = Encoding.ASCII.GetString(data);
             Debug.Log(cards);
+
+            if (cards.Equals("empty")) {
+                cards = "";
+			}
             mostRecentCardInfo = cards;
         }
     }

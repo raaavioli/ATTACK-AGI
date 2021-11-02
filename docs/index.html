@@ -36,7 +36,7 @@
         <ul>
             <li><a href="index.html" class="current"><span></span>Home</a></li>
             <li><a href="team.html"><span></span>The Team</a></li>
-            <li><a href="#" target="_parent"><span></span>Inspirations</a></li>
+            <!--li><a href="#" target="_parent"><span></span>Inspirations</a></li-->
         </ul>
 	</div>
 </div> <!-- end of templatemo_menu -->
@@ -50,10 +50,163 @@
             <h1>The Project</h1>
             <p>Our project is a turn-based game, reminiscent of Auto Chess, designed for two players. The gameplay will loop between two different states, Draft Round and Combat Round, until either player has emerged victorious.</br></br>
               During the Draft Round, the players will interact with their respective sides of the board simultaneously, placing characters they have drafted to combat eachother. Once the players are done drafting and placing, the Combat Round starts.</br></br>
-              During the Combat Round, the placed teams will automatically battle eachother in a random fashion, until either team is vanquished. Once a team has emerged victorious, it will then deal damage to the losing player. If a player takes too much damage, he/she will have lost, and the other player would win.</br></br>
-              Tech-wise, the intent is to have the game run on a SUR40 device, using Microsoft PixelSense to detect objects added on the screen. What exactly those objects are is right now unclear, but it will be revealed along with the development, depending on what works and what doesn't.
+              During the Combat Round, the placed teams will automatically battle each other in a random fashion, until either team is vanquished. Once a team has emerged victorious, the winning player is awarded a point on the scoreboard. Once a set amount of rounds has passed, the final score will determine the winner for the game.</br></br>
+              This project is integrating the Microsoft PixelSense technology of a SUR40 device. Every single pixel of the device's screen contains tiny IR-sensors, not only capable of sensing touch, but capturing images as well. Playing your characters during the Setup Phase will involve placing actual physical cards on the screen, allowing them to be read, and then that data is sent to the game client to generate the appropriate characters. We chose regular "Poker" cards, because making such generic and readily available cards would be a cool proof of concept.
             </p>
 	</div>
+      <!--a href="blogpost.html?entry=">
+        <div class="post_box">
+            <div class="header">
+                <h2></h2>
+              <div class="tag"><strong>Tags: </strong></div>
+                <span class="posted_date">
+
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/lightning.png" alt="image" />
+            <div class="pb_right">
+                <p></p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a-->
+      <a href="blogpost.html?entry=15">
+        <div class="post_box">
+            <div class="header">
+                <h2>Shield effect for defensive mode</h2>
+              <div class="tag"><strong>Tags: </strong>Shaders, Model, Scripting, Texture, Blender</div>
+                <span class="posted_date">
+                    01 Nov
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/combinedShield.png" alt="image" />
+            <div class="pb_right">
+                <p>Added an effect for when characters are in defensive mode</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=14">
+        <div class="post_box">
+            <div class="header">
+                <h2>Card UI improvements and character stats</h2>
+              <div class="tag"><strong>Tags: </strong>UI, Character Stats, Card Interaction</div>
+                <span class="posted_date">
+                    25 Oct
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/UI1.png" alt="image" />
+            <div class="pb_right">
+                <p>Update UI for card placement areas. Also create a panel for character descriptions. Last, make sure cards can be differentiated on the board by rotation.</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=13">
+        <div class="post_box">
+            <div class="header">
+                <h2>Armor and Doctor characters finished</h2>
+              <div class="tag"><strong>Tags: </strong>Art, Blender, Modeling, Animation, Procedural Materials</div>
+                <span class="posted_date">
+                    21 Oct
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/armor.gif" alt="image" />
+            <div class="pb_right">
+                <p>With the addition of these two characters, we have more of a finished roster!</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=12">
+        <div class="post_box">
+            <div class="header">
+                <h2>General environment changes</h2>
+              <div class="tag"><strong>Tags: </strong>Environment, Skybox, Modelling</div>
+                <span class="posted_date">
+                    15 Oct
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/environmentupgrade.png" alt="image" />
+            <div class="pb_right">
+                <p>Update environment giving it depth and texturing and a skybox for the background. Also add platforms for spawning and flags for each team.</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=11">
+        <div class="post_box">
+            <div class="header">
+                <h2>Battlefield animated river and waterfall</h2>
+              <div class="tag"><strong>Tags: </strong>Shaders, Graphics, Particles, Water</div>
+                <span class="posted_date">
+                    10 Oct
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/waterfall.gif" alt="image" />
+            <div class="pb_right">
+                <p>There is now a great big waterfall off the battlefield, with an animated river that leads to it.</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=10">
+        <div class="post_box">
+            <div class="header">
+                <h2>Squishy character added</h2>
+              <div class="tag"><strong>Tags: </strong>Character, Ray Marching, HLSL</div>
+                <span class="posted_date">
+                    30 Sep
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/squishy.png" alt="image" />
+            <div class="pb_right">
+                <p>Create new character using sphere tracing/ray marching into a signed distance field.</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=9">
+        <div class="post_box">
+            <div class="header">
+                <h2>Card parsing works!</h2>
+              <div class="tag"><strong>Tags: </strong>Computer Vision, Card Reading, Parsing, Networking</div>
+                <span class="posted_date">
+                    29 Sep
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/correctedDescriptiveImage.png" alt="image" />
+            <div class="pb_right">
+                <p>The data pipeline from SUR40 to Unity works now.</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
+      <a href="blogpost.html?entry=8">
+        <div class="post_box">
+            <div class="header">
+                <h2>Game Design choices made</h2>
+              <div class="tag"><strong>Tags: </strong>Game Design</div>
+                <span class="posted_date">
+                    24 Sep
+                    <strong>2021</strong>
+                </span>
+            </div>
+            <img src="images/gameloop.png" alt="image" />
+            <div class="pb_right">
+                <p>Basic design such as gameloop and gameplay was determined and documented.</p>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+      </a>
       <a href="blogpost.html?entry=7">
         <div class="post_box">
             <div class="header">

@@ -2047,7 +2047,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 16
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -2063,30 +2063,113 @@ MonoBehaviour:
     You''ll
     play 5 rounds of automated, yet interactive combat. For each round, you''ll have
     drafted cards to help you win the round, by placing them on the indicated spaces.
-    These cards can be placed vertically OR horizontally on the indicated card spaces
-    during the Setup Phase of the round. Placing a card successfully will spawn a
-    character to fight for your side once the Battle Phase starts. When placed vertically,
-    the card space will light up orange, indicating that the card is placed in offensive
-    mode. When place horizontally, the card space will light up blue, indicating
-    that the card is placed in defensive mode. Once the timer runs out, or both players
-    have tapped their ''Ready''-buttons, Setup Phase ends, and Battle Phase begins. 
-    During the Battle Phase, the battle has begun, and you may not place new cards
-    or remove previously placed card, but you may switch the already placed card
-    between being offensive or defensive. The characters of each side will automatically
-    engage each other until one (or both) sides are eliminated. You''ll not just
-    stand and watch while they battle each other.  You may actively assist your team
-    by double-tapping your characters. This will heal your target by a significant
-    amount. You''re limited to one heal, per player, per round. Once only one side
-    is remaining, that player will then have won that round, earning a point towards
-    winning the game. If both sides are eliminated, no one earns a point. At this
-    point, you''re allowed to take your time to assess the results, and when you''re
-    ready for the next round, you may click ''Continue to next round'', to start
-    a new round.  As for drafting cards, there really aren''t any rules. It is up
-    to you to draft as you like. However, here are a few suggested drafting methods: 
-    1. Start the first round with 2 random cards from your deck. Then for each subsequent
-    round, draw another card. 2. Have all cards available throughout the entire game,
-    and experiment with different placement combinations. 3. Same as 2, but the winning
-    player of a round loses a card of the losing player''s choice, for each round.'
+    Each round will be initiated with a Setup Phase, which is then followed by a
+    Battle Phase.<br>
+
+    Show your opponent no mercy!
+
+
+    During the Setup Phase,
+    the cards you have drafted can be placed vertically OR horizontally on the indicated
+    card spaces. Placing a card successfully will spawn a unit. You can inspect the
+    units attributes, to get a general sense of how it will perform during battle.
+    (More detailed descriptions of each unit is found further back in the instructions.)
+    You can also switch around with positioning if you''re not happy with the current
+    one.<br>
+
+    When placed vertically, the card space will light up orange, indicating
+    that the card is placed, and in offensive mode. When place horizontally, the
+    card space will light up blue, indicating that the card is placed, and in defensive
+    mode.<br>
+
+    Once the setup timer runs out, or both players have tapped their
+    respective ''Ready''-buttons, Setup Phase ends, and Battle Phase begins. By this
+    time, you should have orange or blue boxes underneath all cards you want to play.
+
+
+    During
+    the Battle Phase, the battle has begun, and you may not place new cards or remove
+    previously placed card, but you may switch the already placed card between being
+    offensive or defensive. The characters of each side will automatically engage
+    each other until one (or both) sides are eliminated.<br>
+
+    You''ll not just
+    stand by and watch while they battle each other.  You may actively assist your
+    team by double-tapping your characters. This will heal your target by a significant
+    amount. You''re limited to one heal, per player, per round.<br>
+
+    Once only
+    one side is remaining, that player will then have won that round, earning a point
+    towards winning the game. If both sides are eliminated, no one earns a point.
+    At this point, you''re allowed to take your time to assess the results, and when
+    you''re ready for the next round, you may click ''Continue to next round'', to
+    start a new round.
+
+
+    As for drafting cards, there really aren''t any rules.
+    It is up to you to draft as you like. Experiment freely.<br>
+
+    However, here
+    are a few suggested drafting methods:<br>
+
+    1. Start the first round with
+    2 random cards from your deck. Then for each subsequent round, draw another card.<br>
+
+    2.
+    Have all cards available throughout the entire game, and experiment with different
+    placement combinations.<br>
+
+    3. Same as 2, but the winning player of a round
+    loses a card of the losing player''s choice, for each round.
+
+
+    There is currently
+    six different units, with various traits:<br><br>
+
+    A: Witch<br>
+
+    A fierce
+    spell caster, quickly hurling barrages of lightning against her opponents. She''s
+    old, but not decrepit, so can handle a small beating.<br><br>
+
+    2: Enigma<br>
+
+    The
+    enigma is as deadly as it is mysterious, capable of firing devastating lasers,
+    but it cannot handle too much damage itself.<br><br>
+
+    3: Colonel<br>
+
+    An
+    imposing military commander, inspiring so much loyalty for his flight troops
+    that they will literally crash into his targets. It takes a while for his planes
+    to arrive, but they sure do deal large amount of damage. His survival training
+    also makes him very durable.
+
+
+    4: Squishy<br>
+
+    This weird lifeform may
+    look harmless, and even cute, but don''t let that fool you; it''s actually a
+    very deadly blob of liquid. It''s capable of ejecting toxic liquid projectiles
+    from itself, hitting ALL enemy targets. It''s amorphous body makes it very resilient
+    to damage.<br><br>
+
+    5: Doctor<br>
+
+    Did someone call for the doctor? As
+    a physician, the Doctor has sworn the Hippocratic oath; do no harm. Still, he
+    will assist his team by frequently healing his two close neighbours. His lack
+    of armor or other defensive traits makes him a vulnerable target, though.<br><br>
+
+    6:
+    Armor<br>
+
+    A suit of possessed, medieval armor. Being a literally hunk of
+    animated metal, it''s VERY durable. It''s also able to manipulate its shield,
+    lending its protective abilities to needing team members. While defence is its
+    primary focus, it is also able to send hurling blades towards its enemies, dealing
+    a fair amount of damage.'
 --- !u!222 &265936819
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14025,19 +14108,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titles:
   - Introduction
-  - 2
-  - 3
-  - 4
-  - 5
+  - Setup Phase
+  - Battle Phase
+  - Drafting Cards
+  - Unit Description
+  - Unit Description Continued
   contents:
-  - Welcome to Augmented Table-Top Auto Chess Kingdom (ATTACK)!<br>You'll play 5
-    rounds of automated, yet interactive combat. Each round begins with a Setup Phase
-    and ends with a Battle Phase. For each round, you'll have drafted cards to help
-    you win the round, by placing them on the indicated spaces.
-  - 2
-  - 3
-  - 4
-  - 5
+  - Welcome to Augmented Table-Top Auto Chess Kingdom (ATTACK)!<br><br>You'll play
+    5 rounds of automated, yet interactive combat. For each round, you'll have drafted
+    cards to help you win the round, by placing them on the indicated spaces. Each
+    round will be initiated with a Setup Phase, which is then followed by a Battle
+    Phase.<br><br>Show your opponent no mercy!
+  - During the Setup Phase, the cards you have drafted can be placed vertically OR
+    horizontally on the indicated card spaces. Placing a card successfully will spawn
+    a unit. You can inspect the units attributes, to get a general sense of how it
+    will perform during battle. (More detailed descriptions of each unit is found
+    further back in the instructions.) You can also switch around with positioning
+    if you're not happy with the current one.<br><br>When placed vertically, the
+    card space will light up orange, indicating that the card is placed, and in offensive
+    mode. When place horizontally, the card space will light up blue, indicating
+    that the card is placed, and in defensive mode.<br><br>Once the setup timer runs
+    out, or both players have tapped their respective 'Ready'-buttons, Setup Phase
+    ends, and Battle Phase begins. By this time, you should have orange or blue boxes
+    underneath all cards you want to play.
+  - During the Battle Phase, the battle has begun, and you may not place new cards
+    or remove previously placed card, but you may switch the already placed card
+    between being offensive or defensive. The characters of each side will automatically
+    engage each other until one (or both) sides are eliminated.<br><br>You'll not
+    just stand by and watch while they battle each other.  You may actively assist
+    your team by double-tapping your characters. This will heal your target by a
+    significant amount. You're limited to one heal, per player, per round.<br><br>Once
+    only one side is remaining, that player will then have won that round, earning
+    a point towards winning the game. If both sides are eliminated, no one earns
+    a point. At this point, you're allowed to take your time to assess the results,
+    and when you're ready for the next round, you may click 'Continue to next round',
+    to start a new round.
+  - As for drafting cards, there really aren't any rules. It is up to you to draft
+    as you like. Experiment freely.<br>However, here are a few suggested drafting
+    methods:<br><br>1. Start the first round with 2 random cards from your deck.
+    Then for each subsequent round, draw another card.<br>2. Have all cards available
+    throughout the entire game, and experiment with different placement combinations.<br>3.
+    Same as 2, but the winning player of a round loses a card of the losing player's
+    choice, for each round.
+  - 'There is currently six different units, with various traits:<br><br>A: Witch<br>A
+    fierce spell caster, quickly hurling barrages of lightning against her opponents.
+    She''s old, but not decrepit, so can handle a small beating.<br><br>2: Enigma<br>The
+    enigma is as deadly as it is mysterious, capable of firing devastating lasers,
+    but it cannot handle too much damage itself.<br><br>3: Colonel<br>An imposing
+    military commander, inspiring so much loyalty for his flight troops that they
+    will literally crash into his targets. It takes a while for his planes to arrive,
+    but they sure do deal large amount of damage. His survival training also makes
+    him very durable.'
+  - '4: Squishy<br>This weird lifeform may look harmless, and even cute, but don''t
+    let that fool you; it''s actually a very deadly blob of liquid. It''s capable
+    of ejecting toxic liquid projectiles from itself, hitting ALL enemy targets.
+    It''s amorphous body makes it very resilient to damage.<br><br>5: Doctor<br>Did
+    someone call for the doctor? As a physician, the Doctor has sworn the Hippocratic
+    oath; do no harm. Still, he will assist his team by frequently healing his two
+    close neighbours. His lack of armor or other defensive traits makes him a vulnerable
+    target, though.<br><br>6: Armor<br>A suit of possessed, medieval armor. Being
+    a literally hunk of animated metal, it''s VERY durable. It''s also able to manipulate
+    its shield, lending its protective abilities to needing team members. While defence
+    is its primary focus, it is also able to send hurling blades towards its enemies,
+    dealing a fair amount of damage.'
   title: {fileID: 1407876570}
   content: {fileID: 265936816}
 --- !u!1001 &1346969117

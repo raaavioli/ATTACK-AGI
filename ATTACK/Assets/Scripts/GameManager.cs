@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             Team team = (spawnedCharacters % 2).AsTeam();
 
             // Spawn 2, 3, 0, 1, 2
-            int character = (2 + position) % characters.Count;
+            int character = (1 + position) % characters.Count;
             CharacterMode mode = CharacterMode.Offensive;
             SpawnCharacter(position, characters[character], mode, team);
 

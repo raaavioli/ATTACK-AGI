@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class TextBoxScript : MonoBehaviour
 {
     [SerializeField]
-    string[] titles = new string[5];
+    string[] titles = new string[6];
     [SerializeField]
-    string[] contents = new string[5];
+    string[] contents = new string[6];
     [SerializeField]
     GameObject title;
     [SerializeField]

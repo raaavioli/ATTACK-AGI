@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     private void SetupPhaseUpdate()
     {
         // For debug purpose to be able to spawn by clicking when not running on SUR40
-        if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2)
+        if (Input.GetMouseButtonDown(0) && spawnedCharacters < TEAM_SIZE * 2 && false)
         {
             List<Character> characters = Character.Values();
             int position = (int)(spawnedCharacters / 2f);
@@ -437,7 +437,7 @@ public class GameManager : MonoBehaviour
                 if (CardManager.HasCard(team, i)) {
                     Card card = CardManager.GetCard(team, i);
                     GameObject spawn = team == Team.One ? spawnPointsT1[card.position] : spawnPointsT2[card.position];
-                    Character character = Character.Values()[card.rank % Character.Values().Count];
+                    Character character = Character.Values()[(card.rank - 1) % Character.Values().Count];
 
                     // Clear position if it is already taken.
                     if (potentialCurrentCharacter != null && potentialCurrentCharacter.GetComponent<CharacterCommon>().character != character) {

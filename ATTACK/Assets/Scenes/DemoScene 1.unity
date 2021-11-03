@@ -2152,15 +2152,15 @@ MonoBehaviour:
     This weird lifeform may
     look harmless, and even cute, but don''t let that fool you; it''s actually a
     very deadly blob of liquid. It''s capable of ejecting toxic liquid projectiles
-    from itself, hitting ALL enemy targets. It''s amorphous body makes it very resilient
-    to damage.<br><br>
+    from itself, hitting up to three enemy targets. It''s amorphous body makes it
+    very resilient to damage.<br><br>
 
     5: Doctor<br>
 
-    Did someone call for the doctor? As
-    a physician, the Doctor has sworn the Hippocratic oath; do no harm. Still, he
-    will assist his team by frequently healing his two close neighbours. His lack
-    of armor or other defensive traits makes him a vulnerable target, though.<br><br>
+    Did someone call for
+    the doctor? As a physician, the Doctor has sworn the Hippocratic oath; do no
+    harm. Still, he will assist his team by frequently healing his two close neighbours.
+    His lack of armor or other defensive traits makes him a vulnerable target, though.<br><br>
 
     6:
     Armor<br>
@@ -14161,7 +14161,7 @@ MonoBehaviour:
     him very durable.'
   - '4: Squishy<br>This weird lifeform may look harmless, and even cute, but don''t
     let that fool you; it''s actually a very deadly blob of liquid. It''s capable
-    of ejecting toxic liquid projectiles from itself, hitting ALL enemy targets.
+    of ejecting toxic liquid projectiles from itself, hitting up to three enemy targets.
     It''s amorphous body makes it very resilient to damage.<br><br>5: Doctor<br>Did
     someone call for the doctor? As a physician, the Doctor has sworn the Hippocratic
     oath; do no harm. Still, he will assist his team by frequently healing his two

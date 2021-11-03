@@ -12,7 +12,11 @@ public class Healing : Attack
     private Team team;
 
 	private void Start() {
-        team = GetComponent<CharacterCommon>().GetTeam();
+        //Works for Doctors, otherwise it doesn't matter.
+        if (GetComponent<CharacterCommon>() != null)
+        {
+            team = GetComponent<CharacterCommon>().GetTeam();
+        }
 	}
 
 	protected override int GetMaxTargets()

@@ -16,6 +16,8 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     GameObject continueButton;
     [SerializeField]
+    GameObject combatTouchPanels;
+    [SerializeField]
     GameManager gameManager;
     Color previousBackgroundColor;
     GameState state;
@@ -33,6 +35,7 @@ public class MenuScript : MonoBehaviour
         inGameMenu.SetActive(false);
         inGameButtons.SetActive(false);
         continueButton.SetActive(false);
+        combatTouchPanels.SetActive(false);
         previousBackgroundColor = new Color(0, 0, 0, 0);
         state = gameManager.GetGameState();
     }
@@ -53,12 +56,15 @@ public class MenuScript : MonoBehaviour
                     HideContinueButton();
                     break;
                 case GameState.Combat:
+                    ShowCombatTouchPanels();
                     HideInGameButtons();
                     break;
                 case GameState.RoundOver:
+                    HideCombatTouchPanels();
                     ShowContinueButton();
                     break;
                 case GameState.GameOver:
+                    HideCombatTouchPanels();
                     ShowContinueButton();
                     break;
                 case GameState.MainMenu:
@@ -126,5 +132,16 @@ public class MenuScript : MonoBehaviour
     public void HideContinueButton()
     {
         continueButton.SetActive(false);
+    }
+
+    public void ShowCombatTouchPanels()
+    {
+        combatTouchPanels.SetActive(true);
+        combatTouchPanels.GetComponent<TouchPanelScript>().ResetAmounts();
+    }
+
+    public void HideCombatTouchPanels()
+    {
+        combatTouchPanels.SetActive(false);
     }
 }

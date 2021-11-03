@@ -16,15 +16,9 @@
 
     <div id="site_title">
 
-        <a href="http://www.templatemo.com" target="_parent">Development Blog - Advanced Graphics and Interaction</a>
+        <a target="_parent"></a>
 
     </div> <!-- end of site_title -->
-
-   <div id="header_right">
-
-     <!-- free space we might want to use -->
-
-   </div>
 
     <div class="cleaner"></div>
 
@@ -36,7 +30,7 @@
         <ul>
             <li><a href="index.html" class="current"><span></span>Home</a></li>
             <li><a href="team.html"><span></span>The Team</a></li>
-            <!--li><a href="#" target="_parent"><span></span>Inspirations</a></li-->
+            <li><a href="photogallery.html"><span></span>Photo Gallery</a></li>
         </ul>
 	</div>
 </div> <!-- end of templatemo_menu -->
@@ -51,7 +45,8 @@
             <p>Our project is a turn-based game, reminiscent of Auto Chess, designed for two players. The gameplay will loop between two different states, Draft Round and Combat Round, until either player has emerged victorious.</br></br>
               During the Draft Round, the players will interact with their respective sides of the board simultaneously, placing characters they have drafted to combat eachother. Once the players are done drafting and placing, the Combat Round starts.</br></br>
               During the Combat Round, the placed teams will automatically battle each other in a random fashion, until either team is vanquished. Once a team has emerged victorious, the winning player is awarded a point on the scoreboard. Once a set amount of rounds has passed, the final score will determine the winner for the game.</br></br>
-              This project is integrating the Microsoft PixelSense technology of a SUR40 device. Every single pixel of the device's screen contains tiny IR-sensors, not only capable of sensing touch, but capturing images as well. Playing your characters during the Setup Phase will involve placing actual physical cards on the screen, allowing them to be read, and then that data is sent to the game client to generate the appropriate characters. We chose regular "Poker" cards, because making such generic and readily available cards would be a cool proof of concept.
+              This project is integrating the Microsoft PixelSense technology of a SUR40 device. Every single pixel of the device's screen contains tiny IR-sensors, not only capable of sensing touch, but capturing images as well. Playing your characters during the Setup Phase will involve placing actual physical cards on the screen, allowing them to be read, and then that data is sent to the game client to generate the appropriate characters. We wanted to do this, because most of us reminisce fondly on the Yu-Gi-Oh series, where cards placed in the game are animated, and interact with eachother, and the SUR40 device our way of getting to do that. We chose regular "Poker" cards, because making such generic and readily available cards would be a cool proof of concept. Another reason we wanted to do this was that we saw a <a href="https://alexander-hjelm.github.io/laser-game-ag19/gallery.html">previous project, Lumen</a>, that made us go "Oooh, I want to do something similar!" We also looked for proofs of concept, and found it within <a href="https://link.springer.com/chapter/10.1007/978-3-319-13102-3_25">Snow Surface</a>, where they're also using Microsoft PixelSense. As for the graphics, we chose to use low-polygon models made by ourselves, with nice shaders. That is because modelling is a cumbersome task you either have to do yourself, or pay someone else to do it for you; low-polygon models are easier to do yourself. For the shaders, you can do a lot of cool things with advanced shaders, even on low-polygon models. Also, the SUR40 is not the best equipped device, so many polygons might have overworked it.</br></br>
+              We've encountered a fair share of obstacles and challenges, and we've learned a few lessons from it.</br>The most glaring difficulty we've had is the fact that not only is the device almost 10 years old and outdate, the SUR40 as a concept is deprecated and no longer supported by the official people involved in its conception. Because of that, we had to rely on obscure references online, or by reverse engineering previous projects using the SUR40. It really teaches you to broaden your searches for helpful information, but perhaps we should've taken the hint and done something else instead. Heh.</br>Another difficulty we encountered was making the interaction interesting. We noticed that during our first demo presentation, people simply didn't find the interaction interesting or engaging. Naturally, the first demo was far from complete, but we thought that it would spark some more interest at that point either way. Maybe we should've had other people tried it earlier, and taken their lack of interest to note.</br>The last significant difficulty was understanding and successfully implementing Computer Vision, when none of us were praticularily adept at it. Using <a href="https://ieeexplore.ieee.org/abstract/document/6240859">OpenCV</a> sure helped, but it still wasn't easy. Next time, maybe don't dive head-first into unknown areas, at least not without a plan B.
             </p>
 	</div>
   <div class="content_box">
@@ -60,23 +55,23 @@
           <source src="images/attackdemo.mp4" type="video/mp4">
         </video>
   </div>
-      <!--a href="blogpost.html?entry=">
+      <a href="blogpost.html?entry=19">
         <div class="post_box">
             <div class="header">
-                <h2></h2>
-              <div class="tag"><strong>Tags: </strong></div>
+                <h2>Project Finished</h2>
+              <div class="tag"><strong>Tags: </strong>-</div>
                 <span class="posted_date">
-
+                    03 Nov
                     <strong>2021</strong>
                 </span>
             </div>
-            <img src="images/lightning.png" alt="image" />
+            <img src="images/logo.png" alt="image" />
             <div class="pb_right">
-                <p></p>
+                <p>The project is finished.</p>
             </div>
             <div class="cleaner"></div>
         </div>
-      </a-->
+      </a>
       <a href="blogpost.html?entry=18">
         <div class="post_box">
             <div class="header">

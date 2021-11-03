@@ -92,9 +92,9 @@ blogData =
         text: "We wanted the users to be less passive during the Combat Phase of the game, so we added the ability for the users to once per round double-tap one of their characters. This triggered a strong 'heal' effect, to be used as one wishes, adding additional depth to the gameplay. Once again, this has been implemented excellently using TouchScript."
       },
       {
-        title: "",
-        images: [""],
-        text: ""
+        title: "Project Finished",
+        images: ["images/logo.png"],
+        text: "The short two months of development have passed, and today, after so much hard work by the entire team, we have a finished product. It is with great joy that we can claim that our hard work has paid off, with a product we're incredibly proud of. Of course, there's always more one can do, but the fact that we're enjoying the product as users, as well we've enjoyed it as its developers speaks volumes. The kind words from otherwise uninvolved users has been a great boost to our productivity and motivation; thank you, to all of you. We've learned so much, and had a fun experience doing this, and one can only hope that the future holds similarly exciting projects in store for us. Until the next time!"
       }
    ]
 }

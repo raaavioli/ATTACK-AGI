@@ -67,16 +67,16 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 }
 
 #site_title {
-	float: left;
-	width: 500px;
-	height: 160px;
+	height: 500px;
+	width: 50%;
+  margin: 0 auto;
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 #site_title a {
 	display: block;
 	width: 500px;
-	height: 30px;
+	height: 370px;
 	margin: 0px;
 	padding: 130px 0px 0 170px;
 	font-size: 14px;
@@ -258,6 +258,8 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 .team_box .comment a { display: block; margin-top: 15px; background: url(../images/templatemo_comment.jpg) no-repeat bottom left; padding: 3px 0 0 25px; }
 .links { display: block; float: right; }
 .links div a img {width: 32px; height: 32px; margin-right: 0px; margin-bottom: 5px; }
+
+.gallery {max-width: 100%; height: auto;}
 
 #templatemo_sidebar {
 	float: right;

@@ -72,19 +72,24 @@ blogData =
         text: "The UI was altered so that the areas for card placement now are shaded to be semi-transparent and has a glow when no card is placed. Cards can also be rotated either vertically or horizontally, which changes the color of the border around the card placement area to reflect whether a character is in an offensive or a defensive state. UI was also added to describe the character stats to the players. The players now get to know the character names, health, attack, defense and speed characteristics. Attack, Defense and Speed reflects how strong offensively, strong defensively and fast a character is."
       },
       {
+        title: "Menus Constructed",
+        images: ["images/bpMainMenu.png", "images/bpInGameMenu.png", "images/bpInGameButtons.png", "images/bpContinue.png"],
+        text: "There is now a proper menu to navigate the programme. The game flow logic works as expected, and the users are now able to complete a game without a keyboard, but they still need a mouse until proper touch interaction is implemented. The menu is simple, but it works."
+      },
+      {
         title: "Shield effect for defensive mode",
         images: ["images/combinedShield.png", "images/shieldModel.png", "images/hexPattern.png", "images/shieldShaderTest.png"],
         text: "Playing around with shaders in Unity for this one. This shader features a fresnel effect with 'magical' colors for the appropriate effect. A model for a shield was created in Blender, as well as a texture that is a hexagonal pattern in GIMP. Unwrapping the UV-coordinates of the Blender model, and moving the faces around then made the pattern look good enough on the shield model. After having imported everything to Unity, tweaking the values of the shader inside the Unity editor made it look as intended, including the color and intesity of the effects. At this point, the finished prefab could then applied to the characters as they enter their defensive modes."
       },
       {
-        title: "Menus Constructed",
-        images: [""],
-        text: ""
+        title: "TouchScript implemented",
+        images: ["images/bpTouchScript.png"],
+        text: "Unity Asset Store had a working library for implementing various touch gestures. While we do not need the more advanced gestures, using an already working framework sure isn't bad. Every object previously interactable with mouse cursors are now also interactable with simple press touch gestures. Now, no mouse or keyboard is needed to interact with the programme. The blue circles on the image is different touches being detected. Those on the card boxes are detecting the cards, while the other five are the five fingers of a hand, providing proof of concept that the programme can handle multiple touches simultaneously. We shouldn't ever reach 15 individual touch interactions, so this should work. Those blue circle cursors are only for debug purposes; they won't be visible in the final product."
       },
       {
-        title: "TouchScript implemented",
-        images: [""],
-        text: ""
+        title: "Character interaction implemented",
+        images: ["images/bpCharacterInteraction.gif"],
+        text: "We wanted the users to be less passive during the Combat Phase of the game, so we added the ability for the users to once per round double-tap one of their characters. This triggered a strong 'heal' effect, to be used as one wishes, adding additional depth to the gameplay. Once again, this has been implemented excellently using TouchScript."
       },
       {
         title: "",

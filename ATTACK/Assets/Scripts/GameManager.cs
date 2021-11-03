@@ -278,10 +278,13 @@ public class GameManager : MonoBehaviour
         }
 
         GetComponents<AudioSource>()[2].Play();
-        state = GameState.Combat;
         DeactivateReadyButtons();
         UIController.SetTimer(setupTime);
         UIController.ShowScoreBoard(false);
+
+        // Start AnimCamera
+        CameraHandler.instance.StartAnimCamera();
+        yield return new WaitForSeconds(4.5f);
 
         // Prepare for combat
         state = GameState.Combat;

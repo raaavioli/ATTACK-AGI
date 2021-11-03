@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraHandler : MonoBehaviour
 {
     private Camera p1Camera, p2Camera, combatCamera;
+    [SerializeField]
+    public Camera AnimCamera;
     public static CameraHandler instance;
 
     void Awake() 
@@ -39,6 +41,16 @@ public class CameraHandler : MonoBehaviour
     {
         p1Camera.enabled = false;
         p2Camera.enabled = false;
+        AnimCamera.gameObject.SetActive(false);
         combatCamera.enabled = true;
+    }
+
+        public void StartAnimCamera()
+    {
+        p1Camera.enabled = false;
+        p2Camera.enabled = false;
+        AnimCamera.gameObject.SetActive(true);
+        combatCamera.enabled = false;
+
     }
 }

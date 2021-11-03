@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 import os
 from interactiveClient import startInteractiveClient
+import traceback
 
 file_path = os.path.dirname(__file__)
 
@@ -34,6 +35,9 @@ def main():
     if "-i" in sys.argv:
         startInteractiveClient()
         return
+
+    cv2.startWindowThread()
+    cv2.namedWindow("server_image")
 
     # Create a TCP/IP socket.
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -75,6 +79,7 @@ def main():
                 UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 50002))
             except:
                 print("something went wrong, nothing was processed or sent")
+                traceback.print_exc()
 
 def recvFull(connection, fullSize):
     fullData = b''
@@ -100,7 +105,7 @@ def suitAreaToSquare(image):
     sharpen = cv2.filter2D(image, -1, sharpen_kernel)
     median = cv2.medianBlur(sharpen, 7)
     
-    size = (4, 4)
+    size = (6, 6)
     shape = cv2.MORPH_RECT
     kernel = cv2.getStructuringElement(shape, size)
     max_image = cv2.dilate(median, kernel)
@@ -110,7 +115,11 @@ def suitAreaToSquare(image):
     kernel = cv2.getStructuringElement(shape, size)
     min_image = cv2.erode(max_image, kernel)
 
-    return min_image
+    _, thresh = cv2.threshold(min_image,128,255,cv2.THRESH_BINARY)
+    cv2.imshow("server_image", thresh)
+    cv2.waitKey(20)
+
+    return thresh
 
 # Takes a full-size image of the SUR40 screen and returns the string that represents the positioning of the cards.
 # The returned string is formatted as follows: "{player}:{position}:{rank}:{rotated},{player}:{position}:{rank}:{rotated},..."
@@ -134,8 +143,7 @@ def analyzeImage(image):
 # for each card, a string is created containing player_id, position, rank, rotated.
 # If no card is found, an empty string is returned.
 def analyzeSubImage(subImage, player):
-    _, thresh = cv2.threshold(subImage,10,255,cv2.THRESH_BINARY)
-    contours, hier = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    contours, hier = cv2.findContours(subImage,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     index_sort = sorted(range(len(contours)), key=lambda i : cv2.contourArea(contours[i]),reverse=True)
 
     # If there are no contours or no card is found, do nothing.

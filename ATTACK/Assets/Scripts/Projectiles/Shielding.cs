@@ -27,6 +27,7 @@ public class Shielding : Special {
 
 		shield = Instantiate(shieldPrefab);
 		shield.transform.position = CalculateTargetPosition(transform);
+		shield.SetActive(false);
 	}
 
 	private void Update() {
@@ -35,6 +36,8 @@ public class Shielding : Special {
 	}
 
 	public override void Execute(GameObject[] targets) {
+		shield.SetActive(true);
+
 		// Remove damage modifier from last targeted character.
 		if (lastCharacter != null) {
 			lastCharacter.damageModifier /= shielding;

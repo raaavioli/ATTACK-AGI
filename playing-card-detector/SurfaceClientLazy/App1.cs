@@ -56,8 +56,7 @@ namespace RawImageVisualizer {
         public App1() {
             graphics = new GraphicsDeviceManager(this);
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            SocketThreadManager.CreateServer("127.0.0.1", 666);
-            //SocketThreadManager.CreateServer("169.254.185.113", 666);
+            SocketThreadManager.CreateServer("169.254.185.113", 666);
             Console.WriteLine("HELLO");
 
         }

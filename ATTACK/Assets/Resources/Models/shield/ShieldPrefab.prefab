@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6355499953534893409}
   - component: {fileID: 8042476884828254916}
   - component: {fileID: 5222039578514982414}
+  - component: {fileID: 7642653839062446285}
   m_Layer: 0
   m_Name: ShieldPrefab
   m_TagString: Untagged
@@ -81,3 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!111 &7642653839062446285
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014721286197290971}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: fb1eb31a9d18df24487dc9c6c592aed8, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: fb1eb31a9d18df24487dc9c6c592aed8, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

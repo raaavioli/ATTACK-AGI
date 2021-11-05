@@ -10,7 +10,6 @@ public class CharacterCommon : MonoBehaviour
 {
     //Shield related
     private GameObject spawnedShield = null;
-    private GameObject shieldAsset;
 
     public CharacterMode Mode;
     private Team team;
@@ -39,7 +38,13 @@ public class CharacterCommon : MonoBehaviour
     void Awake()
     {
         Mode = CharacterMode.Offensive;
-        shieldAsset = Resources.Load<GameObject>("Models/shield/ShieldPrefab");
+
+        //Instantiate Shield
+        GameObject shieldAsset = Resources.Load<GameObject>("Models/shield/ShieldPrefab");
+        spawnedShield = Instantiate(shieldAsset, transform.position, Quaternion.LookRotation(new Vector3(-transform.position.x, 0, 0)));
+        spawnedShield.transform.Translate(Vector3.forward * 10);
+        spawnedShield.SetActive(false);
+
         health = maxHealth;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
@@ -127,26 +132,16 @@ public class CharacterCommon : MonoBehaviour
 
     private void setRotation(bool rotated)
     {
-        if (Mode == CharacterMode.Offensive)
+        if (rotated)
         {
-            // If going into defensive mode
-            if (rotated)
-            {
-                spawnedShield = Instantiate(shieldAsset, transform.position, Quaternion.LookRotation(new Vector3(-transform.position.x, 0, 0)));
-                spawnedShield.transform.Translate(Vector3.forward * 6);
-                Mode = CharacterMode.Defensive;
-            } 
-        } 
-        else 
-        {
-            // If going out of defensive mode
-            if (!rotated)
-            {
-                Destroy(spawnedShield);
-                Mode = CharacterMode.Offensive;
-            } 
+            Mode = CharacterMode.Defensive;
+            spawnedShield.SetActive(true);
         }
-        return;
+        else
+        {
+            Mode = CharacterMode.Offensive;
+            spawnedShield.SetActive(false);
+        }
     }
 
     private void OnDestroy() {

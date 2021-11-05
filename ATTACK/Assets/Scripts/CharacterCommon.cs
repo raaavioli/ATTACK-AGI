@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class CharacterCommon : MonoBehaviour
 {
+    //Shield related
+    private GameObject spawnedShield = null;
+
     public CharacterMode Mode;
     private Team team;
 
@@ -37,6 +40,13 @@ public class CharacterCommon : MonoBehaviour
     void Awake()
     {
         Mode = CharacterMode.Offensive;
+
+        //Instantiate Shield
+        GameObject shieldAsset = Resources.Load<GameObject>("Models/shield/ShieldPrefab");
+        spawnedShield = Instantiate(shieldAsset, transform.position, Quaternion.LookRotation(new Vector3(-transform.position.x, 0, 0)));
+        spawnedShield.transform.Translate(Vector3.forward * 10);
+        spawnedShield.SetActive(false);
+
         health = maxHealth;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         attack = GetComponent<Attack>();
@@ -52,7 +62,7 @@ public class CharacterCommon : MonoBehaviour
         if (position != -1 && CardManager.HasCard(team, position))
         {
             Card c = CardManager.GetCard(team, position);
-            Mode = c.rotated ? CharacterMode.Defensive : CharacterMode.Offensive;
+            setRotation(c.rotated);
         }
     }
 
@@ -121,6 +131,26 @@ public class CharacterCommon : MonoBehaviour
         // Some characters dont have an animator, so this is a hacky solution for now.
         if (animator != null) animator.SetTrigger("StartGetHit");
     }
+
+    private void setRotation(bool rotated)
+    {
+        if (rotated)
+        {
+            Mode = CharacterMode.Defensive;
+            spawnedShield.SetActive(true);
+        }
+        else
+        {
+            Mode = CharacterMode.Offensive;
+            spawnedShield.SetActive(false);
+        }
+    }
+
+    private void OnDestroy() {
+        if (spawnedShield != null)
+            Destroy(spawnedShield);
+    }
+
 }
 
 public enum CharacterMode

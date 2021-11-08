@@ -8,7 +8,7 @@ The game is played using cards, similar to how you would play traditional card
 games such as "Yu Gi Oh!" or "Magic the Gathering", by placing them on the SUR40 monitor.
 
 When cards are placed onto the screen, characters are summoned for each of the two players.
-The characters then fight, and during the fight players can affect outcome of the game by rotating the cards and thus setting their character in defensive or offensive mode, acting similar to [Taunt in Hearthstone](https://hearthstone.fandom.com/wiki/Taunt). Players can also heal their characters by double tapping characters on the board. The last man standing wins!
+The characters then fight, and during the fight players can affect the outcome of the game by rotating the cards and thus setting their character in defensive or offensive mode, where defensive mode works similarly to [Taunt in Hearthstone](https://hearthstone.fandom.com/wiki/Taunt). Players can also heal their characters by double tapping characters on the board. The last man standing wins!
 
 ![overview_attack](https://user-images.githubusercontent.com/32779655/140800789-2fb96b88-7bc5-462f-966a-fdc143a1a74c.png)
 

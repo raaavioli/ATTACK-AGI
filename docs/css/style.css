@@ -205,6 +205,10 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 	color: #20c4d3;
 }
 
+.bg-video {
+    max-width: 100%;
+}
+
 .content_box {
 	padding-bottom: 30px;
 	margin-bottom: 30px;
